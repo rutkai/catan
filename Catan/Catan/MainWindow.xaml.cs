@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -11,14 +12,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Catan.ViewModel;
 
-namespace Catan {
+namespace Catan
+{
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window {
-		public MainWindow() {
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
 			InitializeComponent();
+
+			var context = new GameTableContext();
+
+			context.GameCells = new List<GameCellContext>()
+				                    {
+										new GameCellContext(context) { Value = 1},
+										new GameCellContext(context) { Value = 2},
+										new GameCellContext(context) { Value = 3},
+										new GameCellContext(context) { Value = 4},
+				                    };
+
+			DataContext = context;
 		}
 	}
 }
