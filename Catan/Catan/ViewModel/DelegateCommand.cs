@@ -6,40 +6,6 @@ using System.Windows.Input;
 
 namespace Catan.ViewModel
 {
-	public class ActionCommand : ICommand
-	{
-		private readonly Predicate<object> _CanExecute;
-		private readonly Action _Execute;
-
-		public ActionCommand(Action execute, Predicate<object> canExecute = null)
-		{
-			_Execute = execute;
-			_CanExecute = canExecute;
-		}
-
-		public void Execute(object parameter)
-		{
-			_Execute();
-		}
-
-		public bool CanExecute(object parameter)
-		{
-			if (_CanExecute == null)
-				return true;
-			return _CanExecute(parameter);
-		}
-
-		public event EventHandler CanExecuteChanged;
-
-		protected void OnCanExecuteChanged()
-		{
-			if (CanExecuteChanged != null)
-			{
-				CanExecuteChanged(this, EventArgs.Empty);
-			}
-		}
-	}
-
 	public class DelegateCommand<T> : ICommand
 	{
 		private readonly Predicate<T> _canExecute;

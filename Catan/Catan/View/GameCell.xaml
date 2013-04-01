@@ -8,8 +8,7 @@
 						 d:DesignWidth="300">
 	<UserControl.Template>
 		<ControlTemplate TargetType="UserControl">
-			<Grid xmlns:system="clr-namespace:System;assembly=mscorlib">
-
+			<Grid>
 				<Polygon Points="0.5,0 1.5,0 2,0.86 1.5,1.73 0.5,1.73 0,0.86"
 								 Fill="{TemplateBinding Background}"
 								 Stroke="{TemplateBinding Foreground}"

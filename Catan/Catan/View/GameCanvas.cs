@@ -5,6 +5,9 @@ using Catan.Common;
 
 namespace Catan.View
 {
+	/// <summary>
+	/// Játéktábla felülete
+	/// </summary>
 	public class GameCanvas : Canvas
 	{
 		/// <summary>

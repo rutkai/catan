@@ -16,16 +16,13 @@ using Catan.ViewModel;
 
 namespace Catan
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			var context = new GameTableContext();
+			var context = new GameTableContext() {TableSize = new Size(2, 2)};
 
 			context.GameCells = new List<GameCellContext>()
 				                    {

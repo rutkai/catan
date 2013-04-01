@@ -12,12 +12,11 @@
 		<Border BorderBrush="Black"
 						BorderThickness="2">
 			<ItemsControl ItemsSource="{Binding GameCells}"
-										ClipToBounds="True"
-										MinHeight="500">
+										ClipToBounds="True">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<View:GameCanvas Rows="2"
-														 Columns="2"
+						<View:GameCanvas Rows="{Binding TableSize.Width}"
+														 Columns="{Binding TableSize.Height}"
 														 IsItemsHost="True" />
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
@@ -44,14 +43,8 @@
 								<Style TargetType="Button">
 									<Setter Property="Background"
 													Value="Red" />
-									<!--<Style.Triggers>
-										<Trigger Property="IsChecked"
-														 Value="True">
-											<Setter Property="Background"
-															Value="Gray" />
-										</Trigger>
-									</Style.Triggers>-->
 								</Style>
+
 							</Button.Style>
 							<Button.Template>
 								<ControlTemplate TargetType="Button">
@@ -64,6 +57,7 @@
 												<Setter Property="Background"
 																Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
 												<Style.Triggers>
+
 													<Trigger Property="IsMouseOver"
 																	 Value="True">
 														<Setter Property="RenderTransform">
@@ -78,6 +72,7 @@
 												</Style.Triggers>
 											</Style>
 										</View:GameCell.Style>
+
 									</View:GameCell>
 								</ControlTemplate>
 							</Button.Template>
@@ -86,6 +81,20 @@
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</Border>
+
+		<View:GameCellOptions DataContext="{Binding}">
+			<View:GameCellOptions.Style>
+				<Style TargetType="View:GameCellOptions">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding SelectedGameCell}"
+												 Value="{x:Null}">
+							<Setter Property="Visibility"
+											Value="Hidden" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</View:GameCellOptions.Style>
+		</View:GameCellOptions>
 
 	</Grid>
 </Window>
