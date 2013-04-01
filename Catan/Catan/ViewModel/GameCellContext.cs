@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
+using Catan.Common;
 
 namespace Catan.ViewModel
 {
@@ -60,33 +61,25 @@ namespace Catan.ViewModel
 		{
 			get
 			{
-				if (_SelectCommand == null)
-					_SelectCommand = new ActionCommand(_ => GameTable != null,
-													   () => GameTable.SelectGameCellCommand.Execute(this));
-				return _SelectCommand;
+				return Lazy.Init(ref _SelectCommand, () => new ActionCommand(_ => GameTable != null,
+																			 () => GameTable.SelectGameCellCommand.Execute(this)));
 			}
 		}
 
+		/// <summary>
+		/// Út építésének parancsa
+		/// </summary>
 		public DelegateCommand<int> BuildRoadCommand
 		{
-			get
-			{
-				if (_BuildRoadCommand != null)
-					_BuildRoadCommand = new DelegateCommand<int>(null, null);
-				return _BuildRoadCommand;
-			}
+			get { return Lazy.Init(ref _BuildRoadCommand, () => new DelegateCommand<int>(null, null)); }
 		}
 
+		/// <summary>
+		/// Város építésének parancsa
+		/// </summary>
 		public DelegateCommand<int> BuildTownCommand
 		{
-			get
-			{
-				if (_BuildTownCommand == null)
-					_BuildTownCommand = new DelegateCommand<int>(null, null);
-				return _BuildTownCommand;
-			}
+			get { return Lazy.Init(ref _BuildTownCommand, () => new DelegateCommand<int>(null, null)); }
 		}
-
-
 	}
 }

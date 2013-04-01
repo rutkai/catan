@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Catan.Common;
 
 namespace Catan.ViewModel
 {
@@ -73,9 +74,8 @@ namespace Catan.ViewModel
 		{
 			get
 			{
-				if (_SelectGameCellCommand == null)
-					_SelectGameCellCommand = new DelegateCommand<GameCellContext>(value => SelectedGameCell = value);
-				return _SelectGameCellCommand;
+				return Lazy.Init(ref _SelectGameCellCommand,
+								 () => new DelegateCommand<GameCellContext>(value => SelectedGameCell = value));
 			}
 		}
 
