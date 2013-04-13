@@ -49,6 +49,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>Resources\ExtendedWPFToolkit\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -65,6 +68,9 @@
     <Compile Include="Model\Town.cs" />
     <Compile Include="View\GameCellOptions.xaml.cs">
       <DependentUpon>GameCellOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewGameWindow.xaml.cs">
+      <DependentUpon>NewGameWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\GameCell.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +100,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\GameCellOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewGameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
