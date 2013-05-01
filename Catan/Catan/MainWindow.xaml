@@ -4,9 +4,13 @@
 				xmlns:View="clr-namespace:Catan.View"
 				xmlns:System="clr-namespace:System;assembly=mscorlib"
 				xmlns:ViewModel="clr-namespace:Catan.ViewModel"
+				xmlns:Converters="clr-namespace:Catan.ViewModel.Converters"
 				Title="Catan - The Game"
 				Height="350"
 				Width="525">
+	<Window.Resources>
+		<Converters:PlayerColorValueConverter x:Key="playerColorConverter" />
+	</Window.Resources>
 	<Grid>
 
 		<Border BorderBrush="Black"
@@ -80,6 +84,35 @@
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
+		</Border>
+
+		<Border BorderBrush="Black"
+						BorderThickness="2 0 0 2"
+						VerticalAlignment="Top"
+						Padding="10"
+						MinWidth="150"
+						CornerRadius="0 0 0 10"
+						HorizontalAlignment="Right">
+			<Border.Background>
+				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
+			</Border.Background>
+			<StackPanel>
+				<StackPanel.Resources>
+					<Style TargetType="TextBlock">
+						<Setter Property="FontWeight"
+										Value="Bold" />
+						<Setter Property="Foreground"
+										Value="White" />
+						<Setter Property="Margin"
+										Value="0 0 0 10" />
+					</Style>
+				</StackPanel.Resources>
+				<TextBlock Text="{Binding CurrentPlayer.Name}" />
+				<TextBlock Text="Dobott érték" />
+				<Button Command="{Binding StepCommand}">
+					Dobás
+				</Button>
+			</StackPanel>
 		</Border>
 
 		<View:GameCellOptions DataContext="{Binding}">

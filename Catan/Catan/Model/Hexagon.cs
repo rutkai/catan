@@ -1,11 +1,15 @@
+using System;
+using System.Collections.Generic;
+
 namespace Catan.Model
 {
 
 	/// <summary>
 	/// A térkép alkotóeleme.
 	/// </summary>
-	public class Hexagon
+	public class Hexagon : IDisposable
 	{
+		public List<Hexagon> Neighbours { get; protected set; }
 
 		/// <summary>
 		/// A rabló itt található?
@@ -17,6 +21,7 @@ namespace Catan.Model
 			//write property
 			set;
 		}
+
 		/// <summary>
 		/// A mezõ nyersanyaga. Csak getter.
 		/// </summary>
@@ -27,6 +32,7 @@ namespace Catan.Model
 			//write property
 			set;
 		}
+
 		/// <summary>
 		/// Hányas dobásra termel nyersanyagot. Csak getter.
 		/// A víz produce numbere 0!
@@ -38,6 +44,7 @@ namespace Catan.Model
 			//write property
 			set;
 		}
+
 		/// <summary>
 		/// Ha van út, a gazdája van benne, egyébként null.
 		/// 6 elemû tömb. Elsõ elem 1 óránál, a többi az óramutató járásának megfelelõen.
@@ -53,8 +60,17 @@ namespace Catan.Model
 		public Settlement m_Settlement;
 
 		public Hexagon()
+			: this(null)
 		{
 
+		}
+
+		public Hexagon(IEnumerable<Hexagon> neighbours)
+		{
+			if (neighbours == null)
+				Neighbours = new List<Hexagon>();
+			else
+				Neighbours = new List<Hexagon>(neighbours);
 		}
 
 		public virtual void Dispose()
@@ -68,6 +84,7 @@ namespace Catan.Model
 		/// <param name="ProduceNumber">Mely dobásra termel</param>
 		/// <param name="Material">A mezõ nyersanyaga</param>
 		public Hexagon(int ProduceNumber, Material Material)
+			: this(null)
 		{
 
 		}

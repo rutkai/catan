@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using Catan.Common;
+using Catan.Model;
 
 namespace Catan.ViewModel
 {
@@ -16,6 +17,7 @@ namespace Catan.ViewModel
 		private GameCellContext _SelectedGameCell;
 		private Size _TableSize;
 		private DelegateCommand<GameCellContext> _SelectGameCellCommand;
+		private ActionCommand _StepCommand;
 
 		public GameTableContext()
 			: this(5, 5)
@@ -23,9 +25,22 @@ namespace Catan.ViewModel
 
 		}
 
-		public GameTableContext(int width, int height)
+		public GameTableContext(uint size)
+			: this(size, size)
+		{
+
+		}
+
+		public GameTableContext(uint width, uint height)
 		{
 			_TableSize = new Size(width, height);
+			GameController.Instance.Init(width, new[] { new Player("Gipsz Jakab", PlayerColor.Blue),
+														new Player("Játékos 2", PlayerColor.Red) });
+		}
+
+		public Player CurrentPlayer
+		{
+			get { return GameController.Instance.CurrentPlayer; }
 		}
 
 		/// <summary>
@@ -79,5 +94,20 @@ namespace Catan.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Játékban való lépés
+		/// </summary>
+		public ActionCommand StepCommand
+		{
+			get
+			{
+				return Lazy.Init(ref _StepCommand, () => new ActionCommand(
+					() =>
+					{
+						GameController.Instance.Step();
+						OnPropertyChanged("CurrentPlayer");
+					}));
+			}
+		}
 	}
 }

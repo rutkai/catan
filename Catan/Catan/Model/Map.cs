@@ -6,6 +6,7 @@ namespace Catan.Model
     /// </summary>
     public class Map
     {
+	    public uint Size { get; protected set; }
 
         /// <summary>
         /// A térkép
@@ -17,6 +18,7 @@ namespace Catan.Model
             //write property
             set;
         }
+
         public Hexagon m_Hexagon;
 
         public virtual void Dispose()
@@ -27,9 +29,9 @@ namespace Catan.Model
         /// <summary>
         /// Konstruktor. Elkészíti a térképet.
         /// </summary>
-        public Map()
+        public Map(uint size)
         {
-
+	        Size = size;
         }
 
         /// <summary>

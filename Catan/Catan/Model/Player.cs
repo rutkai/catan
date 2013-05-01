@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 namespace Catan.Model
 {
-
-
     /// <summary>
     /// Játékos osztály. Tartalmazza a játékosok beállításait.
     /// </summary>
@@ -52,6 +50,7 @@ namespace Catan.Model
         public Settlement m_Settlement;
 
         public Player()
+			: this("", PlayerColor.Blue)
         {
 
         }
@@ -66,9 +65,10 @@ namespace Catan.Model
         /// </summary>
         /// <param name="Name"></param>
         /// <param name="Color"></param>
-        public Player(string Name, PlayerColor Color)
+        public Player(string name, PlayerColor color)
         {
-
+	        Name = name;
+	        Color = color;
         }
 
         /// <summary>

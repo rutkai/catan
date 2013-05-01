@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using Catan.Common;
+using Catan.Model;
 
 namespace Catan.ViewModel
 {
@@ -16,23 +17,41 @@ namespace Catan.ViewModel
 		private Image _BackgroundImage;
 		private DelegateCommand<int> _BuildRoadCommand;
 		private DelegateCommand<int> _BuildTownCommand;
+
 		private int _Value;
 
-		public GameCellContext(GameTableContext gameTable)
+		private static Dictionary<Material, Image> _BackgroundImages = 
+			new Dictionary<Material, Image>
+			        {
+				        { Material.Clay, null },
+				        { Material.Iron, null },
+				        { Material.Wheat, null },
+						{ Material.Wood, null },
+						{ Material.Wool, null },
+			        };
+
+		public GameCellContext(GameTableContext gameTable, Hexagon hexagon = null)
 		{
 			GameTable = gameTable;
+			_Hexagon = hexagon;
 		}
+
+		/// <summary>
+		/// Hexagont reprezentáló tulajdonság
+		/// </summary>
+		protected Hexagon _Hexagon { get; set; }
 
 		/// <summary>
 		/// Játékcella háttérképe
 		/// </summary>
 		public Image BackgroundImage
 		{
-			get { return _BackgroundImage; }
-			set
+			get
 			{
-				_BackgroundImage = value;
-				OnPropertyChanged("BackgroundImage");
+				if (_Hexagon == null)
+					throw new Exception("Nem lehet null a Hexagon!");
+
+				return _BackgroundImages[_Hexagon.Material];
 			}
 		}
 
@@ -71,7 +90,16 @@ namespace Catan.ViewModel
 		/// </summary>
 		public DelegateCommand<int> BuildRoadCommand
 		{
-			get { return Lazy.Init(ref _BuildRoadCommand, () => new DelegateCommand<int>(null, null)); }
+			get
+			{
+				return Lazy.Init(ref _BuildRoadCommand,
+								 () => new DelegateCommand<int>(
+									 roadId =>
+									 {
+
+									 },
+									 roadId => roadId >= 0 && roadId < 6));
+			}
 		}
 
 		/// <summary>

@@ -62,7 +62,7 @@ namespace Catan.View {
 					result[i++] = new Player(txtPlayerName2.Text, PlayerColor.Red);
 				}
 				if (txtPlayerName3.IsEnabled) {
-					result[i++] = new Player(txtPlayerName3.Text, PlayerColor.White);
+					result[i++] = new Player(txtPlayerName3.Text, PlayerColor.Green);
 				}
 				if (txtPlayerName4.IsEnabled) {
 					result[i++] = new Player(txtPlayerName4.Text, PlayerColor.Orange);

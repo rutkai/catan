@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Lazy.cs" />
+    <Compile Include="Model\GameController.cs" />
     <Compile Include="Model\Hexagon.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Material.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Model\PlayerColor.cs" />
     <Compile Include="Model\Settlement.cs" />
     <Compile Include="Model\Town.cs" />
+    <Compile Include="ViewModel\Converters\PlayerColorValueConverter.cs" />
     <Compile Include="View\GameCellOptions.xaml.cs">
       <DependentUpon>GameCellOptions.xaml</DependentUpon>
     </Compile>
