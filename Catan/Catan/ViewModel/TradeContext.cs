@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Catan.Common;
 using Catan.Model;
 
 namespace Catan.ViewModel
 {
+	/// <summary>
+	/// Kereskedésért felelős nézetmodell
+	/// </summary>
 	public class TradeContext : ViewModelBase
 	{
 		private DelegateCommand<object> _AddCommand;
@@ -24,12 +28,15 @@ namespace Catan.ViewModel
 									  new TradeItem
 										  {
 											  Material = Material.Wool,
-											  Player = null,
+											  Player = _GameTableContext.CurrentPlayer,
 											  Price = 100,
 											  Quantity = 10
 										  });
 		}
 
+		/// <summary>
+		/// Elérhető termékek, amik még nincsenek meghirdetve
+		/// </summary>
 		public IEnumerable<Material> AvailableTradeItems
 		{
 			get
@@ -42,12 +49,27 @@ namespace Catan.ViewModel
 			}
 		}
 
-		public List<TradeItem> TradeItems
+		/// <summary>
+		/// Kereskedelmi termékek
+		/// </summary>
+		public List<TradeItem> MyTradeItems
 		{
 			get { return Player.TradeItems.Values.ToList(); }
 		}
 
-
+		public List<TradeItem> TradeItems
+		{
+			get
+			{
+				var items = new List<TradeItem>();
+				foreach (var player in _GameTableContext.Players)
+				{
+					if (player != null && player != _GameTableContext.CurrentPlayer)
+						items.AddRange(player.TradeItems.Values);
+				}
+				return items;
+			}
+		}
 
 		/// <summary>
 		/// Kereskedelmi termék törlése
@@ -63,14 +85,14 @@ namespace Catan.ViewModel
 							if (Player.TradeItems.ContainsKey(material))
 							{
 								Player.TradeItems.Remove(material);
-								OnPropertyChanged("TradeItems");
+								OnPropertyChanged("MyTradeItems");
 								OnPropertyChanged("AvailableTradeItems");
 							}
 						},
 						_ => Player != null));
 			}
 		}
-		
+
 		/// <summary>
 		/// Új kereskedelmi termék hozzáadása
 		/// </summary>
@@ -84,7 +106,7 @@ namespace Catan.ViewModel
 								{
 									Player.AddTradeItem(1, 1, (Material)material);
 									OnPropertyChanged("AvailableTradeItems");
-									OnPropertyChanged("TradeItems");
+									OnPropertyChanged("MyTradeItems");
 								},
 								material => material is Material && AvailableTradeItems.Count() != 0
 							));

@@ -13,13 +13,9 @@
 	</Window.Resources>
 	<Grid>
 
-		<View:TradeControl DataContext="{Binding TradeContext}">
-
-		</View:TradeControl>
-
 		<Border BorderBrush="Black"
 						BorderThickness="2"
-						Visibility="Hidden">
+						Visibility="Visible">
 			<ItemsControl ItemsSource="{Binding GameCells}"
 										ClipToBounds="True">
 				<ItemsControl.ItemsPanel>
@@ -97,7 +93,7 @@
 						Padding="10"
 						MinWidth="150"
 						CornerRadius="0 0 0 10"
-						Visibility="Hidden"
+						Visibility="Visible"
 						HorizontalAlignment="Right">
 			<Border.Background>
 				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
@@ -111,16 +107,15 @@
 										Value="White" />
 						<Setter Property="Margin"
 										Value="0 0 0 10" />
+						<Setter Property="HorizontalAlignment"
+										Value="Center" />
 					</Style>
 				</StackPanel.Resources>
 				<TextBlock Text="{Binding CurrentPlayer.Name}" />
 				<TextBlock Text="Dobott érték" />
 
-				<Button Command="{Binding}">
-					Belkereskedelem
-				</Button>
-				<Button Command="{Binding}">
-					Tengeri kereskedelem
+				<Button Command="{Binding ShowTradeWindowCommand}">
+					Kereskedelem
 				</Button>
 				<Button Command="{Binding StepCommand}">
 					Kör vége

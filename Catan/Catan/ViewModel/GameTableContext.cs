@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using Catan.Common;
 using Catan.Model;
+using Catan.View;
 
 namespace Catan.ViewModel
 {
@@ -13,6 +16,7 @@ namespace Catan.ViewModel
 	/// </summary>
 	public class GameTableContext : ViewModelBase
 	{
+		private ActionCommand _ShowTradeWindowCommand;
 		private IEnumerable<GameCellContext> _GameCells;
 		private GameCellContext _SelectedGameCell;
 		private Size _TableSize;
@@ -42,6 +46,11 @@ namespace Catan.ViewModel
 		public Player CurrentPlayer
 		{
 			get { return GameController.Instance.CurrentPlayer; }
+		}
+
+		public IEnumerable<Player> Players
+		{
+			get { return GameController.Instance.Players; }
 		}
 
 		/// <summary>
@@ -117,6 +126,24 @@ namespace Catan.ViewModel
 			get
 			{
 				return new TradeContext(this, CurrentPlayer);
+			}
+		}
+
+		public ActionCommand ShowTradeWindowCommand
+		{
+			get
+			{
+				return Lazy.Init(ref _ShowTradeWindowCommand,
+					() => new ActionCommand(() =>
+						{
+							var tradeControl = new TradeControl();
+							tradeControl.SetBinding(FrameworkElement.DataContextProperty, 
+								new Binding("TradeContext")
+									{
+										Source = this
+									});
+							tradeControl.ShowDialog();
+						}));
 			}
 		}
 	}

@@ -17,7 +17,7 @@ namespace Catan.View
 	/// <summary>
 	/// Interaction logic for TradeControl.xaml
 	/// </summary>
-	public partial class TradeControl : UserControl
+	public partial class TradeControl : Window
 	{
 		public TradeControl()
 		{
