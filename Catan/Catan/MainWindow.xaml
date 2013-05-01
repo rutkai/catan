@@ -13,8 +13,13 @@
 	</Window.Resources>
 	<Grid>
 
+		<View:TradeControl DataContext="{Binding TradeContext}">
+
+		</View:TradeControl>
+
 		<Border BorderBrush="Black"
-						BorderThickness="2">
+						BorderThickness="2"
+						Visibility="Hidden">
 			<ItemsControl ItemsSource="{Binding GameCells}"
 										ClipToBounds="True">
 				<ItemsControl.ItemsPanel>
@@ -92,6 +97,7 @@
 						Padding="10"
 						MinWidth="150"
 						CornerRadius="0 0 0 10"
+						Visibility="Hidden"
 						HorizontalAlignment="Right">
 			<Border.Background>
 				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
@@ -109,13 +115,21 @@
 				</StackPanel.Resources>
 				<TextBlock Text="{Binding CurrentPlayer.Name}" />
 				<TextBlock Text="Dobott érték" />
+
+				<Button Command="{Binding}">
+					Belkereskedelem
+				</Button>
+				<Button Command="{Binding}">
+					Tengeri kereskedelem
+				</Button>
 				<Button Command="{Binding StepCommand}">
-					Dobás
+					Kör vége
 				</Button>
 			</StackPanel>
 		</Border>
 
-		<View:GameCellOptions DataContext="{Binding}">
+		<View:GameCellOptions DataContext="{Binding}"
+													Visibility="Hidden">
 			<View:GameCellOptions.Style>
 				<Style TargetType="View:GameCellOptions">
 					<Style.Triggers>

@@ -18,6 +18,7 @@ namespace Catan.ViewModel
 		private Size _TableSize;
 		private DelegateCommand<GameCellContext> _SelectGameCellCommand;
 		private ActionCommand _StepCommand;
+		private TradeContext _TradeContext;
 
 		public GameTableContext()
 			: this(5, 5)
@@ -106,7 +107,16 @@ namespace Catan.ViewModel
 					{
 						GameController.Instance.Step();
 						OnPropertyChanged("CurrentPlayer");
+						OnPropertyChanged("TradeContext");
 					}));
+			}
+		}
+
+		public TradeContext TradeContext
+		{
+			get
+			{
+				return new TradeContext(this, CurrentPlayer);
 			}
 		}
 	}
