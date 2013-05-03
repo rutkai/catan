@@ -71,6 +71,7 @@
     <Compile Include="ViewModel\Converters\MaterialToStringConverter.cs" />
     <Compile Include="ViewModel\Converters\PlayerColorValueConverter.cs" />
     <Compile Include="ViewModel\TradeContext.cs" />
+    <Compile Include="ViewModel\TradeItemContext.cs" />
     <Compile Include="View\GameCellOptions.xaml.cs">
       <DependentUpon>GameCellOptions.xaml</DependentUpon>
     </Compile>
