@@ -146,6 +146,7 @@
 									<ColumnDefinition Width="120" />
 									<ColumnDefinition Width="120" />
 									<ColumnDefinition Width="120" />
+									<ColumnDefinition Width="120" />
 									<ColumnDefinition Width="*" />
 								</Grid.ColumnDefinitions>
 
@@ -155,14 +156,15 @@
 								</Grid.RowDefinitions>
 
 								<Border Background="DarkGray"
-												Grid.ColumnSpan="5" />
+												Grid.ColumnSpan="6" />
 								<TextBlock Grid.Column="0">Termék neve</TextBlock>
 								<TextBlock Grid.Column="1">Termék mennyisége</TextBlock>
 								<TextBlock Grid.Column="2">Termék ára</TextBlock>
 								<TextBlock Grid.Column="3">Játékos neve</TextBlock>
+								<TextBlock Grid.Column="4">Mennyiség</TextBlock>
 
 								<ItemsPresenter Grid.Row="1"
-																Grid.ColumnSpan="5" />
+																Grid.ColumnSpan="6" />
 							</Grid>
 
 						</ControlTemplate>
@@ -175,6 +177,7 @@
 											BorderThickness="0 0 0 1">
 								<Grid>
 									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="120" />
 										<ColumnDefinition Width="120" />
 										<ColumnDefinition Width="120" />
 										<ColumnDefinition Width="120" />
@@ -204,8 +207,12 @@
 														 Text="{Binding Player.Name}"
 														 Margin="0 0 10 0" />
 
+									<xctk:IntegerUpDown Grid.Column="4"
+																			Value="1"
+																			Minimum="1" />
+
 									<Button HorizontalAlignment="Right"
-													Grid.Column="4"
+													Grid.Column="5"
 													Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}, Path=DataContext.BuyCommand}"
 													CommandParameter="{Binding}">
 										Vásárlás
