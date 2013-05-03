@@ -57,7 +57,7 @@ namespace Catan.ViewModel
 			get { return Player.TradeItems.Values.ToList(); }
 		}
 
-		public List<TradeItem> TradeItems
+		public IEnumerable<TradeItemContext> TradeItems
 		{
 			get
 			{
@@ -67,7 +67,7 @@ namespace Catan.ViewModel
 					if (player != null && player != _GameTableContext.CurrentPlayer)
 						items.AddRange(player.TradeItems.Values);
 				}
-				return items;
+				return items.Select(item => new TradeItemContext(this, item)).ToArray();
 			}
 		}
 

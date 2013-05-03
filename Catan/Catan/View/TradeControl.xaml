@@ -208,13 +208,15 @@
 														 Margin="0 0 10 0" />
 
 									<xctk:IntegerUpDown Grid.Column="4"
+																			x:Name="PART_ItemsCount"
 																			Value="1"
-																			Minimum="1" />
+																			Minimum="1" 
+																			Maximum="{Binding Quantity}"/>
 
 									<Button HorizontalAlignment="Right"
 													Grid.Column="5"
-													Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}, Path=DataContext.BuyCommand}"
-													CommandParameter="{Binding}">
+													Command="{Binding BuyCommand}"
+													CommandParameter="{Binding ElementName=PART_ItemsCount, Path=Value}">
 										Vásárlás
 									</Button>
 								</Grid>
