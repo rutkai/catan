@@ -112,7 +112,7 @@
 					</Style>
 				</StackPanel.Resources>
 				<TextBlock Text="{Binding CurrentPlayer.Name}" />
-				<TextBlock Text="Dobott érték" />
+				<TextBlock>Arany: <TextBlock Text="{Binding CurrentPlayer.Gold}"/></TextBlock>
 
 				<Button Command="{Binding ShowTradeWindowCommand}">
 					Kereskedelem
@@ -123,8 +123,7 @@
 			</StackPanel>
 		</Border>
 
-		<View:GameCellOptions DataContext="{Binding}"
-													Visibility="Hidden">
+		<View:GameCellOptions DataContext="{Binding}">
 			<View:GameCellOptions.Style>
 				<Style TargetType="View:GameCellOptions">
 					<Style.Triggers>

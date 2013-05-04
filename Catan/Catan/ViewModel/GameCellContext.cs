@@ -20,7 +20,7 @@ namespace Catan.ViewModel
 
 		private int _Value;
 
-		private static Dictionary<Material, Image> _BackgroundImages = 
+		private static Dictionary<Material, Image> _BackgroundImages =
 			new Dictionary<Material, Image>
 			        {
 				        { Material.Clay, null },
@@ -80,8 +80,10 @@ namespace Catan.ViewModel
 		{
 			get
 			{
-				return Lazy.Init(ref _SelectCommand, () => new ActionCommand(_ => GameTable != null,
-																			 () => GameTable.SelectGameCellCommand.Execute(this)));
+				return Lazy.Init(ref _SelectCommand,
+					() => new ActionCommand(
+						_ => GameTable != null,
+						() => GameTable.SelectGameCellCommand.Execute(this)));
 			}
 		}
 
@@ -93,12 +95,12 @@ namespace Catan.ViewModel
 			get
 			{
 				return Lazy.Init(ref _BuildRoadCommand,
-								 () => new DelegateCommand<int>(
-									 roadId =>
-									 {
+					() => new DelegateCommand<int>(
+						roadId =>
+						{
 
-									 },
-									 roadId => roadId >= 0 && roadId < 6));
+						},
+						roadId => roadId >= 0 && roadId < 6));
 			}
 		}
 

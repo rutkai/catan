@@ -22,7 +22,6 @@ namespace Catan.ViewModel
 		private Size _TableSize;
 		private DelegateCommand<GameCellContext> _SelectGameCellCommand;
 		private ActionCommand _StepCommand;
-		private TradeContext _TradeContext;
 
 		public GameTableContext()
 			: this(5, 5)
@@ -62,7 +61,7 @@ namespace Catan.ViewModel
 			set
 			{
 				_SelectedGameCell = value;
-				OnPropertyChanged("SelectedGameCell");
+				OnPropertyChanged(() => SelectedGameCell);
 			}
 		}
 
@@ -75,7 +74,7 @@ namespace Catan.ViewModel
 			set
 			{
 				_GameCells = value;
-				OnPropertyChanged("GameCells");
+				OnPropertyChanged(() => GameCells);
 			}
 		}
 
@@ -88,7 +87,7 @@ namespace Catan.ViewModel
 			set
 			{
 				_TableSize = value;
-				OnPropertyChanged("TableSize");
+				OnPropertyChanged(() => TableSize);
 			}
 		}
 
@@ -115,8 +114,7 @@ namespace Catan.ViewModel
 					() =>
 					{
 						GameController.Instance.Step();
-						OnPropertyChanged("CurrentPlayer");
-						OnPropertyChanged("TradeContext");
+						OnPropertyChanged(() => CurrentPlayer, () => TradeContext);
 					}));
 			}
 		}

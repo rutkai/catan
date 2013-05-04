@@ -152,8 +152,8 @@
 				</Grid>
 
 				<Grid x:Name="BuildTownState"
-							ShowGridLines="True"
-							Visibility="Hidden">
+							ShowGridLines="False"
+							Visibility="Visible">
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />

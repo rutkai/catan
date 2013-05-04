@@ -12,23 +12,18 @@ namespace Catan.ViewModel.Converters
 	{
 		string Convert(Material material, Type targetType, object parameter, CultureInfo culture)
 		{
-			switch(material)
+			switch (material)
 			{
 				case Material.Wood:
 					return "Fa";
-					break;
 				case Material.Clay:
 					return "Agyag";
-					break;
 				case Material.Iron:
 					return "Vas";
-					break;
 				case Material.Wheat:
 					return "Búza";
-					break;
 				case Material.Wool:
 					return "Gyapjú";
-					break;
 				default:
 					throw new ArgumentOutOfRangeException("material");
 			}

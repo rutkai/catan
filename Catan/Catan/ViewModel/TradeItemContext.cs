@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Catan.Common;
 using Catan.Model;
@@ -12,7 +13,8 @@ namespace Catan.ViewModel
 	/// </summary>
 	public class TradeItemContext : ViewModelBase
 	{
-		private DelegateCommand<int> _BuyCommand;
+		private DelegateCommand<int?> _BuyCommand;
+		private string _Message;
 		public TradeItem TradeItem { get; protected set; }
 		public TradeContext TradeContext { get; protected set; }
 
@@ -31,9 +33,11 @@ namespace Catan.ViewModel
 			set
 			{
 				TradeItem.Quantity = value;
-				OnPropertyChanged("Quantity");
+				OnPropertyChanged(() => Quantity);
 			}
 		}
+
+		public int AvailableQuantity { get; set; }
 
 		public Material Material
 		{
@@ -41,7 +45,7 @@ namespace Catan.ViewModel
 			set
 			{
 				TradeItem.Material = value;
-				OnPropertyChanged("Material");
+				OnPropertyChanged(() => Material);
 			}
 		}
 
@@ -51,7 +55,7 @@ namespace Catan.ViewModel
 			set
 			{
 				TradeItem.Price = value;
-				OnPropertyChanged("Price");
+				OnPropertyChanged(() => Price);
 			}
 		}
 
@@ -61,20 +65,55 @@ namespace Catan.ViewModel
 			set
 			{
 				TradeItem.Player = value;
-				OnPropertyChanged("Player");
+				OnPropertyChanged(() => Player);
 			}
 		}
 
-		public DelegateCommand<int> BuyCommand
+		public string Message
+		{
+			get { return _Message; }
+			set
+			{
+				_Message = value;
+				OnPropertyChanged(() => Message);
+			}
+		}
+
+		/// <summary>
+		/// Vásárlás parancs
+		/// </summary>
+		public DelegateCommand<int?> BuyCommand
 		{
 			get
 			{
 				return Lazy.Init(ref _BuyCommand,
-						() => new DelegateCommand<int>(
+						() => new DelegateCommand<int?>(
 							quantity =>
 							{
-								Quantity -= quantity;
-							}
+								if (quantity.HasValue)
+								{
+									if (Price * quantity.Value > TradeContext.GameTableContext.CurrentPlayer.Gold)
+										Message = "Nincs elég aranyad megvásárolni!";
+									else
+									{
+										var tradePrice = Price * quantity.Value;
+										Quantity -= quantity.Value;
+										if (Player != null)
+										{
+											Player.Gold += tradePrice;
+											TradeContext.GameTableContext.CurrentPlayer.Gold -= tradePrice;
+										}
+									}
+								}
+
+								if (TradeContext != null)
+									TradeContext.Refresh();
+							},
+							quantity => !quantity.HasValue ||
+										(quantity <= Quantity && Quantity > 0 &&
+										TradeContext != null &&
+										TradeContext.GameTableContext != null &&
+										TradeContext.GameTableContext.CurrentPlayer != null)
 						));
 			}
 		}

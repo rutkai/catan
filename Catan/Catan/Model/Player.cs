@@ -56,7 +56,7 @@ namespace Catan.Model
 		public Player()
 			: this("", PlayerColor.Blue)
 		{
-
+			
 		}
 
 		public virtual void Dispose()
@@ -74,7 +74,7 @@ namespace Catan.Model
 			Name = name;
 			Color = color;
 			TradeItems = new Dictionary<Material, TradeItem>();
-			Gold = 0;
+			Gold = 1000;
 		}
 
 		/// <summary>

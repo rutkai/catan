@@ -15,12 +15,12 @@ namespace Catan.ViewModel
 	{
 		private DelegateCommand<object> _AddCommand;
 		private DelegateCommand<Material> _DeleteCommand;
-		protected GameTableContext _GameTableContext;
+		public GameTableContext GameTableContext;
 		protected Player Player { get; set; }
 
 		public TradeContext(GameTableContext context, Player player)
 		{
-			_GameTableContext = context;
+			GameTableContext = context;
 			Player = player;
 
 			if (!Player.TradeItems.ContainsKey(Material.Wool))
@@ -28,7 +28,7 @@ namespace Catan.ViewModel
 									  new TradeItem
 										  {
 											  Material = Material.Wool,
-											  Player = _GameTableContext.CurrentPlayer,
+											  Player = GameTableContext.CurrentPlayer,
 											  Price = 100,
 											  Quantity = 10
 										  });
@@ -52,9 +52,9 @@ namespace Catan.ViewModel
 		/// <summary>
 		/// Kereskedelmi termékek
 		/// </summary>
-		public List<TradeItem> MyTradeItems
+		public IEnumerable<TradeItemContext> MyTradeItems
 		{
-			get { return Player.TradeItems.Values.ToList(); }
+			get { return Player.TradeItems.Values.Select(item => new TradeItemContext(this, item)).ToArray(); }
 		}
 
 		public IEnumerable<TradeItemContext> TradeItems
@@ -62,12 +62,14 @@ namespace Catan.ViewModel
 			get
 			{
 				var items = new List<TradeItem>();
-				foreach (var player in _GameTableContext.Players)
+				foreach (var player in GameTableContext.Players)
 				{
-					if (player != null && player != _GameTableContext.CurrentPlayer)
+					if (player != null && player != GameTableContext.CurrentPlayer)
 						items.AddRange(player.TradeItems.Values);
 				}
-				return items.Select(item => new TradeItemContext(this, item)).ToArray();
+				return items.Where(item => item.Quantity > 0)
+							.Select(item => new TradeItemContext(this, item))
+							.ToArray();
 			}
 		}
 
@@ -85,8 +87,7 @@ namespace Catan.ViewModel
 							if (Player.TradeItems.ContainsKey(material))
 							{
 								Player.TradeItems.Remove(material);
-								OnPropertyChanged("MyTradeItems");
-								OnPropertyChanged("AvailableTradeItems");
+								OnPropertyChanged(() => MyTradeItems, () => AvailableTradeItems);
 							}
 						},
 						_ => Player != null));
@@ -105,12 +106,18 @@ namespace Catan.ViewModel
 								material =>
 								{
 									Player.AddTradeItem(1, 1, (Material)material);
-									OnPropertyChanged("AvailableTradeItems");
-									OnPropertyChanged("MyTradeItems");
+									OnPropertyChanged(() => AvailableTradeItems, () => MyTradeItems);
 								},
 								material => material is Material && AvailableTradeItems.Count() != 0
 							));
 			}
+		}
+
+		public override void Refresh()
+		{
+			base.Refresh();
+			if (GameTableContext != null)
+				GameTableContext.Refresh();
 		}
 	}
 }
