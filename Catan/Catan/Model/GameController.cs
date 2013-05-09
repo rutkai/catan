@@ -11,6 +11,7 @@ namespace Catan.Model
 	/// </summary>
 	public class GameController
 	{
+        private int WinnerScore = 10;
 		private int _CurrentPlayerIndex;
 
 		/// <summary>
@@ -70,5 +71,90 @@ namespace Catan.Model
 			if (Players != null && Players.Count() > 0)
 				_CurrentPlayerIndex = (_CurrentPlayerIndex + 1) % Players.Count();
 		}
+
+        /// <summary>
+        /// Út megépítése
+        /// </summary>
+        public void BuildRoad(int position, Hexagon h)
+        {
+                CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                h.SetRoad(CurrentPlayer, position);
+        }
+
+        /// <summary>
+        /// Település építése
+        /// </summary>
+        public void BuildSettlement(int position, Hexagon h)
+        {
+            Settlement set = h.GetSettlement(position);
+            CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            h.SetTown(set, position);
+        }
+
+        /// <summary>
+        /// Kör vége
+        /// </summary>
+        public void EndTurn()
+        {
+            if (!HasWinner())
+                Step();
+        }
+
+        /// <summary>
+        /// Van-e nyertes
+        /// </summary>
+        public bool HasWinner()
+        {
+            bool isWinner = false;
+            foreach (Player p in Players)
+            {
+                if (p.GetPoints() >= WinnerScore)
+                {
+                    isWinner = true;
+                }
+            }
+            return isWinner;
+        }
+
+        /// <summary>
+        /// Új játék
+        /// </summary>
+        public void NewGame()
+        {
+
+            //Players = newGameWindow.getPlayers();
+            int j = 0;
+            Player[] p = Players.ToArray();
+            /// <summary>
+            /// Fisher–Yates shuffle
+            /// </summary>
+            for (int i = p.Length - 1; i > 0; i--)
+            {
+                j = Convert.ToInt32(new Random(i));
+                Player temp = p[j];
+                p[j] = p[i];
+                p[i] = temp;
+
+            }
+
+            Players = p;
+            PlaceInitial();
+        }
+
+        
+        public void PlaceInitial()
+        {
+           
+        }
+
+        /// <summary>
+        /// Település fejlesztése
+        /// </summary>
+        public void UpgradeSettlement(int position, Hexagon h)
+        {
+            Settlement set = h.GetSettlement(position);
+            CurrentPlayer.UpgradeSettlement(set);
+            h.SetTown(set, position);
+        }
 	}
 }
