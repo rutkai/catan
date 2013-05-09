@@ -20,6 +20,11 @@ namespace Catan.Model
 
         }
 
+        public Hexagon[] getFields()
+        {
+            return Fields;
+        }
+
         public virtual void Dispose()
         {
 

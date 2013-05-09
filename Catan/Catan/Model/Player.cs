@@ -2,6 +2,26 @@ using System;
 using System.Collections.Generic;
 namespace Catan.Model
 {
+    public class NotEnoughMaterialsException : System.Exception
+    {
+        public NotEnoughMaterialsException() : base() { }
+        public NotEnoughMaterialsException(string message) : base(message) { }
+        public NotEnoughMaterialsException(string message, System.Exception inner) : base(message, inner) { }
+
+        protected NotEnoughMaterialsException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) { }
+    }
+
+    public class ItsAlreadyTownException : System.Exception
+    {
+        public ItsAlreadyTownException() : base() { }
+        public ItsAlreadyTownException(string message) : base(message) { }
+        public ItsAlreadyTownException(string message, System.Exception inner) : base(message, inner) { }
+
+        protected ItsAlreadyTownException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) { }
+    }
+
 	/// <summary>
 	/// Játékos osztály. Tartalmazza a játékosok beállításait.
 	/// </summary>
@@ -48,20 +68,17 @@ namespace Catan.Model
 		/// <summary>
 		/// Települések listája.
 		/// </summary>
-		private Settlement[] Settlements;
+		private List<Settlement> Settlements;
 		public Material m_Material;
 		public PlayerColor m_PlayerColor;
 		public Settlement m_Settlement;
 
-		public Player()
-			: this("", PlayerColor.Blue)
+        public Player(string name, PlayerColor pc)
 		{
-			
-		}
-
-		public virtual void Dispose()
-		{
-
+            Name = name;
+            m_PlayerColor = pc;
+            Materials = new Dictionary<Material, int>();
+            Settlements = new List<Settlement>();
 		}
 
 		/// <summary>
@@ -81,9 +98,19 @@ namespace Catan.Model
 		/// Hozzáadja a paramterben lévõ nyersanyagokat a játékos készletéhez.
 		/// </summary>
 		/// <param name="Materials"></param>
-		public void AddMaterials(Dictionary<Material, int> Materials)
+		public void AddMaterials(Dictionary<Material, int> mats)
 		{
-
+            foreach (KeyValuePair<Material, int> ms in mats)
+            {
+                if (Materials.ContainsKey(ms.Key))
+                {
+                    Materials[ms.Key] += ms.Value;
+                }
+                else
+                {
+                    Materials.Add(ms.Key, ms.Value);
+                }
+            }
 		}
 
 		/// <summary>
@@ -92,7 +119,7 @@ namespace Catan.Model
 		/// <param name="Settlement"></param>
 		public void AddSettlement(Settlement Settlement)
 		{
-
+            Settlements.Add(Settlement);
 		}
 
 		public void AddTradeItem(int price, int quantity, Material material)
@@ -126,8 +153,16 @@ namespace Catan.Model
 		/// </summary>
 		public Player BuildRoad()
 		{
-
-			return null;
+            if (Materials[Material.Wood] > 0 && Materials[Material.Clay] > 0)
+            {
+                Materials[Material.Wood]--;
+                Materials[Material.Clay]--;
+            }
+            else
+            {
+                throw new NotEnoughMaterialsException();
+            }
+            return this;
 		}
 
 		/// <summary>
@@ -136,8 +171,20 @@ namespace Catan.Model
 		/// </summary>
 		public Settlement BuildSettlement()
 		{
-
-			return null;
+            Settlement set = new Settlement();
+            if (Materials[Material.Wood] > 0 && Materials[Material.Clay] > 0 && Materials[Material.Wheat] > 0 && Materials[Material.Wool] > 0)
+            {
+                Materials[Material.Wood]--;
+                Materials[Material.Clay]--;
+                Materials[Material.Wheat]--;
+                Materials[Material.Wool]--;
+                Settlements.Add(set);
+            }
+            else
+            {
+                throw new NotEnoughMaterialsException();
+            }
+            return set;
 		}
 
 		/// <summary>
@@ -146,7 +193,21 @@ namespace Catan.Model
 		/// <param name="Dice">Kockadobás</param>
 		public void CollectMaterials(int Dice)
 		{
-
+            foreach (Settlement s in Settlements)
+            {
+                Dictionary<Material, int> settlemetMaterial = s.Produce(Dice);
+                foreach (KeyValuePair<Material, int> ms in settlemetMaterial)
+                {
+                    if (Materials.ContainsKey(ms.Key))
+                    {
+                        Materials[ms.Key] += ms.Value;
+                    }
+                    else
+                    {
+                        Materials.Add(ms.Key, ms.Value);
+                    }
+                }
+            }
 		}
 
 		/// <summary>
@@ -155,7 +216,10 @@ namespace Catan.Model
 		/// </summary>
 		public void CollectStarterMaterials()
 		{
-
+            for (int i = 2; i <= 12; i++)
+            {
+                CollectMaterials(i);
+            }
 		}
 
 		/// <summary>
@@ -163,8 +227,23 @@ namespace Catan.Model
 		/// </summary>
 		public int GetPoints()
 		{
-
-			return 0;
+            int point = 0;
+            foreach (Settlement s in Settlements)
+            {
+                if (s.GetType().ToString() == "Settlement")
+                {
+                    point++;
+                }
+                else
+                {
+                    point += 2;
+                }
+            }
+            if (LongestRoad)
+            {
+                point += 2;
+            }
+            return point;
 		}
 
 		/// <summary>
@@ -172,9 +251,19 @@ namespace Catan.Model
 		/// értéknél kivétel!
 		/// </summary>
 		/// <param name="Materials"></param>
-		public void RemoveMaterials(Dictionary<Material, int> Materials)
+		public void RemoveMaterials(Dictionary<Material, int> mats)
 		{
-
+            foreach (KeyValuePair<Material, int> ms in mats)
+            {
+                if (Materials.ContainsKey(ms.Key) && Materials[ms.Key] >= ms.Value)
+                {
+                    Materials[ms.Key] -= ms.Value;
+                }
+                else
+                {
+                    throw new NotEnoughMaterialsException();
+                }
+            }
 		}
 
 		/// <summary>
@@ -182,7 +271,7 @@ namespace Catan.Model
 		/// </summary>
 		public void SetLongestRoad()
 		{
-
+            LongestRoad = true;
 		}
 
 		/// <summary>
@@ -190,7 +279,7 @@ namespace Catan.Model
 		/// </summary>
 		public void UnsetLongestRoad()
 		{
-
+            LongestRoad = false;
 		}
 
 		/// <summary>
@@ -198,9 +287,27 @@ namespace Catan.Model
 		/// a paraméter már város akkor is. :)
 		/// </summary>
 		/// <param name="Settlement"></param>
-		public void UpgradeSettlement(Settlement Settlement)
+		public void UpgradeSettlement(Settlement settlement)
 		{
-
+            if (settlement.GetType().ToString() != "Town")
+            {
+                if (Materials[Material.Iron] >= 3 && Materials[Material.Wheat] >= 2)
+                {
+                    Materials[Material.Wheat] -= 3;
+                    Materials[Material.Iron] -= 2;
+                    Town town = new Town(settlement.getFields(), this);
+                    Settlements.Remove(settlement);
+                    Settlements.Add(town);
+                }
+                else
+                {
+                    throw new NotEnoughMaterialsException();
+                }
+            }
+            else
+            {
+                throw new ItsAlreadyTownException();
+            }
 		}
 
 	}
