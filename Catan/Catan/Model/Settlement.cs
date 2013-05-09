@@ -15,19 +15,9 @@ namespace Catan.Model
         private Player Owner;
         public Hexagon m_Hexagon;
 
-        public Settlement()
-        {
-
-        }
-
         public Hexagon[] getFields()
         {
             return Fields;
-        }
-
-        public virtual void Dispose()
-        {
-
         }
 
         /// <summary>
@@ -37,7 +27,8 @@ namespace Catan.Model
         /// <param name="Owner">Tulajdonos</param>
         public Settlement(Hexagon[] Fields, Player Owner)
         {
-
+            this.Fields = Fields;
+            this.Owner = Owner;
         }
 
         /// <summary>
