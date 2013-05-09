@@ -73,13 +73,12 @@ namespace Catan.Model
 		public PlayerColor m_PlayerColor;
 		public Settlement m_Settlement;
 
-        public Player(string name, PlayerColor pc)
-		{
-            Name = name;
-            m_PlayerColor = pc;
-            Materials = new Dictionary<Material, int>();
-            Settlements = new List<Settlement>();
-		}
+
+        public Player()
+            : this("", PlayerColor.Blue)
+        {
+
+        }
 
 		/// <summary>
 		/// Konstruktor. Inicializálja az objektumot.
@@ -90,6 +89,8 @@ namespace Catan.Model
 		{
 			Name = name;
 			Color = color;
+            Materials = new Dictionary<Material, int>();
+            Settlements = new List<Settlement>();
 			TradeItems = new Dictionary<Material, TradeItem>();
 			Gold = 1000;
 		}
