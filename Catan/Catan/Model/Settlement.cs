@@ -15,6 +15,11 @@ namespace Catan.Model
         private Player Owner;
         public Hexagon m_Hexagon;
 
+        public Settlement()
+        {
+
+        }
+
         public Hexagon[] getFields()
         {
             return Fields;

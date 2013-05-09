@@ -13,24 +13,14 @@ namespace Catan.Model
 
         }
 
-        ~Town()
-        {
-
-        }
-
-        public override void Dispose()
-        {
-
-        }
-
         /// <summary>
         /// Konstruktor, meghívja az õs konstruktorát.
         /// </summary>
         /// <param name="Fields"></param>
         /// <param name="Owner"></param>
-        public Town(Hexagon[] Fields, Player Owner)
+        public Town(Hexagon[] Fields, Player Owner):base(Fields,Owner)
         {
-
+            
         }
 
         /// <summary>
