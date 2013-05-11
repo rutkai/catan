@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Catan.Common;
 using Catan.Model;
 using Catan.View;
@@ -22,6 +24,7 @@ namespace Catan.ViewModel
 		private Size _TableSize;
 		private DelegateCommand<GameCellContext> _SelectGameCellCommand;
 		private ActionCommand _StepCommand;
+		private ImageSource _BackgroundImage;
 
 		public GameTableContext()
 			: this(5, 5)
@@ -37,6 +40,7 @@ namespace Catan.ViewModel
 
 		public GameTableContext(uint width, uint height)
 		{
+			//_BackgroundImage = new BitmapImage(new Uri("Images//sea_field.png"));
 			_TableSize = new Size(width, height);
 			GameController.Instance.Init(width, new[] { new Player("Gipsz Jakab", PlayerColor.Blue),
 														new Player("Játékos 2", PlayerColor.Red) });
@@ -127,6 +131,16 @@ namespace Catan.ViewModel
 			}
 		}
 
+		public ImageSource BackgroundImage
+		{
+			get { return _BackgroundImage; }
+			set
+			{
+				_BackgroundImage = value;
+				OnPropertyChanged(() => BackgroundImage);
+			}
+		}
+
 		public ActionCommand ShowTradeWindowCommand
 		{
 			get
@@ -135,7 +149,7 @@ namespace Catan.ViewModel
 					() => new ActionCommand(() =>
 						{
 							var tradeControl = new TradeControl();
-							tradeControl.SetBinding(FrameworkElement.DataContextProperty, 
+							tradeControl.SetBinding(FrameworkElement.DataContextProperty,
 								new Binding("TradeContext")
 									{
 										Source = this

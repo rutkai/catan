@@ -38,15 +38,16 @@
 				<RowDefinition Height="*" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
-			<Viewbox Stretch="Uniform">
-				<View:GameCell Margin="10"
-											 DataContext="{Binding SelectedGameCell}"
-											 Content="{Binding Value}">
-					<View:GameCell.Background>
-						<SolidColorBrush Color="{Binding Player.Color, Converter={StaticResource PlayerColorValueConverter}}" />
-					</View:GameCell.Background>
-				</View:GameCell>
-			</Viewbox>
+			<View:GameCell Margin="10"
+										 DataContext="{Binding SelectedGameCell}"
+										 MaxWidth="300"
+										 MaxHeight="300"
+										 Content="{Binding Value}">
+				<View:GameCell.Background>
+					<SolidColorBrush Color="{Binding Player.Color, Converter={StaticResource PlayerColorValueConverter}}" />
+				</View:GameCell.Background>
+			</View:GameCell>
+
 			<UniformGrid Columns="2"
 									 Rows="1"
 									 Grid.Row="1"
@@ -65,10 +66,79 @@
 		</Grid>
 
 		<Border BorderBrush="Black"
+						BorderThickness="2 0 2 2"
+						VerticalAlignment="Top"
+						Padding="10"
+						MinWidth="150"
+						CornerRadius="0 0 10 10"
+						Background="LightGray"
+						DataContext="{Binding SelectedGameCell}"
+						HorizontalAlignment="Center">
+			<Border.Style>
+				<Style TargetType="Border">
+					<Setter Property="Visibility"
+									Value="Visible" />
+					<Style.Triggers>
+						<MultiDataTrigger >
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding BuildTownMode}" Value="False"/>
+								<Condition Binding="{Binding BuildRoadMode}" Value="False"/>
+							</MultiDataTrigger.Conditions>
+							<MultiDataTrigger.Setters>
+								<Setter Property="Visibility"
+												Value="Hidden" />
+							</MultiDataTrigger.Setters>
+						</MultiDataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Border.Style>
+			<Grid>
+				<Grid.Resources>
+					<Style TargetType="TextBlock" x:Key="BaseStyle">
+						<Setter Property="FontSize"
+										Value="20" />
+						<Setter Property="HorizontalAlignment"
+										Value="Center" />
+						<Setter Property="VerticalAlignment"
+										Value="Center" />
+					</Style>
+				</Grid.Resources>
+				<TextBlock>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock" BasedOn="{StaticResource BaseStyle}">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding BuildRoadMode}"
+														 Value="False">
+									<Setter Property="Visibility"
+													Value="Hidden" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+					Útépítő mód
+				</TextBlock>
+				<TextBlock>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock" BasedOn="{StaticResource BaseStyle}">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding BuildTownMode}"
+														 Value="False">
+									<Setter Property="Visibility"
+													Value="Hidden" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+					Városépítő mód
+				</TextBlock>
+			</Grid>
+		</Border>
+
+		<Border BorderBrush="Black"
 						BorderThickness="0 0 2 2"
 						VerticalAlignment="Top"
 						Padding="10"
-						MinWidth="150"										
+						MinWidth="150"
 						CornerRadius="0 0 10 0"
 						Visibility="Visible"
 						Background="LightGray"
@@ -82,14 +152,19 @@
 						<Setter Property="Foreground"
 										Value="Black" />
 						<Setter Property="Margin"
-										Value="0 0 0 10" />
+										Value="0 0 0 2" />
 						<Setter Property="HorizontalAlignment"
 										Value="Left" />
 					</Style>
 				</StackPanel.Resources>
-				<TextBlock Text="Tulajdonos:" />
-				<TextBlock>Nyersanyag: 
-					<TextBlock Text="{Binding Material, Converter={StaticResource MaterialToStringConverter}}" />
+				<TextBlock>
+					Tulajdonos: <TextBlock Text="{Binding Owner}" />
+				</TextBlock>
+				<TextBlock>
+					Nyersanyag: <TextBlock Text="{Binding Material, Converter={StaticResource MaterialToStringConverter}}" />
+				</TextBlock>
+				<TextBlock>
+					Érték: <TextBlock Text="{Binding Value}" />
 				</TextBlock>
 			</StackPanel>
 		</Border>

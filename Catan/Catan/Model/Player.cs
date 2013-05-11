@@ -158,7 +158,7 @@ namespace Catan.Model
             {
                 Materials[Material.Wood]--;
                 Materials[Material.Clay]--;
-            }
+            }					
             else
             {
                 throw new NotEnoughMaterialsException();

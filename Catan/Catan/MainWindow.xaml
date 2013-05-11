@@ -46,8 +46,21 @@
 										Command="{Binding SelectCommand}">
 							<Button.Style>
 								<Style TargetType="Button">
-									<Setter Property="Background"
-													Value="Red" />
+									<Setter Property="VerticalContentAlignment"
+													Value="Center" />
+									<Setter Property="HorizontalContentAlignment"
+													Value="Center" />
+									<Setter Property="Foreground"
+													Value="White" />
+									<Setter Property="FontSize"
+													Value="25" />
+									<Setter Property="FontWeight"
+													Value="Bold" />
+									<Setter Property="Background">
+										<Setter.Value>
+											<ImageBrush ImageSource="{Binding BackgroundImage}" />
+										</Setter.Value>
+									</Setter>
 								</Style>
 
 							</Button.Style>
@@ -112,7 +125,7 @@
 					</Style>
 				</StackPanel.Resources>
 				<TextBlock Text="{Binding CurrentPlayer.Name}" />
-				<TextBlock>Arany: <TextBlock Text="{Binding CurrentPlayer.Gold}"/></TextBlock>
+				<TextBlock>Arany: <TextBlock Text="{Binding CurrentPlayer.Gold}" /></TextBlock>
 
 				<Button Command="{Binding ShowTradeWindowCommand}">
 					Kereskedelem

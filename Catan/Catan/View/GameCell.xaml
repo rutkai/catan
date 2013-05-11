@@ -146,11 +146,13 @@
 				<Grid x:Name="DefaultState"
 							Visibility="Visible">
 
+					<Ellipse Fill="Indigo" Margin="20" />
 					<Label Content="{TemplateBinding Content}"
 								 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
 								 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
 								 FontFamily="{TemplateBinding FontFamily}"
 								 FontSize="{TemplateBinding FontSize}"
+								 Foreground="{TemplateBinding Foreground}"
 								 VerticalAlignment="Center"
 								 HorizontalAlignment="Center" />
 
@@ -248,41 +250,99 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 
+					<Grid.Resources>
+						<Style TargetType="Button">
+							<Setter Property="ToolTip"
+											Value="Építsd ide az utat!" />
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="Button">
+										<Border BorderBrush="Green"
+														BorderThickness="3"
+														CornerRadius="4">
+
+											<Border.Style>
+												<Style TargetType="Border">
+													<Setter Property="Background">
+														<Setter.Value>
+															<SolidColorBrush Color="Green"
+																							 Opacity="0.75" />
+														</Setter.Value>
+													</Setter>
+													<Style.Triggers>
+														<Trigger Property="IsMouseOver"
+																		 Value="True">
+															<Setter Property="Background">
+																<Setter.Value>
+																	<SolidColorBrush Color="Green"
+																									 Opacity="1" />
+																</Setter.Value>
+															</Setter>
+														</Trigger>
+													</Style.Triggers>
+												</Style>
+											</Border.Style>
+
+											<Label Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+														 HorizontalAlignment="Center"
+														 HorizontalContentAlignment="Center"
+														 VerticalContentAlignment="Center"
+														 FontSize="20"
+														 VerticalAlignment="Center" />
+										</Border>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</Grid.Resources>
+
 					<Button Content="1"
 									Grid.Column="0"
 									Grid.Row="0"
 									HorizontalAlignment="Stretch"
-									VerticalAlignment="Stretch" />
+									VerticalAlignment="Stretch"
+									Command="{Binding BuildRoadCommand}"
+									CommandParameter="1" />
 
 					<Button Content="2"
 									Grid.Column="1"
 									Grid.Row="0"
 									HorizontalAlignment="Stretch"
-									VerticalAlignment="Stretch" />
+									VerticalAlignment="Stretch"
+									Command="{Binding BuildRoadCommand}"
+									CommandParameter="2" />
 
 					<Button Content="3"
 									Grid.Column="2"
 									Grid.Row="0"
 									HorizontalAlignment="Stretch"
-									VerticalAlignment="Stretch" />
+									VerticalAlignment="Stretch"
+									Command="{Binding BuildRoadCommand}"
+									CommandParameter="3" />
 
 					<Button Content="4"
 									Grid.Column="0"
 									Grid.Row="1"
 									HorizontalAlignment="Stretch"
-									VerticalAlignment="Stretch" />
+									VerticalAlignment="Stretch"
+									Command="{Binding BuildRoadCommand}"
+									CommandParameter="4" />
 
 					<Button Content="5"
 									Grid.Column="1"
 									Grid.Row="1"
 									HorizontalAlignment="Stretch"
-									VerticalAlignment="Stretch" />
+									VerticalAlignment="Stretch"
+									Command="{Binding BuildRoadCommand}"
+									CommandParameter="5" />
 
 					<Button Content="6"
 									Grid.Column="2"
 									Grid.Row="1"
 									HorizontalAlignment="Stretch"
-									VerticalAlignment="Stretch" />
+									VerticalAlignment="Stretch"
+									Command="{Binding BuildRoadCommand}"
+									CommandParameter="6" />
 
 				</Grid>
 

@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Catan.Common;
 using Catan.Model;
 
@@ -14,7 +18,6 @@ namespace Catan.ViewModel
 	public class GameCellContext : ViewModelBase
 	{
 		private ActionCommand _SelectCommand;
-		private Image _BackgroundImage;
 		private DelegateCommand<string> _BuildRoadCommand;
 		private DelegateCommand<string> _BuildTownCommand;
 		private Player _Player;
@@ -24,15 +27,34 @@ namespace Catan.ViewModel
 		private bool _BuildTownMode;
 		private bool _BuildRoadMode;
 
-		private static Dictionary<Material, Image> _BackgroundImages =
-			new Dictionary<Material, Image>
-			        {
-				        { Material.Clay, null },
-				        { Material.Iron, null },
-				        { Material.Wheat, null },
-						{ Material.Wood, null },
-						{ Material.Wool, null },
-			        };
+		private static readonly Dictionary<Material, ImageSource> _BackgroundImages;
+
+
+		private static Dictionary<Material, ImageSource> InitImages()
+		{
+			var dictionary = new Dictionary<Material, ImageSource>();
+
+			foreach (var key in new[] { Material.Clay, 
+										Material.Iron, 
+										Material.Wheat,
+										Material.Wood, 
+										Material.Wool })
+			{
+				var filename = "Images//" + key.ToString().ToLower() + "_field.png";
+				if (File.Exists(filename))
+				{
+					BitmapImage bmp = new BitmapImage(new Uri(filename,
+															  UriKind.Relative));
+					dictionary.Add(key, bmp);
+				}
+			}
+			return dictionary;
+		}
+
+		static GameCellContext()
+		{
+			_BackgroundImages = InitImages();
+		}
 
 		public GameCellContext(GameTableContext gameTable, Hexagon hexagon)
 		{
@@ -81,14 +103,14 @@ namespace Catan.ViewModel
 		/// <summary>
 		/// Játékcella háttérképe
 		/// </summary>
-		public Image BackgroundImage
+		public ImageSource BackgroundImage
 		{
 			get
 			{
 				if (_Hexagon == null)
 					throw new Exception("Nem lehet null a Hexagon!");
 
-				return _BackgroundImages[_Hexagon.Material];
+				return _BackgroundImages[Material];
 			}
 		}
 
