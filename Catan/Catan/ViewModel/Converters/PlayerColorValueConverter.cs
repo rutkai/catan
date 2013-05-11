@@ -34,16 +34,12 @@ namespace Catan.ViewModel.Converters
 			{
 				case PlayerColor.Blue:
 					return Colors.Blue;
-					break;
 				case PlayerColor.Red:
 					return Colors.Red;
-					break;
 				case PlayerColor.Green:
 					return Colors.Green;
-					break;
 				case PlayerColor.Orange:
 					return Colors.Orange;
-					break;
 				default:
 					throw new ArgumentOutOfRangeException("value", "Nincs ilyen szín definiálva!");
 			}

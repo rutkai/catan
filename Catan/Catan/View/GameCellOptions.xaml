@@ -4,9 +4,14 @@
 						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 						 xmlns:View="clr-namespace:Catan.View"
+						 xmlns:Converters="clr-namespace:Catan.ViewModel.Converters"
 						 mc:Ignorable="d"
 						 d:DesignHeight="300"
 						 d:DesignWidth="300">
+	<UserControl.Resources>
+		<Converters:PlayerColorValueConverter x:Key="PlayerColorValueConverter" />
+		<Converters:MaterialToStringConverter x:Key="MaterialToStringConverter" />
+	</UserControl.Resources>
 	<Grid x:Name="PART_ShowGameCellOptions">
 		<Button>
 			<Button.Style>
@@ -35,17 +40,59 @@
 			</Grid.RowDefinitions>
 			<Viewbox Stretch="Uniform">
 				<View:GameCell Margin="10"
-											 Content="{Binding SelectedGameCell.Value}"
-											 Background="Red" />
+											 DataContext="{Binding SelectedGameCell}"
+											 Content="{Binding Value}">
+					<View:GameCell.Background>
+						<SolidColorBrush Color="{Binding Player.Color, Converter={StaticResource PlayerColorValueConverter}}" />
+					</View:GameCell.Background>
+				</View:GameCell>
 			</Viewbox>
 			<UniformGrid Columns="2"
 									 Rows="1"
 									 Grid.Row="1"
 									 Margin="30">
-				<Button Margin="0 0 10 0">Út építése</Button>
-				<Button Margin="10 0 0 0">Falu építése</Button>
+				<ToggleButton Margin="0 0 10 0"
+											IsThreeState="False"
+											IsChecked="{Binding SelectedGameCell.BuildRoadMode}">
+					Út építése
+				</ToggleButton>
+				<ToggleButton Margin="10 0 0 0"
+											IsThreeState="False"
+											IsChecked="{Binding SelectedGameCell.BuildTownMode}">
+					Falu építése
+				</ToggleButton>
 			</UniformGrid>
 		</Grid>
+
+		<Border BorderBrush="Black"
+						BorderThickness="0 0 2 2"
+						VerticalAlignment="Top"
+						Padding="10"
+						MinWidth="150"										
+						CornerRadius="0 0 10 0"
+						Visibility="Visible"
+						Background="LightGray"
+						DataContext="{Binding SelectedGameCell}"
+						HorizontalAlignment="Left">
+			<StackPanel>
+				<StackPanel.Resources>
+					<Style TargetType="TextBlock">
+						<Setter Property="FontWeight"
+										Value="Bold" />
+						<Setter Property="Foreground"
+										Value="Black" />
+						<Setter Property="Margin"
+										Value="0 0 0 10" />
+						<Setter Property="HorizontalAlignment"
+										Value="Left" />
+					</Style>
+				</StackPanel.Resources>
+				<TextBlock Text="Tulajdonos:" />
+				<TextBlock>Nyersanyag: 
+					<TextBlock Text="{Binding Material, Converter={StaticResource MaterialToStringConverter}}" />
+				</TextBlock>
+			</StackPanel>
+		</Border>
 
 	</Grid>
 </UserControl>

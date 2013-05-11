@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Catan.Model;
 using Catan.ViewModel;
 
 namespace Catan
@@ -22,14 +23,14 @@ namespace Catan
 		{
 			InitializeComponent();
 
-			var context = new GameTableContext() {TableSize = new Size(2, 2)};
+			var context = new GameTableContext() { TableSize = new Size(2, 2) };
 
 			context.GameCells = new List<GameCellContext>()
 				                    {
-										new GameCellContext(context) { Value = 1},
-										new GameCellContext(context) { Value = 2},
-										new GameCellContext(context) { Value = 3},
-										new GameCellContext(context) { Value = 4},
+										new GameCellContext(context, new Hexagon(10, Material.Iron)) { Value = 1},
+										new GameCellContext(context, new Hexagon(10, Material.Wheat)) { Value = 2},
+										new GameCellContext(context, new Hexagon(10, Material.Wood)) { Value = 3},
+										new GameCellContext(context, new Hexagon(10, Material.Wool)) { Value = 4},
 				                    };
 
 			DataContext = context;

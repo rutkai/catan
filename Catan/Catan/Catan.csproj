@@ -70,6 +70,8 @@
     <Compile Include="Model\TradeItem.cs" />
     <Compile Include="ViewModel\Converters\MaterialToStringConverter.cs" />
     <Compile Include="ViewModel\Converters\PlayerColorValueConverter.cs" />
+    <Compile Include="ViewModel\Converters\StringToInteger.cs" />
+    <Compile Include="ViewModel\Converters\ValueConverter.cs" />
     <Compile Include="ViewModel\TradeContext.cs" />
     <Compile Include="ViewModel\TradeItemContext.cs" />
     <Compile Include="View\GameCellOptions.xaml.cs">
