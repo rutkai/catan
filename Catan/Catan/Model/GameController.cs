@@ -56,7 +56,7 @@ namespace Catan.Model
 			var _players = players as List<Player> ?? players.ToList();
 
 			if (!_players.Any())
-				throw new Exception("Legalább egy játékos meg kell adni!");
+				throw new Exception("Legalább egy játékost meg kell adni!");
 
 			Players = _players;
 			_CurrentPlayerIndex = 0;

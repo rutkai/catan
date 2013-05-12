@@ -1,8 +1,14 @@
 ﻿<Window x:Class="Catan.View.NewGameWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="Új játék kezdése" Height="300" Width="350">
+        xmlns:Converters="clr-namespace:Catan.ViewModel.Converters"
+        mc:Ignorable="d"
+        Height="300"
+        Width="350"
+        Title="Új játék kezdése">
     <Window.Resources>
         <Style TargetType="{x:Type Label}">
             <Setter Property="FontSize" Value="14" />
@@ -33,16 +39,15 @@
         </Grid.RowDefinitions>
         
         <Label Name="lblPlayers" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Játékosok: </Label>
-        <xctk:CheckListBox x:Name="clbPlayers" Grid.Column="1" Grid.Row="0" ItemSelectionChanged="clbPlayers_ItemSelectionChanged" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" BorderBrush="{x:Null}" />
+        <xctk:CheckListBox x:Name="clbPlayers" Grid.Column="1" Grid.Row="0" SelectedItemsOverride="{Binding SelectedPlayers}" SelectedValue="{Binding SelectedPlayerValues}" ItemsSource="{Binding PlayerColors}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" BorderBrush="{x:Null}" />
         <Label Name="lblPlayerName1" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Kék játékos neve:</Label>
         <Label Name="lblPlayerName2" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Piros játékos neve:</Label>
-        <Label Name="lblPlayerName3" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Fehér játékos neve:</Label>
+        <Label Name="lblPlayerName3" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Zöld játékos neve:</Label>
         <Label Name="lblPlayerName4" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Narancs játékos neve:</Label>
-        <TextBox Name="txtPlayerName1" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" IsEnabled="False" VerticalAlignment="Center" />
-        <TextBox Name="txtPlayerName2" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" IsEnabled="False" VerticalAlignment="Center" />
-        <TextBox Name="txtPlayerName3" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" IsEnabled="False" VerticalAlignment="Center" />
-        <TextBox Name="txtPlayerName4" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" IsEnabled="False" VerticalAlignment="Center" />
-        <Button Name="btnCancel" Grid.Column="1" Grid.Row="5" Click="btnCancel_Click">Mégse</Button>
-        <Button Name="btnNewGame" Grid.Column="2" Grid.Row="5" Click="btnNewGame_Click">Új játék</Button>
+        <TextBox Name="txtPlayerName1" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[0].Name}" IsEnabled="{Binding EnabledPlayers[0]}" />
+        <TextBox Name="txtPlayerName2" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[1].Name}" IsEnabled="{Binding EnabledPlayers[1]}" />
+        <TextBox Name="txtPlayerName3" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[2].Name}" IsEnabled="{Binding EnabledPlayers[2]}" />
+        <TextBox Name="txtPlayerName4" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[3].Name}" IsEnabled="{Binding EnabledPlayers[3]}" />
+        <Button Name="btnNewGame" Grid.Column="2" Grid.Row="5" Command="{Binding NewGameCommand}">Új játék</Button>
     </Grid>
 </Window>

@@ -123,8 +123,12 @@
 						<Setter Property="HorizontalAlignment"
 										Value="Center" />
 					</Style>
-				</StackPanel.Resources>
-				<TextBlock Text="{Binding CurrentPlayer.Name}" />
+                </StackPanel.Resources>
+                <Button Command="{Binding ShowNewGameWindowCommand}">
+                    Új játék
+                </Button>
+                
+                <TextBlock Text="{Binding CurrentPlayer.Name}" />
 				<TextBlock>Arany: <TextBlock Text="{Binding CurrentPlayer.Gold}" /></TextBlock>
 
 				<Button Command="{Binding ShowTradeWindowCommand}">
