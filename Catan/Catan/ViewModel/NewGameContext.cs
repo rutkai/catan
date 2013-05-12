@@ -7,6 +7,7 @@ using System.Windows;
 using Catan.Common;
 using Catan.Model;
 using Catan.View;
+using Catan.IFace;
 using Catan.ViewModel.Converters;
 
 namespace Catan.ViewModel {
@@ -15,10 +16,12 @@ namespace Catan.ViewModel {
 		private List<string> _SelectedPlayers;
 		public GameTableContext GameTableContext;
 		protected Size tableSize;
+		protected IWindowService WindowService;
 
-		public NewGameContext(GameTableContext context, Size size) {
+		public NewGameContext(GameTableContext context, Size size, IWindowService service) {
 			GameTableContext = context;
 			tableSize = size;
+			WindowService = service;
 			_SelectedPlayers = new List<string>();
 
 			Players = new Dictionary<PlayerColor, Player>();
@@ -42,7 +45,7 @@ namespace Catan.ViewModel {
 		public IEnumerable<PlayerColor> PlayerColors {
 			get {
 				return new[] {
-								PlayerColor.Blue, PlayerColor.Green, PlayerColor.Orange, PlayerColor.Red
+								PlayerColor.Blue, PlayerColor.Red, PlayerColor.Green, PlayerColor.Orange
 				};
 			}
 		}
@@ -73,11 +76,16 @@ namespace Catan.ViewModel {
 
 							if (players.Count > 1) {
 								GameController.Instance.Init((uint)tableSize.Width, players);
+								CloseCommand();
 							} else {
 								MessageBox.Show("Legalább két játékos kell!");
 							}
 						}));
 			}
+		}
+
+		protected void CloseCommand() {
+			WindowService.Close();
 		}
 
 	}

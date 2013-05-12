@@ -132,12 +132,6 @@ namespace Catan.ViewModel
 			}
 		}
 
-		public NewGameContext NewGameContext {
-			get {
-				return new NewGameContext(this, _TableSize);
-			}
-		}
-
 		public ImageSource BackgroundImage
 		{
 			get { return _BackgroundImage; }
@@ -171,10 +165,7 @@ namespace Catan.ViewModel
 				return Lazy.Init(ref _ShowNewGameWindowCommand,
 					() => new ActionCommand(() => {
 							var newGameControl = new NewGameWindow();
-							newGameControl.SetBinding(FrameworkElement.DataContextProperty,
-								new Binding("NewGameContext") {
-									Source = this
-								});
+							newGameControl.DataContext = new NewGameContext(this, _TableSize, new WPFWindowService(newGameControl));
 							newGameControl.ShowDialog();
 						}));
 			}
