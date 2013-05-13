@@ -23,15 +23,27 @@ namespace Catan
 		{
 			InitializeComponent();
 
-			var context = new GameTableContext() { TableSize = new Size(2, 2) };
+			var context = new GameTableContext(7);
 
-			context.GameCells = new List<GameCellContext>()
+			/*context.GameCells = new List<GameCellContext>()
 				                    {
 										new GameCellContext(context, new Hexagon(10, Material.Iron)) { Value = 1},
 										new GameCellContext(context, new Hexagon(10, Material.Wheat)) { Value = 2},
 										new GameCellContext(context, new Hexagon(10, Material.Wood)) { Value = 3},
 										new GameCellContext(context, new Hexagon(10, Material.Wool)) { Value = 4},
-				                    };
+				                    };*/
+
+			context.GameCells = new List<GameCellContext>();
+
+			for (int i = 0; i < 7; i++)
+			{
+				for (int j = 0; j < 7; j++)
+				{
+					(context.GameCells as List<GameCellContext>)
+						.Add(new GameCellContext(context, 
+							 new Hexagon(10, Material.Iron)) { Value = i });
+				}
+			}
 
 			DataContext = context;
 		}

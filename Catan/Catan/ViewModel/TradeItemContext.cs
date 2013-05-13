@@ -27,6 +27,9 @@ namespace Catan.ViewModel
 			TradeContext = context;
 		}
 
+		/// <summary>
+		/// Mennyiség
+		/// </summary>
 		public int Quantity
 		{
 			get { return TradeItem.Quantity; }
@@ -37,8 +40,14 @@ namespace Catan.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Elérhető mennyiség
+		/// </summary>
 		public int AvailableQuantity { get; set; }
 
+		/// <summary>
+		/// Nyersanyag
+		/// </summary>
 		public Material Material
 		{
 			get { return TradeItem.Material; }
@@ -49,6 +58,9 @@ namespace Catan.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Ára
+		/// </summary>
 		public int Price
 		{
 			get { return TradeItem.Price; }

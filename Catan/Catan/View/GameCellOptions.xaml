@@ -43,8 +43,22 @@
 										 MaxWidth="300"
 										 MaxHeight="300"
 										 Content="{Binding Value}">
+				<View:GameCell.Style>
+					<Style TargetType="View:GameCell">
+						<Setter Property="VerticalContentAlignment"
+										Value="Center" />
+						<Setter Property="HorizontalContentAlignment"
+										Value="Center" />
+						<Setter Property="Foreground"
+										Value="White" />
+						<Setter Property="FontSize"
+										Value="25" />
+						<Setter Property="FontWeight"
+										Value="Bold" />
+					</Style>
+				</View:GameCell.Style>
 				<View:GameCell.Background>
-					<SolidColorBrush Color="{Binding Player.Color, Converter={StaticResource PlayerColorValueConverter}}" />
+					<ImageBrush ImageSource="{Binding BackgroundImage}" />
 				</View:GameCell.Background>
 			</View:GameCell>
 
@@ -52,6 +66,20 @@
 									 Rows="1"
 									 Grid.Row="1"
 									 Margin="30">
+				<UniformGrid.Resources>
+					<Style TargetType="ToggleButton">
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="ToggleButton">
+									<Border Background="LightGray"
+													BorderBrush="Black">
+										<ContentPresenter />
+									</Border>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</UniformGrid.Resources>
 				<ToggleButton Margin="0 0 10 0"
 											IsThreeState="False"
 											IsChecked="{Binding SelectedGameCell.BuildRoadMode}">
@@ -79,10 +107,12 @@
 					<Setter Property="Visibility"
 									Value="Visible" />
 					<Style.Triggers>
-						<MultiDataTrigger >
+						<MultiDataTrigger>
 							<MultiDataTrigger.Conditions>
-								<Condition Binding="{Binding BuildTownMode}" Value="False"/>
-								<Condition Binding="{Binding BuildRoadMode}" Value="False"/>
+								<Condition Binding="{Binding BuildTownMode}"
+													 Value="False" />
+								<Condition Binding="{Binding BuildRoadMode}"
+													 Value="False" />
 							</MultiDataTrigger.Conditions>
 							<MultiDataTrigger.Setters>
 								<Setter Property="Visibility"
@@ -94,7 +124,8 @@
 			</Border.Style>
 			<Grid>
 				<Grid.Resources>
-					<Style TargetType="TextBlock" x:Key="BaseStyle">
+					<Style TargetType="TextBlock"
+								 x:Key="BaseStyle">
 						<Setter Property="FontSize"
 										Value="20" />
 						<Setter Property="HorizontalAlignment"
@@ -105,7 +136,8 @@
 				</Grid.Resources>
 				<TextBlock>
 					<TextBlock.Style>
-						<Style TargetType="TextBlock" BasedOn="{StaticResource BaseStyle}">
+						<Style TargetType="TextBlock"
+									 BasedOn="{StaticResource BaseStyle}">
 							<Style.Triggers>
 								<DataTrigger Binding="{Binding BuildRoadMode}"
 														 Value="False">
@@ -119,7 +151,8 @@
 				</TextBlock>
 				<TextBlock>
 					<TextBlock.Style>
-						<Style TargetType="TextBlock" BasedOn="{StaticResource BaseStyle}">
+						<Style TargetType="TextBlock"
+									 BasedOn="{StaticResource BaseStyle}">
 							<Style.Triggers>
 								<DataTrigger Binding="{Binding BuildTownMode}"
 														 Value="False">

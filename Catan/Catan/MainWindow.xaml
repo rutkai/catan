@@ -61,8 +61,58 @@
 											<ImageBrush ImageSource="{Binding BackgroundImage}" />
 										</Setter.Value>
 									</Setter>
+									<Setter Property="ContextMenu">
+										<Setter.Value>
+											<ContextMenu>
+												<ContextMenu.Resources>
+													<SolidColorBrush Color="DarkBlue"
+																					 x:Key="ColorResource" />
+													<Style TargetType="MenuItem">
+														<Setter Property="Template">
+															<Setter.Value>
+																<ControlTemplate TargetType="MenuItem">
+																	<Border x:Name="PART_BackgroundBorder">
+																		<TextBlock Padding="10 5 20 5"
+																							 x:Name="PART_Content"
+																							 Text="{TemplateBinding Header}" />
+																	</Border>
+																	<ControlTemplate.Triggers>
+																		<Trigger Property="IsMouseOver"
+																						 Value="True">
+																			<Setter Property="Background"
+																							TargetName="PART_BackgroundBorder"
+																							Value="{StaticResource ColorResource}" />
+																			<Setter TargetName="PART_Content"
+																							Property="Foreground"
+																							Value="White" />
+																			<Setter TargetName="PART_Content"
+																							Property="FontWeight"
+																							Value="Bold" />
+																		</Trigger>
+																	</ControlTemplate.Triggers>
+																</ControlTemplate>
+															</Setter.Value>
+														</Setter>
+													</Style>
+												</ContextMenu.Resources>
+												<ContextMenu.Template>
+													<ControlTemplate>
+														<Border CornerRadius="4"
+																		Background="White"
+																		BorderBrush="{StaticResource ColorResource}"
+																		BorderThickness="2">
+															<ItemsPresenter />
+														</Border>
+													</ControlTemplate>
+												</ContextMenu.Template>
+												<MenuItem Header="Város építése"
+																	ToolTip="Kattints ide, ha várost szeretnél építeni!" />
+												<MenuItem Header="Út építése"
+																	ToolTip="Kattints ide, ha utat szeretnél építeni!" />
+											</ContextMenu>
+										</Setter.Value>
+									</Setter>
 								</Style>
-
 							</Button.Style>
 							<Button.Template>
 								<ControlTemplate TargetType="Button">
@@ -90,7 +140,6 @@
 												</Style.Triggers>
 											</Style>
 										</View:GameCell.Style>
-
 									</View:GameCell>
 								</ControlTemplate>
 							</Button.Template>

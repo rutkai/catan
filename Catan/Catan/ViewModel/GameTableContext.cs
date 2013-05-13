@@ -39,7 +39,10 @@ namespace Catan.ViewModel
 
 		}
 
-		public GameTableContext(uint width, uint height)
+		/// <summary>
+		/// Konstruktor, ami megkapja paraméteréül a tábla méretét
+		/// </summary>
+		private GameTableContext(uint width, uint height)
 		{
 			//_BackgroundImage = new BitmapImage(new Uri("Images//sea_field.png"));
 			_TableSize = new Size(width, height);
@@ -47,11 +50,17 @@ namespace Catan.ViewModel
 														new Player("Játékos 2", PlayerColor.Red) });
 		}
 
+		/// <summary>
+		/// Aktuális játékos
+		/// </summary>
 		public Player CurrentPlayer
 		{
 			get { return GameController.Instance.CurrentPlayer; }
 		}
 
+		/// <summary>
+		/// Játékosokat reprezentáló tömb
+		/// </summary>
 		public IEnumerable<Player> Players
 		{
 			get { return GameController.Instance.Players; }
@@ -104,7 +113,15 @@ namespace Catan.ViewModel
 			get
 			{
 				return Lazy.Init(ref _SelectGameCellCommand,
-								 () => new DelegateCommand<GameCellContext>(value => SelectedGameCell = value));
+								 () => new DelegateCommand<GameCellContext>(value =>
+								 {
+									 if (SelectedGameCell != null)
+									 {
+										 SelectedGameCell.BuildRoadMode = false;
+										 SelectedGameCell.BuildTownMode = false;
+									 }
+									 SelectedGameCell = value;
+								 }));
 			}
 		}
 
