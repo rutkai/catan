@@ -7,7 +7,6 @@ namespace Catan.Model
     /// </summary>
     public class Settlement
     {
-
         private Hexagon[] Fields;
         /// <summary>
         /// Tulajdonos

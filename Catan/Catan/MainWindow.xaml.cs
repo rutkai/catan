@@ -47,15 +47,24 @@ namespace Catan
 									Material.Iron
 				                };
 
-			for (int i = 0; i < 7; i++)
+            for (var j = 0; j < 7; ++j)
+            {
+                for (var i = 0; i < 7 - Math.Abs(3 - j); ++i)
+                {
+                    (context.GameCells as List<GameCellContext>)
+						.Add(new GameCellContext(context,
+							 new Hexagon(10, materials[random.Next(0, materials.Length)], new Hexid(j,i) )) { Value = random.Next(2, 13) });
+                }
+            }
+			/*for (int i = 0; i < 7; i++)
 			{
 				for (int j = 0; j < 7; j++)
 				{
 					(context.GameCells as List<GameCellContext>)
 						.Add(new GameCellContext(context,
-							 new Hexagon(10, materials[random.Next(0, materials.Length)])) { Value = random.Next(2, 13) });
+							 new Hexagon(10, materials[random.Next(0, materials.Length)], new Hexid(i,j) )) { Value = i*7+j/*random.Next(2, 13) });
 				}
-			}
+			}*/
 
 			NewGameWindow newGameWindow = new NewGameWindow();
 			var newGameContext = new NewGameContext(context, new Size(7, 7), new WPFWindowService(newGameWindow));

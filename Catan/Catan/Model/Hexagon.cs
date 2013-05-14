@@ -3,7 +3,16 @@ using System.Collections.Generic;
 
 namespace Catan.Model
 {
-
+	public struct Hexid
+	{
+		int column;
+		int row;
+		public Hexid(int c, int r)
+		{
+			column = c;
+			row = r;
+		}
+	}
 	/// <summary>
 	/// A térkép alkotóeleme.
 	/// </summary>
@@ -21,6 +30,7 @@ namespace Catan.Model
 			//write property
 			set;
 		}
+
 
 		/// <summary>
 		/// A mezõ nyersanyaga. Csak getter.
@@ -43,6 +53,11 @@ namespace Catan.Model
 			get;
 			//write property
 			set;
+		}
+
+		public virtual void Dispose()
+		{
+
 		}
 
 		/// <summary>
@@ -73,21 +88,27 @@ namespace Catan.Model
 				Neighbours = new List<Hexagon>(neighbours);
 		}
 
-		public virtual void Dispose()
-		{
+		
 
+		public Hexid Id
+		{
+			get;
+			set;
 		}
+
+	   
 
 		/// <summary>
 		/// Konstruktor, inicializálja a hexagont.
 		/// </summary>
 		/// <param name="produceNumber">Mely dobásra termel</param>
 		/// <param name="material">A mezõ nyersanyaga</param>
-		public Hexagon(int produceNumber, Material material)
+		public Hexagon(int produceNumber, Material material, Hexid id)
 			: this(null)
 		{
 			Material = material;
 			ProduceNumber = produceNumber;
+			Id = id;
 		}
 
 		/// <summary>
