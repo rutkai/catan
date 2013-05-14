@@ -64,13 +64,15 @@ namespace Catan.Model
 		/// Ha van út, a gazdája van benne, egyébként null.
 		/// 6 elemû tömb. Elsõ elem 1 óránál, a többi az óramutató járásának megfelelõen.
 		/// </summary>
-		private Player Roads;
+		public Player[] Roads { get; set; }
 		/// <summary>
 		/// Települések a csúcsokon. Ahol nincs ott null.
 		/// 6 elemû tömb, elsõ eleme a 12 óránál található település, a többi az óramutató
 		/// járásának megfelelõen.
 		/// </summary>
 		private Settlement[] Settlements;
+		
+
 
 		public Settlement m_Settlement;
 
@@ -86,6 +88,8 @@ namespace Catan.Model
 				Neighbours = new List<Hexagon>();
 			else
 				Neighbours = new List<Hexagon>(neighbours);
+			Settlements = new Settlement[6];
+			Roads = new Player[6];
 		}
 
 		
@@ -117,7 +121,10 @@ namespace Catan.Model
 		/// <param name="Position"></param>
 		public Player GetRoad(int Position)
 		{
-
+			if (Position >= 0 && Position <= 5)
+			{
+				return Roads[Position];
+			}
 			return null;
 		}
 
@@ -127,7 +134,10 @@ namespace Catan.Model
 		/// <param name="Position"></param>
 		public Settlement GetSettlement(int Position)
 		{
-
+			if (Position >= 0 && Position <= 5)
+			{
+				return Settlements[Position];
+			}
 			return null;
 		}
 
