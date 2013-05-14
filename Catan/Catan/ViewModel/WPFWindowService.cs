@@ -30,5 +30,9 @@ namespace Catan.ViewModel {
 			Window.Close();
 		}
 
+		public void ShowMessageBox(string message, string title)
+		{
+			MessageBox.Show(message, title);
+		}
 	}
 }

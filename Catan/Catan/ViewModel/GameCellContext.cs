@@ -203,11 +203,14 @@ namespace Catan.ViewModel
 							{
 								int result;
 								if (int.TryParse(index, out result))
+								{
 									GameController.Instance.BuildRoad(result, _Hexagon);
+									GameTable.Refresh();
+								}
 							}
 							catch (NotEnoughMaterialsException ex)
 							{
-								MessageBox.Show("Nincs elég nyersanyag!");
+								GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
 							}
 						},
 						index => !string.IsNullOrWhiteSpace(index)));
@@ -236,7 +239,7 @@ namespace Catan.ViewModel
 							}
 							catch (NotEnoughMaterialsException ex)
 							{
-								MessageBox.Show("Nincs elég nyersanyag!");
+								GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
 							}
 						},
 						index => !string.IsNullOrWhiteSpace(index)));

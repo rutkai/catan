@@ -24,7 +24,7 @@ namespace Catan
 		{
 			InitializeComponent();
 
-			var context = new GameTableContext(7);
+			var context = new GameTableContext(7, new WPFWindowService(this));
 
 			/*context.GameCells = new List<GameCellContext>()
 				                    {

@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Catan.Common;
+using Catan.IFace;
 using Catan.Model;
 using Catan.View;
 
@@ -27,14 +28,15 @@ namespace Catan.ViewModel
 		private ActionCommand _StepCommand;
 		private ImageSource _BackgroundImage;
 
-		public GameTableContext()
-			: this(5, 5)
-		{
+		public IFace.IWindowService WindowService { get; set; }
 
+		public GameTableContext(IFace.IWindowService service)
+			: this(5, 5, service)
+		{
 		}
 
-		public GameTableContext(uint size)
-			: this(size, size)
+		public GameTableContext(uint size, IWindowService service)
+			: this(size, size, service)
 		{
 
 		}
@@ -42,12 +44,16 @@ namespace Catan.ViewModel
 		/// <summary>
 		/// Konstruktor, ami megkapja paraméteréül a tábla méretét
 		/// </summary>
-		private GameTableContext(uint width, uint height)
+		private GameTableContext(uint width, uint height, IFace.IWindowService service)
 		{
 			//_BackgroundImage = new BitmapImage(new Uri("Images//sea_field.png"));
 			_TableSize = new Size(width, height);
 			GameController.Instance.Init(width, new[] { new Player("Gipsz Jakab", PlayerColor.Blue),
 														new Player("Játékos 2", PlayerColor.Red) });
+
+			if (service == null)
+				throw new ArgumentNullException("service");
+			WindowService = service;
 		}
 
 		/// <summary>

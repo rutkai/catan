@@ -9,5 +9,6 @@ namespace Catan.IFace {
 	/// </summary>
 	public interface IWindowService {
 		void Close();
+		void ShowMessageBox(string message, string title);
 	}
 }

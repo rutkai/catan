@@ -233,9 +233,6 @@
 					</Style>
 				</StackPanel.Resources>
 				<TextBlock>
-					Tulajdonos: <TextBlock Text="{Binding Owner}" />
-				</TextBlock>
-				<TextBlock>
 					Nyersanyag: <TextBlock Text="{Binding Material, Converter={StaticResource MaterialToStringConverter}}" />
 				</TextBlock>
 				<TextBlock>

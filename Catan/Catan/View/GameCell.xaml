@@ -26,50 +26,93 @@
 								 IsHitTestVisible="False">
 					<Canvas Width="2"
 									Height="1.73">
-						<Canvas.Resources>
-							<Style TargetType="Line">
-								<Setter Property="Stroke"
-												Value="Blue" />
-								<Setter Property="StrokeThickness"
-												Value="0.1" />
-							</Style>
-						</Canvas.Resources>
 
 						<ItemsControl x:Name="RoadItems">
+							<ItemsControl.Resources>
+								<Style TargetType="Line">
+									<Style.Triggers>
+										<Trigger Property="Tag"
+														 Value="{x:Null}">
+											<Setter Property="Visibility"
+															Value="Hidden" />
+										</Trigger>
+									</Style.Triggers>
+									<Setter Property="StrokeThickness"
+													Value="0.1" />
+
+								</Style>
+							</ItemsControl.Resources>
 							<ItemsControl.ItemsPanel>
 								<ItemsPanelTemplate>
 									<Grid />
 								</ItemsPanelTemplate>
 							</ItemsControl.ItemsPanel>
+
 							<Line X1="0"
 										Y1="0.86"
 										X2="0.5"
-										Y2="0" />
+										Y2="0"
+										ToolTip="1"
+										Tag="{Binding Roads[0]}">
+								<Line.Stroke>
+									<SolidColorBrush Color="{Binding Path=Roads[0].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+								</Line.Stroke>
+							</Line>
 
 							<Line X1="0.5"
 										Y1="0"
 										X2="1.5"
-										Y2="0" />
+										Y2="0"
+										ToolTip="2"
+										Tag="{Binding Roads[1]}">
+								<Line.Stroke>
+									<SolidColorBrush Color="{Binding Path=Roads[1].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+								</Line.Stroke>
+							</Line>
 
 							<Line X1="1.5"
 										Y1="0"
 										X2="2"
-										Y2="0.86" />
+										Y2="0.86"
+										ToolTip="3"
+										Tag="{Binding Roads[2]}">
+								<Line.Stroke>
+									<SolidColorBrush Color="{Binding Path=Roads[2].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+								</Line.Stroke>
+							</Line>
 
 							<Line X1="2"
 										Y1="0.86"
 										X2="1.5"
-										Y2="1.73" />
+										Y2="1.73"
+										ToolTip="4"
+										Tag="{Binding Roads[3]}">
+								<Line.Stroke>
+									<SolidColorBrush Color="{Binding Path=Roads[3].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+								</Line.Stroke>
+							</Line>
 
 							<Line X1="1.5"
 										Y1="1.73"
 										X2="0.5"
-										Y2="1.73" />
+										Y2="1.73"
+										ToolTip="5"
+										Tag="{Binding Roads[4]}">
+								<Line.Stroke>
+									<SolidColorBrush Color="{Binding Path=Roads[4].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+								</Line.Stroke>
+							</Line>
 
 							<Line X1="0.5"
 										Y1="1.73"
 										X2="0"
-										Y2="0.86" />
+										Y2="0.86"
+										ToolTip="6"
+										Tag="{Binding Roads[5]}">
+								<Line.Stroke>
+									<SolidColorBrush Color="{Binding Path=Roads[5].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+								</Line.Stroke>
+							</Line>
 						</ItemsControl>
 
 					</Canvas>
@@ -356,7 +399,7 @@
 													<Setter Property="Background">
 														<Setter.Value>
 															<SolidColorBrush Color="Green"
-																							 Opacity="0.75" />
+																							 Opacity="0.66" />
 														</Setter.Value>
 													</Setter>
 													<Style.Triggers>
@@ -392,7 +435,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="1" />
+									CommandParameter="0" />
 
 					<Button Content="2"
 									Grid.Column="1"
@@ -400,7 +443,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="2" />
+									CommandParameter="1" />
 
 					<Button Content="3"
 									Grid.Column="2"
@@ -408,7 +451,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="3" />
+									CommandParameter="2" />
 
 					<Button Content="4"
 									Grid.Column="0"
@@ -416,7 +459,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="4" />
+									CommandParameter="5" />
 
 					<Button Content="5"
 									Grid.Column="1"
@@ -424,7 +467,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="5" />
+									CommandParameter="4" />
 
 					<Button Content="6"
 									Grid.Column="2"
@@ -432,7 +475,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="6" />
+									CommandParameter="3" />
 
 				</Grid>
 
