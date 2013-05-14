@@ -82,6 +82,7 @@ namespace Catan.Model
         {
                 CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 h.SetRoad(CurrentPlayer, position);
+                h.Neighbours[(position + 3) % 6].SetRoad(CurrentPlayer, (position + 3) % 6);
         }
 
         /// <summary>
@@ -92,6 +93,7 @@ namespace Catan.Model
             Settlement set = h.GetSettlement(position);
             CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             h.SetTown(set, position);
+            h.Neighbours[(position + 3) % 6].SetTown(set, (position + 3) % 6);
         }
 
         /// <summary>
@@ -156,6 +158,71 @@ namespace Catan.Model
             Settlement set = h.GetSettlement(position);
             CurrentPlayer.UpgradeSettlement(set);
             h.SetTown(set, position);
+            h.Neighbours[(position + 3) % 6].SetTown(set, (position + 3) % 6);
+        }
+
+        /// <summary>
+        /// Beállítja az összes hexagon szomszédait
+        /// </summary>
+        public void setAllNeighbours()
+        {
+            foreach (Hexagon h in Hexagons)
+            {
+                //0. szomszéd
+                if(h.Id.getRow() == 0)
+                {
+                    h.Neighbours[0] = null;
+                }
+                else
+                {
+                    h.Neighbours[0] = Hexagons.Find(x=>(x.Id.getCol()==h.Id.getCol() && x.Id.getRow()==h.Id.getRow()-1));
+                }
+                //1. szomszéd
+                if (h.Id.getRow() == 0 && h.Id.getCol() >= 3)
+                {
+                    h.Neighbours[1] = null;
+                }
+                else
+                {
+                    h.Neighbours[1] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol()+1 && x.Id.getRow() == h.Id.getRow() - 1));
+                }
+                //2. szomszéd
+                if (h.Id.getCol() == 6 && h.Id.getCol() + h.Id.getRow() == 9)
+                {
+                    h.Neighbours[2] = null;
+                }
+                else
+                {
+                    h.Neighbours[2] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 || x.Id.getRow() == h.Id.getRow()));
+                }
+                //3. szomszéd
+                if (h.Id.getCol()+3 == h.Id.getRow() || h.Id.getCol() + h.Id.getRow() == 9)
+                {
+                    h.Neighbours[3] = null;
+                }
+                else
+                {
+                    h.Neighbours[3] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow()+1));
+                }
+                //4. szomszéd
+                if (h.Id.getCol() + 3 == h.Id.getRow() || h.Id.getCol() == 0)
+                {
+                    h.Neighbours[4] = null;
+                }
+                else
+                {
+                    h.Neighbours[4] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow()));
+                }
+                //5. szomszéd
+                if ((h.Id.getCol() >= 3 && h.Id.getRow() == 0) || h.Id.getCol() == 0)
+                {
+                    h.Neighbours[4] = null;
+                }
+                else
+                {
+                    h.Neighbours[4] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow()-1));
+                }
+            }
         }
 	}
 }
