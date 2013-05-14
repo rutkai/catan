@@ -8,6 +8,9 @@ using Catan.Model;
 
 namespace Catan.ViewModel.Converters
 {
+	/// <summary>
+	/// Nyersanyagot karakterliterállá konvertáló osztály
+	/// </summary>
 	public class MaterialToStringConverter : IValueConverter
 	{
 		string Convert(Material material, Type targetType, object parameter, CultureInfo culture)

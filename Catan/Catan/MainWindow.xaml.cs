@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Catan.Model;
+using Catan.View;
 using Catan.ViewModel;
 
 namespace Catan
@@ -40,10 +41,15 @@ namespace Catan
 				for (int j = 0; j < 7; j++)
 				{
 					(context.GameCells as List<GameCellContext>)
-						.Add(new GameCellContext(context, 
+						.Add(new GameCellContext(context,
 							 new Hexagon(10, Material.Iron)) { Value = i });
 				}
 			}
+
+			NewGameWindow newGameWindow = new NewGameWindow();
+			var newGameContext = new NewGameContext(context, new Size(7, 7), new WPFWindowService(newGameWindow));
+			newGameWindow.DataContext = newGameContext;
+			newGameWindow.ShowDialog();
 
 			DataContext = context;
 		}

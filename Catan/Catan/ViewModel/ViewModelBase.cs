@@ -12,8 +12,14 @@ namespace Catan.ViewModel
 	/// </summary>
 	public abstract class ViewModelBase : INotifyPropertyChanged
 	{
+		/// <summary>
+		/// Tulajdonság értékének megváltozása esetén lefutó esemény
+		/// </summary>
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		/// <summary>
+		/// Tulajdonság értékének megváltoztatását jelző metódus
+		/// </summary>
 		protected ViewModelBase OnPropertyChanged(params Expression<Func<object>>[] expressions)
 		{
 			foreach (var exp in expressions)
@@ -21,6 +27,9 @@ namespace Catan.ViewModel
 			return this;
 		}
 
+		/// <summary>
+		/// Tulajdonság értékének megváltoztatását jelző metódus
+		/// </summary>
 		protected ViewModelBase OnPropertyChanged<TPropertyType>(Expression<Func<TPropertyType>> expression)
 		{
 			var body = expression.Body as MemberExpression;
@@ -30,6 +39,9 @@ namespace Catan.ViewModel
 			return OnPropertyChanged(body.Member.Name);
 		}
 
+		/// <summary>
+		/// Tulajdonság értékének megváltoztatását jelző metódus
+		/// </summary>
 		protected ViewModelBase OnPropertyChanged(params string[] propertyNames)
 		{
 			foreach (var prop in propertyNames)
@@ -37,6 +49,9 @@ namespace Catan.ViewModel
 			return this;
 		}
 
+		/// <summary>
+		/// Tulajdonság értékének megváltoztatását jelző metódus
+		/// </summary>
 		protected virtual ViewModelBase OnPropertyChanged(string propertyName)
 		{
 			PropertyChangedEventHandler handler = PropertyChanged;
@@ -44,6 +59,9 @@ namespace Catan.ViewModel
 			return this;
 		}
 
+		/// <summary>
+		/// Az osztályon belül lévő összes tulajdonság értékének frissítése
+		/// </summary>
 		public virtual void Refresh()
 		{
 			foreach (var propertyName in GetType().GetProperties().Select(prop => prop.Name))

@@ -29,7 +29,9 @@ namespace Catan.ViewModel
 
 		private static readonly Dictionary<Material, ImageSource> _BackgroundImages;
 
-
+		/// <summary>
+		/// Képek inicializálása
+		/// </summary>
 		private static Dictionary<Material, ImageSource> InitImages()
 		{
 			var dictionary = new Dictionary<Material, ImageSource>();
@@ -51,11 +53,17 @@ namespace Catan.ViewModel
 			return dictionary;
 		}
 
+		/// <summary>
+		/// Statikus konstruktor
+		/// </summary>
 		static GameCellContext()
 		{
 			_BackgroundImages = InitImages();
 		}
 
+		/// <summary>
+		/// Konstruktor
+		/// </summary>
 		public GameCellContext(GameTableContext gameTable, Hexagon hexagon)
 		{
 			if (hexagon == null)
@@ -230,6 +238,9 @@ namespace Catan.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Nyersanyag
+		/// </summary>
 		public Material Material
 		{
 			get { return _Hexagon.Material; }

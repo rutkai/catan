@@ -4,6 +4,9 @@ using System.Windows.Data;
 
 namespace Catan.ViewModel.Converters
 {
+	/// <summary>
+	/// Generikus absztrakt ValueConverter osztály
+	/// </summary>
 	public abstract class ValueConverter<TSource, TTarget> : IValueConverter
 	{
 		public abstract TTarget Convert(TSource value, Type targetType, object parameter, CultureInfo culture);

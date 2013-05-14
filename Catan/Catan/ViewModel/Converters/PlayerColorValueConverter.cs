@@ -10,7 +10,7 @@ using Catan.Model;
 namespace Catan.ViewModel.Converters
 {
 	/// <summary>
-	/// ValueConvert a DataBinding-hoz
+	/// Játékos színét WPF Colorrá konvertáló osztály
 	/// </summary>
 	public class PlayerColorValueConverter : IValueConverter
 	{

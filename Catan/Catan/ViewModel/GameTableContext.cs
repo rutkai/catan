@@ -177,14 +177,17 @@ namespace Catan.ViewModel
 			}
 		}
 
-		public ActionCommand ShowNewGameWindowCommand {
-			get {
+		public ActionCommand ShowNewGameWindowCommand
+		{
+			get
+			{
 				return Lazy.Init(ref _ShowNewGameWindowCommand,
-					() => new ActionCommand(() => {
-							var newGameControl = new NewGameWindow();
-							newGameControl.DataContext = new NewGameContext(this, _TableSize, new WPFWindowService(newGameControl));
-							newGameControl.ShowDialog();
-						}));
+					() => new ActionCommand(() =>
+					{
+						var newGameControl = new NewGameWindow();
+						newGameControl.DataContext = new NewGameContext(this, _TableSize, new WPFWindowService(newGameControl));
+						newGameControl.ShowDialog();
+					}));
 			}
 		}
 	}

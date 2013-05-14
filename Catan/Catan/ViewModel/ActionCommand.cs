@@ -3,9 +3,19 @@ using System.Windows.Input;
 
 namespace Catan.ViewModel
 {
+	/// <summary>
+	/// Akció parancs
+	/// </summary>
 	public class ActionCommand : ICommand
 	{
+		/// <summary>
+		/// A parancs futásának elõfeltételét tároló függvény
+		/// </summary>
 		private readonly Predicate<object> _CanExecute;
+
+		/// <summary>
+		/// A parancs futását tároló függvény
+		/// </summary>
 		private readonly Action _Execute;
 
 		/// <summary>
@@ -26,11 +36,17 @@ namespace Catan.ViewModel
 			_CanExecute = canExecute;
 		}
 
+		/// <summary>
+		/// Parancs lefuttatása
+		/// </summary>
 		public void Execute(object parameter)
 		{
 			_Execute();
 		}
 
+		/// <summary>
+		/// Igazzal tér vissza, ha le lehet futtatni a parancsot
+		/// </summary>
 		public bool CanExecute(object parameter)
 		{
 			if (_CanExecute == null)

@@ -66,28 +66,70 @@
 									 Rows="1"
 									 Grid.Row="1"
 									 Margin="30">
-				<UniformGrid.Resources>
-					<Style TargetType="ToggleButton">
-						<Setter Property="Template">
-							<Setter.Value>
-								<ControlTemplate TargetType="ToggleButton">
-									<Border Background="LightGray"
-													BorderBrush="Black">
-										<ContentPresenter />
-									</Border>
-								</ControlTemplate>
-							</Setter.Value>
-						</Setter>
-					</Style>
-				</UniformGrid.Resources>
 				<ToggleButton Margin="0 0 10 0"
 											IsThreeState="False"
 											IsChecked="{Binding SelectedGameCell.BuildRoadMode}">
+					<ToggleButton.Template>
+						<ControlTemplate TargetType="ToggleButton">
+							<Border Background="LightGray"
+											x:Name="PART_Background"
+											CornerRadius="15 0 0 15"
+											BorderThickness="3"
+											BorderBrush="Black">
+								<Label Content="{TemplateBinding Content}"
+											 x:Name="PART_Content"
+											 Foreground="Black"
+											 FontSize="16"
+											 FontWeight="Bold"
+											 VerticalAlignment="Center"
+											 HorizontalAlignment="Center" />
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsMouseOver"
+												 Value="True">
+									<Setter TargetName="PART_Background"
+													Property="Background"
+													Value="DarkGray" />
+									<Setter TargetName="PART_Content"
+													Property="Foreground"
+													Value="White" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</ToggleButton.Template>
 					Út építése
 				</ToggleButton>
 				<ToggleButton Margin="10 0 0 0"
 											IsThreeState="False"
 											IsChecked="{Binding SelectedGameCell.BuildTownMode}">
+					<ToggleButton.Template>
+						<ControlTemplate TargetType="ToggleButton">
+							<Border Background="LightGray"
+											x:Name="PART_Background"
+											CornerRadius="0 15 15 0"
+											BorderThickness="3"
+											BorderBrush="Black">
+								<Label Content="{TemplateBinding Content}"
+											 x:Name="PART_Content"
+											 Foreground="Black"
+											 FontSize="16"
+											 FontWeight="Bold"
+											 VerticalAlignment="Center"
+											 HorizontalAlignment="Center" />
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsMouseOver"
+												 Value="True">
+									<Setter TargetName="PART_Background"
+													Property="Background"
+													Value="DarkGray" />
+									<Setter TargetName="PART_Content"
+													Property="Foreground"
+													Value="White" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</ToggleButton.Template>
 					Falu építése
 				</ToggleButton>
 			</UniformGrid>
