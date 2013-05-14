@@ -113,15 +113,16 @@ namespace Catan.ViewModel
 			get
 			{
 				return Lazy.Init(ref _SelectGameCellCommand,
-								 () => new DelegateCommand<GameCellContext>(value =>
-								 {
-									 if (SelectedGameCell != null)
+								 () => new DelegateCommand<GameCellContext>(
+									 value =>
 									 {
-										 SelectedGameCell.BuildRoadMode = false;
-										 SelectedGameCell.BuildTownMode = false;
-									 }
-									 SelectedGameCell = value;
-								 }));
+										 if (SelectedGameCell != null)
+										 {
+											 SelectedGameCell.BuildRoadMode = false;
+											 SelectedGameCell.BuildTownMode = false;
+										 }
+										 SelectedGameCell = value;
+									 }));
 			}
 		}
 

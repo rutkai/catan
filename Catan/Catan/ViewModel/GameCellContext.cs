@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -198,9 +199,16 @@ namespace Catan.ViewModel
 					() => new DelegateCommand<string>(
 						index =>
 						{
-							int result;
-							if (int.TryParse(index, out result))
-								GameController.Instance.BuildRoad(result, _Hexagon);
+							try
+							{
+								int result;
+								if (int.TryParse(index, out result))
+									GameController.Instance.BuildRoad(result, _Hexagon);
+							}
+							catch (NotEnoughMaterialsException ex)
+							{
+								MessageBox.Show("Nincs elég nyersanyag!");
+							}
 						},
 						index => !string.IsNullOrWhiteSpace(index)));
 			}
@@ -217,9 +225,16 @@ namespace Catan.ViewModel
 					() => new DelegateCommand<string>(
 						index =>
 						{
-							int result;
-							if (int.TryParse(index, out result))
-								GameController.Instance.BuildSettlement(result, _Hexagon);
+							try
+							{
+								int result;
+								if (int.TryParse(index, out result))
+									GameController.Instance.BuildSettlement(result, _Hexagon);
+							}
+							catch (NotEnoughMaterialsException ex)
+							{
+								MessageBox.Show("Nincs elég nyersanyag!");
+							}
 						},
 						index => !string.IsNullOrWhiteSpace(index)));
 			}
