@@ -229,7 +229,10 @@ namespace Catan.ViewModel
 							{
 								int result;
 								if (int.TryParse(index, out result))
+								{
 									GameController.Instance.BuildSettlement(result, _Hexagon);
+									GameTable.Refresh();
+								}
 							}
 							catch (NotEnoughMaterialsException ex)
 							{
@@ -264,6 +267,39 @@ namespace Catan.ViewModel
 				_Hexagon.Material = value;
 				OnPropertyChanged(() => Material);
 			}
+		}
+
+		/// <summary>
+		/// Városokat adja vissza egy tömbben
+		/// </summary>
+		public Settlement[] Settlements
+		{
+			get { return _Hexagon.Settlements; }
+			protected set
+			{
+				_Hexagon.Settlements = value;
+				OnPropertyChanged(() => Settlements);
+			}
+		}
+
+		/// <summary>
+		/// Utakat adja vissza egy tömbben
+		/// </summary>
+		public Player[] Roads
+		{
+			get { return _Hexagon.Roads; }
+			protected set
+			{
+				_Hexagon.Roads = value;
+				OnPropertyChanged(() => Roads);
+			}
+		}
+
+		public override void Refresh()
+		{
+			base.Refresh();
+			OnPropertyChanged(() => Settlements);
+			OnPropertyChanged(() => Roads);
 		}
 	}
 }

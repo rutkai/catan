@@ -12,14 +12,14 @@ namespace Catan.Model
 			column = c;
 			row = r;
 		}
-        public int getCol()
-        {
-            return column;
-        }
-        public int getRow()
-        {
-            return row;
-        }
+		public int getCol()
+		{
+			return column;
+		}
+		public int getRow()
+		{
+			return row;
+		}
 	}
 	/// <summary>
 	/// A térkép alkotóeleme.
@@ -78,9 +78,13 @@ namespace Catan.Model
 		/// 6 elemû tömb, elsõ eleme a 12 óránál található település, a többi az óramutató
 		/// járásának megfelelõen.
 		/// </summary>
-		private Settlement[] Settlements;
-		
-		public Settlement m_Settlement;
+		private Settlement[] _Settlements;
+
+		public Settlement[] Settlements
+		{
+			get { return _Settlements; }
+			set { _Settlements = value; }
+		}
 
 		public Hexagon()
 			: this(null)
@@ -98,13 +102,13 @@ namespace Catan.Model
 			Roads = new Player[6];
 		}
 
-        public Hexid Id
-        {
-            get;
-            set;
-        }
+		public Hexid Id
+		{
+			get;
+			set;
+		}
 
-	   
+
 
 		/// <summary>
 		/// Konstruktor, inicializálja a hexagont.
@@ -117,7 +121,7 @@ namespace Catan.Model
 			Material = material;
 			ProduceNumber = produceNumber;
 			Id = id;
-            Neighbours = new List<Hexagon>();
+			Neighbours = new List<Hexagon>();
 		}
 
 		/// <summary>
@@ -136,33 +140,35 @@ namespace Catan.Model
 		/// <summary>
 		/// Lekéri az adott pozíción található települést.
 		/// </summary>
-		/// <param name="Position"></param>
-		public Settlement GetSettlement(int Position)
+		/// <param name="position"></param>
+		public Settlement GetSettlement(int position)
 		{
-			if (Position >= 0 && Position <= 5)
+			if (position >= 0 && position <= 5)
 			{
-				return Settlements[Position];
+				return Settlements[position];
 			}
 			return null;
 		}
 
 		/// 
-		/// <param name="Player">Tulajdonos</param>
-		/// <param name="Position">hely</param>
-		public void SetRoad(Player Player, int Position)
+		/// <param name="player">Tulajdonos</param>
+		/// <param name="position">hely</param>
+		public void SetRoad(Player player, int position)
 		{
-
+			if (position >= 0 && position <= 5)
+				Roads[position] = player;
 		}
 
 		/// <summary>
 		/// Beállítja az adott sarokra a megadott települést.
 		/// </summary>
-		/// <param name="Settlement"></param>
-		/// <param name="Position"></param>
-		public void SetTown(Settlement Settlement, int Position)
+		/// <param name="settlement"></param>
+		/// <param name="position"></param>
+		public void SetTown(Settlement settlement, int position)
 		{
-
-		}
+			if (position >= 0 && position <= 5)
+				Settlements[position] = settlement;
+		} 
 
 	}
 }

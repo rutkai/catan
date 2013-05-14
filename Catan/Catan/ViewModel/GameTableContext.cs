@@ -191,5 +191,12 @@ namespace Catan.ViewModel
 					}));
 			}
 		}
+
+		public override void Refresh()
+		{
+			foreach (var cell in GameCells)
+				if (cell != null)
+					cell.Refresh();
+		}
 	}
 }

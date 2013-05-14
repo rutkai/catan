@@ -8,16 +8,13 @@ namespace Catan.Model
     public class Settlement
     {
         private Hexagon[] Fields;
-        /// <summary>
-        /// Tulajdonos
-        /// </summary>
-        private Player Owner;
-        public Hexagon m_Hexagon;
 
-        public Settlement()
-        {
-
-        }
+	    /// <summary>
+	    /// Tulajdonos
+	    /// </summary>
+	    public Player Owner { get; set; }
+        
+		public Hexagon m_Hexagon;
 
         public Hexagon[] getFields()
         {
@@ -39,7 +36,7 @@ namespace Catan.Model
         /// Az adott dobásnak megfelelõen visszatér a termelt nyersanyagokkal.
         /// </summary>
         /// <param name="Dice">Kockadobás eredménye mindkét kockával</param>
-        public Dictionary<Material, int> Produce(int Dice)
+        public virtual Dictionary<Material, int> Produce(int Dice)
         {
 
             return null;

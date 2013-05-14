@@ -91,7 +91,7 @@ namespace Catan.Model
         public void BuildSettlement(int position, Hexagon h)
         {
             Settlement set = h.GetSettlement(position);
-            CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            set = CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             h.SetTown(set, position);
             h.Neighbours[(position + 3) % 6].SetTown(set, (position + 3) % 6);
         }
