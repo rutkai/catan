@@ -93,6 +93,11 @@ namespace Catan.Model
             Settlements = new List<Settlement>();
 			TradeItems = new Dictionary<Material, TradeItem>();
 			Gold = 1000;
+            Materials.Add(Material.Clay, 2);
+            Materials.Add(Material.Iron, 2);
+            Materials.Add(Material.Wheat, 2);
+            Materials.Add(Material.Wood, 2);
+            Materials.Add(Material.Wool, 2);
 		}
 
 		/// <summary>
