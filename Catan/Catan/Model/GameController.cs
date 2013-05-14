@@ -11,8 +11,10 @@ namespace Catan.Model
 	/// </summary>
 	public class GameController
 	{
-		private int WinnerScore = 10;
+        private int WinnerScore = 10;
 		private int _CurrentPlayerIndex;
+
+        public List<Hexagon> Hexagons;
 
 		/// <summary>
 		/// Játékosokat tároló lista
@@ -43,6 +45,7 @@ namespace Catan.Model
 		{
 			Players = new List<Player>();
 			_CurrentPlayerIndex = 0;
+            Hexagons = new List<Hexagon>();
 		}
 
 		/// <summary>
@@ -59,19 +62,6 @@ namespace Catan.Model
 				throw new Exception("Legalább egy játékost meg kell adni!");
 
 			Players = _players;
-
-			foreach (var player in Players)
-			{
-				player.AddMaterials(new Dictionary<Material, int>
-					                    {
-											{Material.Clay, 2},
-											{Material.Iron, 2},
-											{Material.Wheat, 2},
-											{Material.Wood, 2},
-											{Material.Wool, 2},
-					                    });
-			}
-
 			_CurrentPlayerIndex = 0;
 			Map = new Map(mapSize);
 		}
@@ -81,93 +71,91 @@ namespace Catan.Model
 		/// </summary>
 		public void Step()
 		{
-			if (Players != null && Players.Any())
+			if (Players != null && Players.Count() > 0)
 				_CurrentPlayerIndex = (_CurrentPlayerIndex + 1) % Players.Count();
 		}
 
-		/// <summary>
-		/// Út megépítése
-		/// </summary>
-		public void BuildRoad(int position, Hexagon h)
-		{
-			CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			h.SetRoad(CurrentPlayer, position);
-		}
+        /// <summary>
+        /// Út megépítése
+        /// </summary>
+        public void BuildRoad(int position, Hexagon h)
+        {
+                CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                h.SetRoad(CurrentPlayer, position);
+        }
 
-		/// <summary>
-		/// Település építése
-		/// </summary>
-		public void BuildSettlement(int position, Hexagon h)
-		{
-			Settlement set = h.GetSettlement(position);
-			CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			h.SetTown(set, position);
-		}
+        /// <summary>
+        /// Település építése
+        /// </summary>
+        public void BuildSettlement(int position, Hexagon h)
+        {
+            Settlement set = h.GetSettlement(position);
+            CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            h.SetTown(set, position);
+        }
 
-		/// <summary>
-		/// Kör vége
-		/// </summary>
-		public void EndTurn()
-		{
-			if (!HasWinner())
-				Step();
-		}
+        /// <summary>
+        /// Kör vége
+        /// </summary>
+        public void EndTurn()
+        {
+            if (!HasWinner())
+                Step();
+        }
 
-		/// <summary>
-		/// Van-e nyertes
-		/// </summary>
-		public bool HasWinner()
-		{
-			bool isWinner = false;
-			foreach (Player p in Players)
-			{
-				if (p.GetPoints() >= WinnerScore)
-				{
-					isWinner = true;
-				}
-			}
-			return isWinner;
-		}
+        /// <summary>
+        /// Van-e nyertes
+        /// </summary>
+        public bool HasWinner()
+        {
+            bool isWinner = false;
+            foreach (Player p in Players)
+            {
+                if (p.GetPoints() >= WinnerScore)
+                {
+                    isWinner = true;
+                }
+            }
+            return isWinner;
+        }
 
-		/// <summary>
-		/// Új játék
-		/// </summary>
-		public void NewGame()
-		{
+        /// <summary>
+        /// Új játék
+        /// </summary>
+        public void NewGame()
+        {
 
-			//Players = newGameWindow.getPlayers();
-			int j = 0;
-			Player[] p = Players.ToArray();
-			/// <summary>
-			/// Fisher–Yates shuffle
-			/// </summary>
-			for (int i = p.Length - 1; i > 0; i--)
-			{
-				j = Convert.ToInt32(new Random(i));
-				Player temp = p[j];
-				p[j] = p[i];
-				p[i] = temp;
+            //Players = newGameWindow.getPlayers();
+            int j = 0;
+            /// <summary>
+            /// Fisher–Yates shuffle
+            /// </summary>
+            for (int i = Players.Count() - 1; i > 0; i--)
+            {
+                j = Convert.ToInt32(new Random(i));
+                Player temp = Players.ToArray()[j];
+                Players.ToArray()[j] = Players.ToArray()[i];
+                Players.ToArray()[i] = temp;
 
-			}
+            }
 
-			Players = p;
-			PlaceInitial();
-		}
+            PlaceInitial();
+        }
 
+        
+        public void PlaceInitial()
+        {
+           
+        }
 
-		public void PlaceInitial()
-		{
-
-		}
-
-		/// <summary>
-		/// Település fejlesztése
-		/// </summary>
-		public void UpgradeSettlement(int position, Hexagon h)
-		{
-			Settlement set = h.GetSettlement(position);
-			CurrentPlayer.UpgradeSettlement(set);
-			h.SetTown(set, position);
-		}
+        /// <summary>
+        /// Település fejlesztése
+        /// </summary>
+        public void UpgradeSettlement(int position, Hexagon h)
+        {
+            Settlement set = h.GetSettlement(position);
+            CurrentPlayer.UpgradeSettlement(set);
+            h.SetTown(set, position);
+        }
 	}
 }
