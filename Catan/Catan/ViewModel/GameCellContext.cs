@@ -46,7 +46,7 @@ namespace Catan.ViewModel
 				var filename = "Images//" + key.ToString().ToLower() + "_field.png";
 				if (File.Exists(filename))
 				{
-					BitmapImage bmp = new BitmapImage(new Uri(filename,
+					var bmp = new BitmapImage(new Uri(filename,
 															  UriKind.Relative));
 					dictionary.Add(key, bmp);
 				}

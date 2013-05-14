@@ -36,13 +36,24 @@ namespace Catan
 
 			context.GameCells = new List<GameCellContext>();
 
+			var random = new Random();
+
+			var materials = new[]
+				                {
+									Material.Wood,
+									Material.Wool, 
+									Material.Clay, 
+									Material.Wheat, 
+									Material.Iron
+				                };
+
 			for (int i = 0; i < 7; i++)
 			{
 				for (int j = 0; j < 7; j++)
 				{
 					(context.GameCells as List<GameCellContext>)
 						.Add(new GameCellContext(context,
-							 new Hexagon(10, Material.Iron)) { Value = i });
+							 new Hexagon(10, materials[random.Next(0, materials.Length)])) { Value = random.Next(2, 13) });
 				}
 			}
 

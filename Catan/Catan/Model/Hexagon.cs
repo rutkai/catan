@@ -56,7 +56,7 @@ namespace Catan.Model
 		/// járásának megfelelõen.
 		/// </summary>
 		private Settlement[] Settlements;
-		public Material m_Material;
+
 		public Settlement m_Settlement;
 
 		public Hexagon()
@@ -81,12 +81,13 @@ namespace Catan.Model
 		/// <summary>
 		/// Konstruktor, inicializálja a hexagont.
 		/// </summary>
-		/// <param name="ProduceNumber">Mely dobásra termel</param>
-		/// <param name="Material">A mezõ nyersanyaga</param>
-		public Hexagon(int ProduceNumber, Material Material)
+		/// <param name="produceNumber">Mely dobásra termel</param>
+		/// <param name="material">A mezõ nyersanyaga</param>
+		public Hexagon(int produceNumber, Material material)
 			: this(null)
 		{
-
+			Material = material;
+			ProduceNumber = produceNumber;
 		}
 
 		/// <summary>
