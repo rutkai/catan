@@ -12,6 +12,14 @@ namespace Catan.Model
 			column = c;
 			row = r;
 		}
+        public int getCol()
+        {
+            return column;
+        }
+        public int getRow()
+        {
+            return row;
+        }
 	}
 	/// <summary>
 	/// A térkép alkotóeleme.
@@ -72,8 +80,6 @@ namespace Catan.Model
 		/// </summary>
 		private Settlement[] Settlements;
 		
-
-
 		public Settlement m_Settlement;
 
 		public Hexagon()
@@ -92,13 +98,11 @@ namespace Catan.Model
 			Roads = new Player[6];
 		}
 
-		
-
-		public Hexid Id
-		{
-			get;
-			set;
-		}
+        public Hexid Id
+        {
+            get;
+            set;
+        }
 
 	   
 

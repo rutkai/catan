@@ -51,20 +51,13 @@ namespace Catan
             {
                 for (var i = 0; i < 7 - Math.Abs(3 - j); ++i)
                 {
+                    Hexagon h = new Hexagon(10, materials[random.Next(0, materials.Length)], new Hexid(j,i) );
                     (context.GameCells as List<GameCellContext>)
 						.Add(new GameCellContext(context,
-							 new Hexagon(10, materials[random.Next(0, materials.Length)], new Hexid(j,i) )) { Value = random.Next(2, 13) });
+							 h) { Value = random.Next(2, 13) });
+                    GameController.Instance.Hexagons.Add(h);
                 }
             }
-			/*for (int i = 0; i < 7; i++)
-			{
-				for (int j = 0; j < 7; j++)
-				{
-					(context.GameCells as List<GameCellContext>)
-						.Add(new GameCellContext(context,
-							 new Hexagon(10, materials[random.Next(0, materials.Length)], new Hexid(i,j) )) { Value = i*7+j/*random.Next(2, 13) });
-				}
-			}*/
 
 			NewGameWindow newGameWindow = new NewGameWindow();
 			var newGameContext = new NewGameContext(context, new Size(7, 7), new WPFWindowService(newGameWindow));
