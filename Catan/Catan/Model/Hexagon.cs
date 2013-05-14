@@ -117,6 +117,7 @@ namespace Catan.Model
 			Material = material;
 			ProduceNumber = produceNumber;
 			Id = id;
+            Neighbours = new List<Hexagon>();
 		}
 
 		/// <summary>

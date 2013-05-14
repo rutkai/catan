@@ -171,56 +171,56 @@ namespace Catan.Model
                 //0. szomszéd
                 if(h.Id.getRow() == 0)
                 {
-                    h.Neighbours[0] = null;
+                    h.Neighbours.Add(null);
                 }
                 else
                 {
-                    h.Neighbours[0] = Hexagons.Find(x=>(x.Id.getCol()==h.Id.getCol() && x.Id.getRow()==h.Id.getRow()-1));
+                    h.Neighbours.Add(Hexagons.Find(x=>(x.Id.getCol()==h.Id.getCol() && x.Id.getRow()==h.Id.getRow()-1)));
                 }
                 //1. szomszéd
                 if (h.Id.getRow() == 0 && h.Id.getCol() >= 3)
                 {
-                    h.Neighbours[1] = null;
+                    h.Neighbours.Add(null);
                 }
                 else
                 {
-                    h.Neighbours[1] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol()+1 && x.Id.getRow() == h.Id.getRow() - 1));
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol()+1 && x.Id.getRow() == h.Id.getRow() - 1)));
                 }
                 //2. szomszéd
                 if (h.Id.getCol() == 6 && h.Id.getCol() + h.Id.getRow() == 9)
                 {
-                    h.Neighbours[2] = null;
+                    h.Neighbours.Add(null);
                 }
                 else
                 {
-                    h.Neighbours[2] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 || x.Id.getRow() == h.Id.getRow()));
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 || x.Id.getRow() == h.Id.getRow())));
                 }
                 //3. szomszéd
                 if (h.Id.getCol()+3 == h.Id.getRow() || h.Id.getCol() + h.Id.getRow() == 9)
                 {
-                    h.Neighbours[3] = null;
+                    h.Neighbours.Add(null);
                 }
                 else
                 {
-                    h.Neighbours[3] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow()+1));
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow()+1)));
                 }
                 //4. szomszéd
                 if (h.Id.getCol() + 3 == h.Id.getRow() || h.Id.getCol() == 0)
                 {
-                    h.Neighbours[4] = null;
+                    h.Neighbours.Add(null);
                 }
                 else
                 {
-                    h.Neighbours[4] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow()));
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
                 }
                 //5. szomszéd
                 if ((h.Id.getCol() >= 3 && h.Id.getRow() == 0) || h.Id.getCol() == 0)
                 {
-                    h.Neighbours[4] = null;
+                    h.Neighbours.Add(null);
                 }
                 else
                 {
-                    h.Neighbours[4] = Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow()-1));
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow()-1)));
                 }
             }
         }
