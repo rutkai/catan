@@ -211,7 +211,7 @@ namespace Catan.Model
 					h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
 				}
 				//5. szomszéd
-				if ((h.Id.getCol() >= 3 && h.Id.getRow() == 0) || h.Id.getCol() == 0)
+				if ((h.Id.getCol() <= 3 && h.Id.getRow() == 0) || h.Id.getCol() == 0)
 				{
 					h.Neighbours.Add(null);
 				}
