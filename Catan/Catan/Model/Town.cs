@@ -7,8 +7,6 @@ namespace Catan.Model
     /// </summary>
     public class Town : Settlement
     {
-
-        
         /// <summary>
         /// Konstruktor, meghívja az õs konstruktorát.
         /// </summary>
@@ -18,16 +16,5 @@ namespace Catan.Model
         {
             
         }
-
-        /// <summary>
-        /// Lásd õs, csak többet termel.
-        /// </summary>
-        /// <param name="Dice"></param>
-        public override Dictionary<Material, int> Produce(int Dice)
-        {
-
-            return null;
-        }
-
     }
 }

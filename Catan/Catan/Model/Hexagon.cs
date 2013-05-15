@@ -191,7 +191,7 @@ namespace Catan.Model
         /// Az adott dobásnak megfelelõen visszatér a termelt nyersanyagokkal.
         /// </summary>
         /// <param name="Dice">Kockadobás eredménye mindkét kockával</param>
-        public virtual Dictionary<Material, int> Produce(int Dice)
+        public void Produce(int Dice)
         {
             Dictionary<Material, int> materials = new Dictionary<Material,int>();
             
@@ -211,7 +211,6 @@ namespace Catan.Model
                     materials.Clear();
                 }
             }
-            return null;
         }
 	}
 }
