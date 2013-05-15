@@ -159,11 +159,11 @@
 						MinWidth="150"
 						CornerRadius="0 0 0 10"
 						Visibility="Visible"
-						HorizontalAlignment="Right">
+						HorizontalAlignment="Right" Height="277" Width="173">
 			<Border.Background>
 				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
 			</Border.Background>
-			<StackPanel>
+			<StackPanel Margin="0,0,0,-2">
 				<StackPanel.Resources>
 					<Style TargetType="TextBlock">
 						<Setter Property="FontWeight"
@@ -176,20 +176,20 @@
 										Value="Center" />
 					</Style>
 				</StackPanel.Resources>
-				<Button Command="{Binding ShowNewGameWindowCommand}">
-					Új játék
-				</Button>
-
-				<TextBlock Text="{Binding CurrentPlayer.Name}" />
-				<TextBlock>Arany: <TextBlock Text="{Binding CurrentPlayer.Gold}" /></TextBlock>
-
-				<Button Command="{Binding ShowTradeWindowCommand}">
-					Kereskedelem
-				</Button>
-				<Button Command="{Binding StepCommand}">
-					Kör vége
-				</Button>
-			</StackPanel>
+                
+                <Label Content="Kockadobás eredménye:"/>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" >
+                    <Label Content="1" Name="Dobas1" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
+                    <Label Content="1" Name="Dobas2" Width="25" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                </StackPanel>
+                <TextBlock Text="{Binding CurrentPlayer.Name}" />
+                <Button Command="{Binding ShowNewGameWindowCommand}" Height="25" Content="Új játék"/>
+                <TextBlock RenderTransformOrigin="-0.684,0.787"><Run Text="Arany: "/><InlineUIContainer>
+                		<TextBlock Text="{Binding CurrentPlayer.Gold}" />
+                	</InlineUIContainer></TextBlock>
+                <Button Command="{Binding ShowTradeWindowCommand}" Content="Kereskedelem"/>
+                <Button Command="{Binding StepCommand}" Content="Kör vége"/>
+            </StackPanel>
 		</Border>
 
 		<View:GameCellOptions DataContext="{Binding}">
