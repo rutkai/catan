@@ -32,5 +32,15 @@ namespace Catan.Model
             this.Owner = Owner;
         }
 
+		/// <summary>
+		/// Lásd õs, csak többet termel.
+		/// </summary>
+		/// <param name="Dice"></param>
+		public virtual Dictionary<Material, int> Produce(int Dice)
+		{
+
+			return null;
+		}
+
     }
 }

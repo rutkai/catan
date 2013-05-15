@@ -8,9 +8,10 @@
 				Title="Catan - The Game"
 				Height="700"
 				Width="800"
-                Top="20">
+				Top="20">
 	<Window.Resources>
 		<Converters:PlayerColorValueConverter x:Key="playerColorConverter" />
+		<Converters:MaterialToStringConverter x:Key="materialToStringConverter" />
 	</Window.Resources>
 	<Grid>
 
@@ -153,13 +154,45 @@
 		</Border>
 
 		<Border BorderBrush="Black"
+						BorderThickness="0 0 2 2"
+						CornerRadius="0 0 10 0"
+						VerticalAlignment="Top"
+						MinWidth="100"
+						MinHeight="100"
+						HorizontalAlignment="Left">
+			<Border.Background>
+				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
+			</Border.Background>
+			<ItemsControl ItemsSource="{Binding Materials, Mode=OneWay}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Grid Margin="5">
+							<ProgressBar Minimum="0"
+													 Maximum="20"
+													 Background="Green"
+													 Foreground="LightGreen"
+													 Value="{Binding Item2, Mode=OneWay}" />
+							<TextBlock VerticalAlignment="Center"
+												 HorizontalAlignment="Center">
+								<TextBlock Text="{Binding Item1, Mode=OneWay, Converter={StaticResource materialToStringConverter}}" />
+								(<TextBlock Text="{Binding Item2, Mode=OneWay}" />)
+							</TextBlock>
+						</Grid>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Border>
+
+		<Border BorderBrush="Black"
 						BorderThickness="2 0 0 2"
 						VerticalAlignment="Top"
 						Padding="10"
 						MinWidth="150"
 						CornerRadius="0 0 0 10"
 						Visibility="Visible"
-						HorizontalAlignment="Right" Height="277" Width="173">
+						HorizontalAlignment="Right"
+						Height="277"
+						Width="173">
 			<Border.Background>
 				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
 			</Border.Background>
@@ -176,20 +209,36 @@
 										Value="Center" />
 					</Style>
 				</StackPanel.Resources>
-                
-                <Label Content="Kockadobás eredménye:"/>
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" >
-                    <Label Content="{Binding DiceResult[0]}" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
-                    <Label Content="{Binding DiceResult[1]}" Width="25" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
-                </StackPanel>
-                <TextBlock Text="{Binding CurrentPlayer.Name}" />
-                <Button Command="{Binding ShowNewGameWindowCommand}" Height="25" Content="Új játék"/>
-                <TextBlock RenderTransformOrigin="-0.684,0.787"><Run Text="Arany: "/><InlineUIContainer>
-                		<TextBlock Text="{Binding CurrentPlayer.Gold}" />
-                	</InlineUIContainer></TextBlock>
-                <Button Command="{Binding ShowTradeWindowCommand}" Content="Kereskedelem"/>
-                <Button Command="{Binding StepCommand}" Content="Kör vége"/>
-            </StackPanel>
+
+				<Label Content="Kockadobás eredménye:" />
+				<StackPanel HorizontalAlignment="Center"
+										VerticalAlignment="Center"
+										Orientation="Horizontal">
+					<Label Content="{Binding DiceResult[0]}"
+								 Width="25"
+								 HorizontalAlignment="Left"
+								 VerticalAlignment="Center"
+								 FontWeight="Bold"
+								 FontSize="16" />
+					<Label Content="{Binding DiceResult[1]}"
+								 Width="25"
+								 HorizontalAlignment="Right"
+								 VerticalAlignment="Center"
+								 FontSize="16"
+								 FontWeight="Bold" />
+				</StackPanel>
+				<TextBlock Text="{Binding CurrentPlayer.Name}" />
+				<Button Command="{Binding ShowNewGameWindowCommand}"
+								Height="25"
+								Content="Új játék" />
+				<TextBlock RenderTransformOrigin="-0.684,0.787"><Run Text="Arany: " /><InlineUIContainer>
+              <TextBlock Text="{Binding CurrentPlayer.Gold}" />
+            </InlineUIContainer></TextBlock>
+				<Button Command="{Binding ShowTradeWindowCommand}"
+								Content="Kereskedelem" />
+				<Button Command="{Binding StepCommand}"
+								Content="Kör vége" />
+			</StackPanel>
 		</Border>
 
 		<View:GameCellOptions DataContext="{Binding}">

@@ -143,7 +143,10 @@ namespace Catan.ViewModel
 					() =>
 					{
 						GameController.Instance.Step();
-						OnPropertyChanged(() => CurrentPlayer, () => TradeContext, () => DiceResult);
+						OnPropertyChanged(() => CurrentPlayer, 
+										  () => TradeContext, 
+										  () => DiceResult, 
+										  () => Materials);
 					}));
 			}
 		}
@@ -203,6 +206,8 @@ namespace Catan.ViewModel
 			foreach (var cell in GameCells)
 				if (cell != null)
 					cell.Refresh();
+
+			OnPropertyChanged(() => Materials);
 		}
 
 		public int[] DiceResult
@@ -210,6 +215,19 @@ namespace Catan.ViewModel
 			get
 			{
 				return new[] { GameController.Instance.Dobas1, GameController.Instance.Dobas2 };
+			}
+		}
+
+		/// <summary>
+		/// Visszatér az aktuális játékos nyersanyagaival
+		/// </summary>
+		public List<Tuple<Material, int>> Materials
+		{
+			get
+			{
+				return CurrentPlayer.Materials
+									.Select(item => Tuple.Create(item.Key, item.Value))
+									.ToList();
 			}
 		}
 	}
