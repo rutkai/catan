@@ -12,12 +12,38 @@ using Catan.ViewModel.Converters;
 
 namespace Catan.ViewModel {
 	public class NewGameContext : ViewModelBase {
+		/// <summary>
+		/// Új gombra tett akció
+		/// </summary>
 		private ActionCommand _NewGame;
+
+		/// <summary>
+		/// A kiválasztott játékosok listája
+		/// </summary>
 		private List<string> _SelectedPlayers;
+
+		/// <summary>
+		/// A játéktábla nézetmodellje
+		/// </summary>
 		public GameTableContext GameTableContext;
+
+		/// <summary>
+		/// A tábla méretei
+		/// </summary>
 		protected Size tableSize;
+
+		/// <summary>
+		/// A nézethez hozzáférést nyújtú interfész
+		/// </summary>
 		protected IWindowService WindowService;
 
+		/// <summary>
+		/// Konstruktor
+		/// Inicializálja az objektumot
+		/// </summary>
+		/// <param name="context">Játéktábla nézetmodellje</param>
+		/// <param name="size">Játéktábla mérete</param>
+		/// <param name="service">Nézethez hozzáférést nyújtó interfész</param>
 		public NewGameContext(GameTableContext context, Size size, IWindowService service) {
 			GameTableContext = context;
 			tableSize = size;
@@ -32,16 +58,25 @@ namespace Catan.ViewModel {
 			}
 		}
 
+		/// <summary>
+		/// Játékosok tömbje
+		/// </summary>
 		public Dictionary<PlayerColor, Player> Players {
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// Színek aktív státuszát tartalmazó tömb
+		/// </summary>
 		public Dictionary<PlayerColor, bool> EnabledPlayers {
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// A játékosok színeit visszaadó getter
+		/// </summary>
 		public IEnumerable<PlayerColor> PlayerColors {
 			get {
 				return new[] {
@@ -50,6 +85,9 @@ namespace Catan.ViewModel {
 			}
 		}
 
+		/// <summary>
+		/// Aktív színek állítását figyelő metódus
+		/// </summary>
 		public string SelectedPlayerValues {
 			get {
 				return String.Join(",", _SelectedPlayers.ToArray());
@@ -63,6 +101,9 @@ namespace Catan.ViewModel {
 			}
 		}
 
+		/// <summary>
+		/// Új játék gombra kattintáskor lefutó akció
+		/// </summary>
 		public ActionCommand NewGameCommand {
 			get {
 				return Lazy.Init(ref _NewGame,
@@ -84,6 +125,9 @@ namespace Catan.ViewModel {
 			}
 		}
 
+		/// <summary>
+		/// Az ablak bezárását végző metódus
+		/// </summary>
 		protected void CloseCommand() {
 			WindowService.Close();
 		}
