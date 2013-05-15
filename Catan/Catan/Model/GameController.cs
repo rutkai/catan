@@ -76,10 +76,9 @@ namespace Catan.Model
 		{
 			if (Players != null && Players.Count() > 0)
 				_CurrentPlayerIndex = (_CurrentPlayerIndex + 1) % Players.Count();
-            Random dobas1 = new Random();
-            Random dobas2 = new Random();
-            Dobas1 = dobas1.Next(1, 7);
-            Dobas2 = dobas2.Next(1, 7);
+            Random dobas = new Random();
+            Dobas1 = dobas.Next(1, 7);
+            Dobas2 = dobas.Next(1, 7);
 		}
 
 		/// <summary>
