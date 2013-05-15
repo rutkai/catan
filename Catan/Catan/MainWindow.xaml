@@ -6,8 +6,9 @@
 				xmlns:ViewModel="clr-namespace:Catan.ViewModel"
 				xmlns:Converters="clr-namespace:Catan.ViewModel.Converters"
 				Title="Catan - The Game"
-				Height="350"
-				Width="525">
+				Height="700"
+				Width="800"
+                Top="20">
 	<Window.Resources>
 		<Converters:PlayerColorValueConverter x:Key="playerColorConverter" />
 	</Window.Resources>

@@ -160,7 +160,7 @@ namespace Catan.Model
                 Roads[position] = player;
                 var hexagon = Neighbours[position];
                 if (hexagon!= null)
-                    Neighbours[position].SetRoad(player, (position + 3) % 6);
+                    Neighbours[position].Roads[(position + 3) % 6]=player;
             }
 			
 		}
@@ -177,7 +177,7 @@ namespace Catan.Model
                 Settlements[position] = settlement;
                 var hexagon = Neighbours[position];
                 if (hexagon != null)
-                    hexagon.SetTown(settlement, (position + 3) % 6);
+                    hexagon.Settlements[(position + 3) % 6]=settlement;
             }
 				
 
