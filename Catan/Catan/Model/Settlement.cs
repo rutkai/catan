@@ -32,15 +32,5 @@ namespace Catan.Model
             this.Owner = Owner;
         }
 
-        /// <summary>
-        /// Az adott dobásnak megfelelõen visszatér a termelt nyersanyagokkal.
-        /// </summary>
-        /// <param name="Dice">Kockadobás eredménye mindkét kockával</param>
-        public virtual Dictionary<Material, int> Produce(int Dice)
-        {
-
-            return null;
-        }
-
     }
 }

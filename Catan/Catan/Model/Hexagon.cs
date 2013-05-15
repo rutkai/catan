@@ -184,9 +184,34 @@ namespace Catan.Model
                     hexagon2.Settlements[(position + 4) % 6] = settlement;
                 }
             }
-				
+			
+		}
 
-		} 
-
+        /// <summary>
+        /// Az adott dobásnak megfelelõen visszatér a termelt nyersanyagokkal.
+        /// </summary>
+        /// <param name="Dice">Kockadobás eredménye mindkét kockával</param>
+        public virtual Dictionary<Material, int> Produce(int Dice)
+        {
+            Dictionary<Material, int> materials = new Dictionary<Material,int>();
+            
+            if (this.ProduceNumber == Dice)
+            {
+                foreach (Settlement sett in Settlements)
+                {
+                    if (sett.GetType().ToString() == "Settlement")
+                    {
+                        materials.Add(this.Material, 1);
+                    }
+                    else
+                    {
+                        materials.Add(this.Material, 2);
+                    }
+                    sett.Owner.AddMaterials(materials);
+                    materials.Clear();
+                }
+            }
+            return null;
+        }
 	}
 }
