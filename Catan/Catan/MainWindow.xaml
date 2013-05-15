@@ -110,9 +110,11 @@
 													</ControlTemplate>
 												</ContextMenu.Template>
 												<MenuItem Header="Város építése"
-																	ToolTip="Kattints ide, ha várost szeretnél építeni!" />
+																	ToolTip="Kattints ide, ha várost szeretnél építeni!"
+																	Command="{Binding BuildTownCommand}" />
 												<MenuItem Header="Út építése"
-																	ToolTip="Kattints ide, ha utat szeretnél építeni!" />
+																	ToolTip="Kattints ide, ha utat szeretnél építeni!"
+																	Command="{Binding BuildRoadCommand}" />
 											</ContextMenu>
 										</Setter.Value>
 									</Setter>

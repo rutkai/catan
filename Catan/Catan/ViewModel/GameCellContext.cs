@@ -199,21 +199,28 @@ namespace Catan.ViewModel
 					() => new DelegateCommand<string>(
 						index =>
 						{
-							try
+							if (string.IsNullOrWhiteSpace(index))
 							{
-								int result;
-								if (int.TryParse(index, out result))
+								GameTable.SelectedGameCell = this;
+								BuildRoadMode = true;
+							}
+							else
+							{
+								try
 								{
-									GameController.Instance.BuildRoad(result, _Hexagon);
-									GameTable.Refresh();
+									int result;
+									if (int.TryParse(index, out result))
+									{
+										GameController.Instance.BuildRoad(result, _Hexagon);
+										GameTable.Refresh();
+									}
+								}
+								catch (NotEnoughMaterialsException ex)
+								{
+									GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
 								}
 							}
-							catch (NotEnoughMaterialsException ex)
-							{
-								GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
-							}
-						},
-						index => !string.IsNullOrWhiteSpace(index)));
+						}));
 			}
 		}
 
@@ -228,21 +235,28 @@ namespace Catan.ViewModel
 					() => new DelegateCommand<string>(
 						index =>
 						{
-							try
+							if (string.IsNullOrWhiteSpace(index))
 							{
-								int result;
-								if (int.TryParse(index, out result))
+								GameTable.SelectedGameCell = this;
+								BuildTownMode = true;
+							}
+							else
+							{
+								try
 								{
-									GameController.Instance.BuildSettlement(result, _Hexagon);
-									GameTable.Refresh();
+									int result;
+									if (int.TryParse(index, out result))
+									{
+										GameController.Instance.BuildSettlement(result, _Hexagon);
+										GameTable.Refresh();
+									}
+								}
+								catch (NotEnoughMaterialsException ex)
+								{
+									GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
 								}
 							}
-							catch (NotEnoughMaterialsException ex)
-							{
-								GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
-							}
-						},
-						index => !string.IsNullOrWhiteSpace(index)));
+						}));
 			}
 		}
 
