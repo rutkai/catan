@@ -82,7 +82,7 @@ namespace Catan.Model
             int result = Dobas1 + Dobas2;
             foreach (Hexagon h in Hexagons)
             {
-                Produce(result);
+                h.Produce(result);
             }
 		}
 
