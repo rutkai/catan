@@ -31,7 +31,7 @@
 											ItemsSource="{Binding AvailableTradeItems}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate DataType="ComboBoxItem">
-									<ComboBoxItem Content="{Binding Converter={StaticResource materialToStringConverter}}" />
+									<ComboBoxItem Content="{Binding}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
@@ -61,7 +61,6 @@
 										<ColumnDefinition Width="120" />
 										<ColumnDefinition Width="120" />
 										<ColumnDefinition Width="120" />
-										<ColumnDefinition Width="120" />
 										<ColumnDefinition Width="*" />
 									</Grid.ColumnDefinitions>
 
@@ -75,7 +74,6 @@
 									<TextBlock Grid.Column="0">Termék neve</TextBlock>
 									<TextBlock Grid.Column="1">Termék mennyisége</TextBlock>
 									<TextBlock Grid.Column="2">Termék ára</TextBlock>
-									<TextBlock Grid.Column="3">Készleten lévő</TextBlock>
 
 									<ItemsPresenter Grid.Row="1"
 																	Grid.ColumnSpan="5" />
@@ -91,7 +89,6 @@
 												BorderThickness="0 0 0 1">
 									<Grid>
 										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="120" />
 											<ColumnDefinition Width="120" />
 											<ColumnDefinition Width="120" />
 											<ColumnDefinition Width="120" />
@@ -113,9 +110,6 @@
 																				Margin="0 0 10 0"
 																				ToolTip="Mennyi legyen az ára?"
 																				Value="{Binding Price, Mode=TwoWay}" />
-
-										<TextBlock Grid.Column="3" 
-															 Text="[Készleten lévő termék mennyisége]"/>
 
 										<Button HorizontalAlignment="Right"
 														Grid.Column="4"
