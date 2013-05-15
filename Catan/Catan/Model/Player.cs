@@ -193,7 +193,7 @@ namespace Catan.Model
 			return set;
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// Az adott dobásnak megfelelõen a nyersanyagok betakarításra kerülnek.
 		/// </summary>
 		/// <param name="Dice">Kockadobás</param>
@@ -214,7 +214,7 @@ namespace Catan.Model
 					}
 				}
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// Betakarítja a kezdõ nyersanyagokat (a várossal szomszédos mezõkrõl 1-1 => town.
