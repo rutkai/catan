@@ -6,6 +6,26 @@ using Catan.Common;
 
 namespace Catan.Model
 {
+
+    public class NoSettlementException : System.Exception
+    {
+        public NoSettlementException() : base() { }
+        public NoSettlementException(string message) : base(message) { }
+        public NoSettlementException(string message, System.Exception inner) : base(message, inner) { }
+
+        protected NoSettlementException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) { }
+    }
+
+    public class thereIsNeighbourException : System.Exception
+    {
+        public thereIsNeighbourException() : base() { }
+        public thereIsNeighbourException(string message) : base(message) { }
+        public thereIsNeighbourException(string message, System.Exception inner) : base(message, inner) { }
+
+        protected thereIsNeighbourException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) { }
+    }
 	/// <summary>
 	/// Játékvezérlő
 	/// </summary>
@@ -91,18 +111,38 @@ namespace Catan.Model
 		/// </summary>
 		public void BuildRoad(int position, Hexagon h)
 		{
-			CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			h.SetRoad(CurrentPlayer, position);
-		}
+            var set1 = h.Settlements[position];
+            var set2 = h.Settlements[(position+5)%6];
+            if (set1 == null && set2 == null)
+            {
+                throw new NoSettlementException();
+            }
+            else
+            {
+                CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                h.SetRoad(CurrentPlayer, position);
+            }
+        }
 
 		/// <summary>
 		/// Település építése
 		/// </summary>
 		public void BuildSettlement(int position, Hexagon h)
 		{
-			Settlement set = h.GetSettlement(position);
-			set = CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			h.SetTown(set, position);
+            var set1 = h.Settlements[position];
+            var set2 = h.Settlements[(position + 5) % 6];
+            var set3 = h.Neighbours[(position + 1) % 6].GetSettlement((position + 5) % 6);
+
+            if (set1 != null || set2 != null || set3 != null)
+            {
+                throw new thereIsNeighbourException();
+            }
+            else
+            {
+                Settlement set = h.GetSettlement(position);
+                set = CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                h.SetTown(set, position);
+            }
 		}
 
 		/// <summary>
