@@ -143,7 +143,7 @@ namespace Catan.ViewModel
 					() =>
 					{
 						GameController.Instance.Step();
-						OnPropertyChanged(() => CurrentPlayer, () => TradeContext);
+						OnPropertyChanged(() => CurrentPlayer, () => TradeContext, () => DiceResult);
 					}));
 			}
 		}
@@ -203,6 +203,14 @@ namespace Catan.ViewModel
 			foreach (var cell in GameCells)
 				if (cell != null)
 					cell.Refresh();
+		}
+
+		public int[] DiceResult
+		{
+			get
+			{
+				return new[] { GameController.Instance.Dobas1, GameController.Instance.Dobas2 };
+			}
 		}
 	}
 }
