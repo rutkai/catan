@@ -214,7 +214,7 @@ namespace Catan.Model
 					}
 				}
 			}
-		}*/
+		}
 
 		/// <summary>
 		/// Betakarítja a kezdõ nyersanyagokat (a várossal szomszédos mezõkrõl 1-1 => town.
@@ -226,7 +226,7 @@ namespace Catan.Model
 			{
 				CollectMaterials(i);
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// A játékos pontszáma.
