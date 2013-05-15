@@ -175,23 +175,31 @@ namespace Catan.Model
 					h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow() - 1)));
 				}
 				//1. szomszéd
-				if (h.Id.getRow() == 0 && h.Id.getCol() >= 3)
+				if ((h.Id.getRow() == 0 && h.Id.getCol() >= 3) || h.Id.getCol() == 6)
 				{
 					h.Neighbours.Add(null);
 				}
-				else
-				{
-					h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow() - 1)));
-				}
+                else if (h.Id.getCol() < 3)
+                {
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow())));
+                }
+                else
+                {
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow()-1)));
+                }
 				//2. szomszéd
-				if (h.Id.getCol() == 6 && h.Id.getCol() + h.Id.getRow() == 9)
+				if (h.Id.getCol() == 6 || h.Id.getCol() + h.Id.getRow() == 9)
 				{
 					h.Neighbours.Add(null);
 				}
-				else
-				{
-					h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 || x.Id.getRow() == h.Id.getRow())));
-				}
+                else if (h.Id.getCol() < 3)
+                {
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow()+1)));
+                }
+                else
+                {
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow())));
+                }
 				//3. szomszéd
 				if (h.Id.getCol() + 3 == h.Id.getRow() || h.Id.getCol() + h.Id.getRow() == 9)
 				{
@@ -206,19 +214,27 @@ namespace Catan.Model
 				{
 					h.Neighbours.Add(null);
 				}
-				else
-				{
-					h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
-				}
+                else if (h.Id.getCol() <= 3)
+                {
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
+                }
+                else
+                {
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow()+1)));
+                }
 				//5. szomszéd
 				if ((h.Id.getCol() <= 3 && h.Id.getRow() == 0) || h.Id.getCol() == 0)
 				{
 					h.Neighbours.Add(null);
 				}
-				else
-				{
-					h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow() - 1)));
-				}
+                else if (h.Id.getCol() <= 3)
+                {
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow()-1)));
+                }
+                else
+                { 
+                    h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
+                }
 			}
 		}
 	}
