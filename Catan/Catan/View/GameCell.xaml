@@ -53,9 +53,9 @@
 										X2="0.5"
 										Y2="0"
 										ToolTip="1"
-										Tag="{Binding Roads[0]}">
+										Tag="{Binding Roads[5]}">
 								<Line.Stroke>
-									<SolidColorBrush Color="{Binding Path=Roads[0].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+									<SolidColorBrush Color="{Binding Path=Roads[5].Color, Converter={StaticResource PlayerColorValueConverter}}" />
 								</Line.Stroke>
 							</Line>
 
@@ -64,9 +64,9 @@
 										X2="1.5"
 										Y2="0"
 										ToolTip="2"
-										Tag="{Binding Roads[1]}">
+										Tag="{Binding Roads[0]}">
 								<Line.Stroke>
-									<SolidColorBrush Color="{Binding Path=Roads[1].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+									<SolidColorBrush Color="{Binding Path=Roads[0].Color, Converter={StaticResource PlayerColorValueConverter}}" />
 								</Line.Stroke>
 							</Line>
 
@@ -75,9 +75,9 @@
 										X2="2"
 										Y2="0.86"
 										ToolTip="3"
-										Tag="{Binding Roads[2]}">
+										Tag="{Binding Roads[1]}">
 								<Line.Stroke>
-									<SolidColorBrush Color="{Binding Path=Roads[2].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+									<SolidColorBrush Color="{Binding Path=Roads[1].Color, Converter={StaticResource PlayerColorValueConverter}}" />
 								</Line.Stroke>
 							</Line>
 
@@ -86,9 +86,9 @@
 										X2="1.5"
 										Y2="1.73"
 										ToolTip="4"
-										Tag="{Binding Roads[3]}">
+										Tag="{Binding Roads[2]}">
 								<Line.Stroke>
-									<SolidColorBrush Color="{Binding Path=Roads[3].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+									<SolidColorBrush Color="{Binding Path=Roads[2].Color, Converter={StaticResource PlayerColorValueConverter}}" />
 								</Line.Stroke>
 							</Line>
 
@@ -97,9 +97,9 @@
 										X2="0.5"
 										Y2="1.73"
 										ToolTip="5"
-										Tag="{Binding Roads[4]}">
+										Tag="{Binding Roads[3]}">
 								<Line.Stroke>
-									<SolidColorBrush Color="{Binding Path=Roads[4].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+									<SolidColorBrush Color="{Binding Path=Roads[3].Color, Converter={StaticResource PlayerColorValueConverter}}" />
 								</Line.Stroke>
 							</Line>
 
@@ -108,9 +108,9 @@
 										X2="0"
 										Y2="0.86"
 										ToolTip="6"
-										Tag="{Binding Roads[5]}">
+										Tag="{Binding Roads[4]}">
 								<Line.Stroke>
-									<SolidColorBrush Color="{Binding Path=Roads[5].Color, Converter={StaticResource PlayerColorValueConverter}}" />
+									<SolidColorBrush Color="{Binding Path=Roads[4].Color, Converter={StaticResource PlayerColorValueConverter}}" />
 								</Line.Stroke>
 							</Line>
 						</ItemsControl>
@@ -435,7 +435,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="0" />
+									CommandParameter="5" />
 
 					<Button Content="2"
 									Grid.Column="1"
@@ -443,7 +443,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="1" />
+									CommandParameter="0" />
 
 					<Button Content="3"
 									Grid.Column="2"
@@ -451,7 +451,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="2" />
+									CommandParameter="1" />
 
 					<Button Content="4"
 									Grid.Column="0"
@@ -459,7 +459,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="5" />
+									CommandParameter="4" />
 
 					<Button Content="5"
 									Grid.Column="1"
@@ -467,7 +467,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="4" />
+									CommandParameter="3" />
 
 					<Button Content="6"
 									Grid.Column="2"
@@ -475,7 +475,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
-									CommandParameter="3" />
+									CommandParameter="2" />
 
 				</Grid>
 
