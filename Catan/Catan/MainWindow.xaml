@@ -25,7 +25,6 @@
 					<ItemsPanelTemplate>
 						<View:GameCanvas Rows="{Binding TableSize.Width}"
 														 Columns="{Binding TableSize.Height}"
-														 Margin="200, 100, 200, 100"
 														 IsItemsHost="True" />
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
@@ -191,12 +190,11 @@
 		<Border BorderBrush="Black"
 						BorderThickness="2 0 0 2"
 						VerticalAlignment="Top"
-						Padding="10"
+						Padding="5"
 						MinWidth="150"
 						CornerRadius="0 0 0 10"
 						Visibility="Visible"
 						HorizontalAlignment="Right"
-						Height="277"
 						Width="173">
 			<Border.Background>
 				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
@@ -215,7 +213,8 @@
 					</Style>
 				</StackPanel.Resources>
 
-				<Label Content="Kockadobás eredménye:" />
+				<TextBlock Foreground="White"
+									 FontWeight="Bold">Kockadobás eredménye</TextBlock>
 				<StackPanel HorizontalAlignment="Center"
 										VerticalAlignment="Center"
 										Orientation="Horizontal">
@@ -233,10 +232,12 @@
 								 FontWeight="Bold" />
 				</StackPanel>
 				<TextBlock Text="{Binding CurrentPlayer.Name}" />
-				<Button Command="{Binding ShowNewGameWindowCommand}"
+				<!--Button Command="{Binding ShowNewGameWindowCommand}"
 								Height="25"
-								Content="Új játék" />
-				<TextBlock RenderTransformOrigin="-0.684,0.787"><Run Text="Arany: " /><InlineUIContainer>
+								Content="Új játék" /-->
+				<TextBlock RenderTransformOrigin="-0.684,0.787">
+						<Run Text="Arany: " />
+						<InlineUIContainer>
               <TextBlock Text="{Binding CurrentPlayer.Gold}" />
             </InlineUIContainer></TextBlock>
 				<Button Command="{Binding ShowTradeWindowCommand}"

@@ -35,7 +35,7 @@ namespace Catan.ViewModel
 			get { return TradeItem.Quantity; }
 			set
 			{
-				TradeItem.Quantity = value;
+				TradeItem.Quantity = value < Player.Materials[Material] ? value : Player.Materials[Material];
 				OnPropertyChanged(() => Quantity);
 			}
 		}
@@ -92,6 +92,20 @@ namespace Catan.ViewModel
 		}
 
 		/// <summary>
+		/// Elérhető nyersanyagok maximuma
+		/// </summary>
+		public int Maximum
+		{
+			get
+			{
+				if (Player != null && Player.Materials.ContainsKey(Material))
+					return Player.Materials[Material];
+
+				return 0;
+			}
+		}
+
+		/// <summary>
 		/// Vásárlás parancs
 		/// </summary>
 		public DelegateCommand<int?> BuyCommand
@@ -105,15 +119,26 @@ namespace Catan.ViewModel
 								if (quantity.HasValue)
 								{
 									if (Price * quantity.Value > TradeContext.GameTableContext.CurrentPlayer.Gold)
-										Message = "Nincs elég aranyad megvásárolni!";
+										TradeContext.GameTableContext.WindowService.ShowMessageBox("Nincs elég aranyad megvásárolni!", "Kereskedelem");
 									else
 									{
 										var tradePrice = Price * quantity.Value;
-										Quantity -= quantity.Value;
 										if (Player != null)
 										{
+											if (Player.Materials.ContainsKey(Material))
+											{
+												Player.Materials[Material] -= quantity.Value;
+											}
+											var currentPlayer = TradeContext.GameTableContext.CurrentPlayer;
+
+											if (currentPlayer.Materials.ContainsKey(Material))
+												currentPlayer.Materials[Material] += quantity.Value;
+											else
+												currentPlayer.Materials.Add(Material, quantity.Value);
+
+											currentPlayer.Gold -= tradePrice;
 											Player.Gold += tradePrice;
-											TradeContext.GameTableContext.CurrentPlayer.Gold -= tradePrice;
+											Quantity -= quantity.Value;
 										}
 									}
 								}

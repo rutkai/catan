@@ -108,9 +108,20 @@ namespace Catan.Model
 			Settlements.Add(Settlement);
 		}
 
-		public void AddTradeItem(int price, int quantity, Material material)
+		public bool AddTradeItem(int price, int quantity, Material material)
 		{
-			TradeItems.Add(material, new TradeItem { Material = material, Player = this, Price = price, Quantity = quantity });
+			if (Materials.ContainsKey(material))
+			{
+				TradeItems.Add(material, new TradeItem
+											 {
+												 Material = material,
+												 Player = this,
+												 Price = price,
+												 Quantity = quantity,
+											 });
+				return true;
+			}
+			return false;
 		}
 
 		/// <summary>

@@ -22,16 +22,6 @@ namespace Catan.ViewModel
 		{
 			GameTableContext = context;
 			Player = player;
-
-			if (!Player.TradeItems.ContainsKey(Material.Wool))
-				Player.TradeItems.Add(Material.Wool,
-									  new TradeItem
-										  {
-											  Material = Material.Wool,
-											  Player = GameTableContext.CurrentPlayer,
-											  Price = 100,
-											  Quantity = 10
-										  });
 		}
 
 		/// <summary>
@@ -105,7 +95,13 @@ namespace Catan.ViewModel
 					() => new DelegateCommand<object>(
 								material =>
 								{
-									Player.AddTradeItem(1, 1, (Material)material);
+									if (Player != null)
+									{
+										if (!Player.AddTradeItem(1, 1, (Material)material))
+											GameTableContext.WindowService.ShowMessageBox("Nincs ilyen nyersanyagod raktáron!", "Kevés a nyersanyag");
+										
+										Player.Materials[(Material)material]--;
+									}
 									OnPropertyChanged(() => AvailableTradeItems, () => MyTradeItems);
 								},
 								material => material is Material && AvailableTradeItems.Count() != 0

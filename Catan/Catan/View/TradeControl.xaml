@@ -31,7 +31,7 @@
 											ItemsSource="{Binding AvailableTradeItems}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate DataType="ComboBoxItem">
-									<ComboBoxItem Content="{Binding}" />
+									<ComboBoxItem Content="{Binding Converter={StaticResource materialToStringConverter}}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
@@ -104,9 +104,9 @@
 															 Text="{Binding Material, Converter={StaticResource materialToStringConverter}}"
 															 Margin="0 0 10 0" />
 										<xctk:IntegerUpDown Grid.Column="1"
-																				Minimum="0"
+																				Minimum="1"
 																				ToolTip="Mennyivel szeretnél kereskedni?"
-																				Value="{Binding Quantity, Mode=TwoWay}"
+																				Value="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 																				Margin="0 0 10 0" />
 										<xctk:IntegerUpDown Minimum="1"
 																				Grid.Column="2"

@@ -78,9 +78,8 @@ namespace Catan.View
 						x = column * element.DesiredSize.Width * 1.5 + element.DesiredSize.Width * 0.75;
 
 					y = row * element.DesiredSize.Height * 0.5;*/
-
-					var x = column * element.DesiredSize.Width * 0.75;
-					var y = (row + 0.5 * Math.Abs(column - Math.Floor(Columns / 2.0))) * element.DesiredSize.Height;
+					var x = arrangeSize.Width / 2 - 0.5 * Columns * (element.DesiredSize.Width * 0.75) + column * element.DesiredSize.Width * 0.75;
+					var y = arrangeSize.Height / 2 - 0.5 * Rows * element.DesiredSize.Height + (row + 0.5 * Math.Abs(column - Math.Floor(Columns / 2.0))) * element.DesiredSize.Height;
 
 					element.Arrange(new Rect(new Point(x, y), element.DesiredSize));
 
