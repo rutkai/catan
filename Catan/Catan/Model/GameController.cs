@@ -82,7 +82,6 @@ namespace Catan.Model
 		{
 			CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			h.SetRoad(CurrentPlayer, position);
-			h.Neighbours[(position + 3) % 6].SetRoad(CurrentPlayer, (position + 3) % 6);
 		}
 
 		/// <summary>
@@ -93,10 +92,6 @@ namespace Catan.Model
 			Settlement set = h.GetSettlement(position);
 			set = CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			h.SetTown(set, position);
-
-			var hexagon = h.Neighbours[(position + 3) % 6];
-			if (hexagon != null)
-				hexagon.SetTown(set, (position + 3) % 6);
 		}
 
 		/// <summary>
@@ -161,7 +156,6 @@ namespace Catan.Model
 			Settlement set = h.GetSettlement(position);
 			CurrentPlayer.UpgradeSettlement(set);
 			h.SetTown(set, position);
-			h.Neighbours[(position + 3) % 6].SetTown(set, (position + 3) % 6);
 		}
 
 		/// <summary>

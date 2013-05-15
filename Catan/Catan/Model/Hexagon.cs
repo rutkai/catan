@@ -155,8 +155,14 @@ namespace Catan.Model
 		/// <param name="position">hely</param>
 		public void SetRoad(Player player, int position)
 		{
-			if (position >= 0 && position <= 5)
-				Roads[position] = player;
+            if (position >= 0 && position <= 5)
+            {
+                Roads[position] = player;
+                var hexagon = Neighbours[position];
+                if (hexagon!= null)
+                    Neighbours[position].SetRoad(player, (position + 3) % 6);
+            }
+			
 		}
 
 		/// <summary>
@@ -166,8 +172,15 @@ namespace Catan.Model
 		/// <param name="position"></param>
 		public void SetTown(Settlement settlement, int position)
 		{
-			if (position >= 0 && position <= 5)
-				Settlements[position] = settlement;
+            if (position >= 0 && position <= 5)
+            {
+                Settlements[position] = settlement;
+                var hexagon = Neighbours[position];
+                if (hexagon != null)
+                    hexagon.SetTown(settlement, (position + 3) % 6);
+            }
+				
+
 		} 
 
 	}
