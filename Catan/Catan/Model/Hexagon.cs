@@ -199,15 +199,18 @@ namespace Catan.Model
             {
                 foreach (Settlement sett in Settlements)
                 {
-                    if (sett.GetType().ToString() == "Settlement")
+                    if (sett != null)
                     {
-                        materials.Add(this.Material, 1);
+                        if (sett.GetType().ToString() == "Settlement")
+                        {
+                            materials.Add(this.Material, 1);
+                        }
+                        else
+                        {
+                            materials.Add(this.Material, 2);
+                        }
+                        sett.Owner.AddMaterials(materials);
                     }
-                    else
-                    {
-                        materials.Add(this.Material, 2);
-                    }
-                    sett.Owner.AddMaterials(materials);
                     materials.Clear();
                 }
             }
