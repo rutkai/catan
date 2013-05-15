@@ -175,9 +175,14 @@ namespace Catan.Model
             if (position >= 0 && position <= 5)
             {
                 Settlements[position] = settlement;
-                var hexagon = Neighbours[position];
-                if (hexagon != null)
-                    hexagon.Settlements[(position + 3) % 6]=settlement;
+                var hexagon1 = Neighbours[position];
+                if (hexagon1 != null)
+                    hexagon1.Settlements[(position + 2) % 6]=settlement;
+                var hexagon2 = Neighbours[(position + 1) % 6];
+                if (hexagon2 != null)
+                {
+                    hexagon2.Settlements[(position + 4) % 6] = settlement;
+                }
             }
 				
 
