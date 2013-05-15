@@ -385,8 +385,17 @@
 
 					<Grid.Resources>
 						<Style TargetType="Button">
+							<Style.Triggers>
+								<Trigger Property="Tag"
+												 Value="{x:Null}">
+									<Setter Property="Visibility"
+													Value="Visible" />
+								</Trigger>
+							</Style.Triggers>
 							<Setter Property="ToolTip"
 											Value="Építsd ide az utat!" />
+							<Setter Property="Visibility"
+											Value="Hidden" />
 							<Setter Property="Template">
 								<Setter.Value>
 									<ControlTemplate TargetType="Button">
@@ -435,6 +444,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
+									Tag="{Binding Roads[5]}"
 									CommandParameter="5" />
 
 					<Button Content="2"
@@ -443,6 +453,7 @@
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
 									Command="{Binding BuildRoadCommand}"
+									Tag="{Binding Roads[0]}"
 									CommandParameter="0" />
 
 					<Button Content="3"
@@ -450,6 +461,7 @@
 									Grid.Row="0"
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
+									Tag="{Binding Roads[1]}"
 									Command="{Binding BuildRoadCommand}"
 									CommandParameter="1" />
 
@@ -458,6 +470,7 @@
 									Grid.Row="1"
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
+									Tag="{Binding Roads[4]}"
 									Command="{Binding BuildRoadCommand}"
 									CommandParameter="4" />
 
@@ -466,6 +479,7 @@
 									Grid.Row="1"
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
+									Tag="{Binding Roads[3]}"
 									Command="{Binding BuildRoadCommand}"
 									CommandParameter="3" />
 
@@ -474,6 +488,7 @@
 									Grid.Row="1"
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Stretch"
+									Tag="{Binding Roads[2]}"
 									Command="{Binding BuildRoadCommand}"
 									CommandParameter="2" />
 

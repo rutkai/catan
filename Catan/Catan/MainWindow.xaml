@@ -170,9 +170,12 @@
 							<ProgressBar Minimum="0"
 													 Maximum="20"
 													 Background="Green"
-													 Foreground="LightGreen"
+													 Foreground="DarkGreen"
 													 Value="{Binding Item2, Mode=OneWay}" />
 							<TextBlock VerticalAlignment="Center"
+												 Foreground="White"
+												 FontWeight="Bold"
+												 Margin="0 3 0 3"
 												 HorizontalAlignment="Center">
 								<TextBlock Text="{Binding Item1, Mode=OneWay, Converter={StaticResource materialToStringConverter}}" />
 								(<TextBlock Text="{Binding Item2, Mode=OneWay}" />)
