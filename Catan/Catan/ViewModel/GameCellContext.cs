@@ -199,28 +199,21 @@ namespace Catan.ViewModel
 					() => new DelegateCommand<string>(
 						index =>
 						{
-							if (string.IsNullOrWhiteSpace(index))
+							try
 							{
-								GameTable.SelectedGameCell = this;
-								BuildRoadMode = true;
-							}
-							else
-							{
-								try
+								int result;
+								if (int.TryParse(index, out result))
 								{
-									int result;
-									if (int.TryParse(index, out result))
-									{
-										GameController.Instance.BuildRoad(result, _Hexagon);
-										GameTable.Refresh();
-									}
-								}
-								catch (NotEnoughMaterialsException ex)
-								{
-									GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
+									GameController.Instance.BuildRoad(result, _Hexagon);
+									GameTable.Refresh();
 								}
 							}
-						}));
+							catch (Exception ex)
+							{
+								GameTable.WindowService.ShowMessageBox(ex.Message, "Catan");
+							}
+						},
+						index => !string.IsNullOrWhiteSpace(index)));
 			}
 		}
 
@@ -235,28 +228,21 @@ namespace Catan.ViewModel
 					() => new DelegateCommand<string>(
 						index =>
 						{
-							if (string.IsNullOrWhiteSpace(index))
+							try
 							{
-								GameTable.SelectedGameCell = this;
-								BuildTownMode = true;
-							}
-							else
-							{
-								try
+								int result;
+								if (int.TryParse(index, out result))
 								{
-									int result;
-									if (int.TryParse(index, out result))
-									{
-										GameController.Instance.BuildSettlement(result, _Hexagon);
-										GameTable.Refresh();
-									}
-								}
-								catch (NotEnoughMaterialsException ex)
-								{
-									GameTable.WindowService.ShowMessageBox("Nincs elég nyersanyag!", "Catan");
+									GameController.Instance.BuildSettlement(result, _Hexagon);
+									GameTable.Refresh();
 								}
 							}
-						}));
+							catch (Exception ex)
+							{
+								GameTable.WindowService.ShowMessageBox(ex.Message, "Catan");
+							}
+						},
+						index => !string.IsNullOrWhiteSpace(index)));
 			}
 		}
 

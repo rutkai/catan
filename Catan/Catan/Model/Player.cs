@@ -2,26 +2,6 @@ using System;
 using System.Collections.Generic;
 namespace Catan.Model
 {
-	public class NotEnoughMaterialsException : System.Exception
-	{
-		public NotEnoughMaterialsException() : base() { }
-		public NotEnoughMaterialsException(string message) : base(message) { }
-		public NotEnoughMaterialsException(string message, System.Exception inner) : base(message, inner) { }
-
-		protected NotEnoughMaterialsException(System.Runtime.Serialization.SerializationInfo info,
-			System.Runtime.Serialization.StreamingContext context) { }
-	}
-
-	public class ItsAlreadyTownException : System.Exception
-	{
-		public ItsAlreadyTownException() : base() { }
-		public ItsAlreadyTownException(string message) : base(message) { }
-		public ItsAlreadyTownException(string message, System.Exception inner) : base(message, inner) { }
-
-		protected ItsAlreadyTownException(System.Runtime.Serialization.SerializationInfo info,
-			System.Runtime.Serialization.StreamingContext context) { }
-	}
-
 	/// <summary>
 	/// Játékos osztály. Tartalmazza a játékosok beállításait.
 	/// </summary>
@@ -166,7 +146,7 @@ namespace Catan.Model
 			}
 			else
 			{
-				throw new NotEnoughMaterialsException();
+				throw new Exception("Nincs elég nyersanyag!");
 			}
 			return this;
 		}
@@ -188,7 +168,7 @@ namespace Catan.Model
 			}
 			else
 			{
-				throw new NotEnoughMaterialsException();
+				throw new Exception("Nincs elég nyersanyag!");
 			}
 			return set;
 		}
@@ -267,7 +247,7 @@ namespace Catan.Model
 				}
 				else
 				{
-					throw new NotEnoughMaterialsException();
+					throw new Exception("Nincs elég nyersanyag!");
 				}
 			}
 		}
@@ -307,12 +287,12 @@ namespace Catan.Model
 				}
 				else
 				{
-					throw new NotEnoughMaterialsException();
+					throw new Exception("Nincs elég nyersanyag!");
 				}
 			}
 			else
 			{
-				throw new ItsAlreadyTownException();
+				throw new Exception("Ez a település már város");
 			}
 		}
 
