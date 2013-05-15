@@ -16,6 +16,7 @@ namespace Catan.Model
         public int Dobas2 { get; set; }
 		private int WinnerScore = 10;
 		private int _CurrentPlayerIndex;
+        private Player Winner = null;
 
 		public List<Hexagon> Hexagons;
 
@@ -74,15 +75,22 @@ namespace Catan.Model
 		/// </summary>
 		public void Step()
 		{
-			if (Players != null && Players.Count() > 0)
-				_CurrentPlayerIndex = (_CurrentPlayerIndex + 1) % Players.Count();
-            Random dobas = new Random();
-            Dobas1 = dobas.Next(1, 7);
-            Dobas2 = dobas.Next(1, 7);
-            int result = Dobas1 + Dobas2;
-            foreach (Hexagon h in Hexagons)
+            if (HasWinner())
             {
-                h.Produce(result);
+                //vmit ki kéne íratni!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
+            else
+            {
+                if (Players != null && Players.Count() > 0)
+                    _CurrentPlayerIndex = (_CurrentPlayerIndex + 1) % Players.Count();
+                Random dobas = new Random();
+                Dobas1 = dobas.Next(1, 7);
+                Dobas2 = dobas.Next(1, 7);
+                int result = Dobas1 + Dobas2;
+                foreach (Hexagon h in Hexagons)
+                {
+                    h.Produce(result);
+                }
             }
 		}
 
@@ -145,6 +153,7 @@ namespace Catan.Model
 				if (p.GetPoints() >= WinnerScore)
 				{
 					isWinner = true;
+                    Winner = p;
 				}
 			}
 			return isWinner;
@@ -169,15 +178,8 @@ namespace Catan.Model
 				Players.ToArray()[i] = temp;
 
 			}
-
-			PlaceInitial();
 		}
 
-
-		public void PlaceInitial()
-		{
-
-		}
 
 		/// <summary>
 		/// Település fejlesztése
