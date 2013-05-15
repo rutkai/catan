@@ -179,7 +179,7 @@
                 
                 <Label Content="Kockadobás eredménye:"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" >
-                    <Label Content="1" Name="Dobas1" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
+                    <Label Content="1" Name="Dobas1" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
                     <Label Content="1" Name="Dobas2" Width="25" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
                 </StackPanel>
                 <TextBlock Text="{Binding CurrentPlayer.Name}" />

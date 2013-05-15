@@ -11,6 +11,9 @@ namespace Catan.Model
 	/// </summary>
 	public class GameController
 	{
+
+        public int Dobas1 { get; set; }
+        public int Dobas2 { get; set; }
 		private int WinnerScore = 10;
 		private int _CurrentPlayerIndex;
 
@@ -75,8 +78,8 @@ namespace Catan.Model
 				_CurrentPlayerIndex = (_CurrentPlayerIndex + 1) % Players.Count();
             Random dobas1 = new Random();
             Random dobas2 = new Random();
-            int result = dobas1.Next(1, 7) + dobas2.Next(1,7);
-            
+            Dobas1 = dobas1.Next(1, 7);
+            Dobas2 = dobas2.Next(1, 7);
 		}
 
 		/// <summary>
