@@ -79,6 +79,11 @@ namespace Catan.Model
             Random dobas = new Random();
             Dobas1 = dobas.Next(1, 7);
             Dobas2 = dobas.Next(1, 7);
+            int result = Dobas1 + Dobas2;
+            foreach (Hexagon h in Hexagons)
+            {
+                Produce(result);
+            }
 		}
 
 		/// <summary>
