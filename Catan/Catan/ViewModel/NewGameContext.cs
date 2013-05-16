@@ -10,8 +10,10 @@ using Catan.View;
 using Catan.IFace;
 using Catan.ViewModel.Converters;
 
-namespace Catan.ViewModel {
-	public class NewGameContext : ViewModelBase {
+namespace Catan.ViewModel
+{
+	public class NewGameContext : ViewModelBase
+	{
 		/// <summary>
 		/// Új gombra tett akció
 		/// </summary>
@@ -44,7 +46,8 @@ namespace Catan.ViewModel {
 		/// <param name="context">Játéktábla nézetmodellje</param>
 		/// <param name="size">Játéktábla mérete</param>
 		/// <param name="service">Nézethez hozzáférést nyújtó interfész</param>
-		public NewGameContext(GameTableContext context, Size size, IWindowService service) {
+		public NewGameContext(GameTableContext context, Size size, IWindowService service)
+		{
 			GameTableContext = context;
 			tableSize = size;
 			WindowService = service;
@@ -52,7 +55,8 @@ namespace Catan.ViewModel {
 
 			Players = new Dictionary<PlayerColor, Player>();
 			EnabledPlayers = new Dictionary<PlayerColor, bool>();
-			foreach (PlayerColor color in Enum.GetValues(typeof(PlayerColor))) {
+			foreach (PlayerColor color in Enum.GetValues(typeof(PlayerColor)))
+			{
 				Players.Add(color, new Player(color.ToString(), color));
 				EnabledPlayers.Add(color, false);
 			}
@@ -61,7 +65,8 @@ namespace Catan.ViewModel {
 		/// <summary>
 		/// Játékosok tömbje
 		/// </summary>
-		public Dictionary<PlayerColor, Player> Players {
+		public Dictionary<PlayerColor, Player> Players
+		{
 			get;
 			private set;
 		}
@@ -69,7 +74,8 @@ namespace Catan.ViewModel {
 		/// <summary>
 		/// Színek aktív státuszát tartalmazó tömb
 		/// </summary>
-		public Dictionary<PlayerColor, bool> EnabledPlayers {
+		public Dictionary<PlayerColor, bool> EnabledPlayers
+		{
 			get;
 			private set;
 		}
@@ -77,8 +83,10 @@ namespace Catan.ViewModel {
 		/// <summary>
 		/// A játékosok színeit visszaadó getter
 		/// </summary>
-		public IEnumerable<PlayerColor> PlayerColors {
-			get {
+		public IEnumerable<PlayerColor> PlayerColors
+		{
+			get
+			{
 				return new[] {
 								PlayerColor.Blue, PlayerColor.Red, PlayerColor.Green, PlayerColor.Orange
 				};
@@ -88,13 +96,17 @@ namespace Catan.ViewModel {
 		/// <summary>
 		/// Aktív színek állítását figyelő metódus
 		/// </summary>
-		public string SelectedPlayerValues {
-			get {
+		public string SelectedPlayerValues
+		{
+			get
+			{
 				return String.Join(",", _SelectedPlayers.ToArray());
 			}
-			set {
+			set
+			{
 				_SelectedPlayers = new List<string>(value.Split(','));
-				foreach (PlayerColor color in Enum.GetValues(typeof(PlayerColor))) {
+				foreach (PlayerColor color in Enum.GetValues(typeof(PlayerColor)))
+				{
 					EnabledPlayers[color] = _SelectedPlayers.Contains(color.ToString());
 				}
 				OnPropertyChanged(() => EnabledPlayers);
@@ -104,31 +116,40 @@ namespace Catan.ViewModel {
 		/// <summary>
 		/// Új játék gombra kattintáskor lefutó akció
 		/// </summary>
-		public ActionCommand NewGameCommand {
-			get {
+		public ActionCommand NewGameCommand
+		{
+			get
+			{
 				return Lazy.Init(ref _NewGame,
-					() => new ActionCommand(() => {
-							List<Player> players = new List<Player>();
-							foreach (PlayerColor color in Enum.GetValues(typeof(PlayerColor))) {
-								if (EnabledPlayers[color]) {
-									players.Add(Players[color]);
-								}
+					() => new ActionCommand(() =>
+					{
+						List<Player> players = new List<Player>();
+						foreach (PlayerColor color in Enum.GetValues(typeof(PlayerColor)))
+						{
+							if (EnabledPlayers[color])
+							{
+								players.Add(Players[color]);
 							}
+						}
 
-							if (players.Count > 1) {
-								GameController.Instance.Init((uint)tableSize.Width, players);
-								CloseCommand();
-							} else {
-								MessageBox.Show("Legalább két játékos kell!");
-							}
-						}));
+						if (players.Count > 1)
+						{
+							GameController.Instance.Init((uint)tableSize.Width, players);
+							CloseCommand();
+						}
+						else
+						{
+							MessageBox.Show("Legalább két játékos kell!");
+						}
+					}));
 			}
 		}
 
 		/// <summary>
 		/// Az ablak bezárását végző metódus
 		/// </summary>
-		protected void CloseCommand() {
+		protected void CloseCommand()
+		{
 			WindowService.Close();
 		}
 

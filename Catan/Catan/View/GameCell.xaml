@@ -170,7 +170,7 @@
 																 FontSize="13"
 																 FontWeight="Bold"
 																 ToolTip="{Binding Path=Tag.Owner.Name, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-																 Text="V" />
+																 Text="F" />
 										</Grid>
 									</ControlTemplate>
 								</Setter.Value>
