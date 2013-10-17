@@ -9,7 +9,7 @@ namespace Catan.ViewModel {
 	/// <summary>
 	/// Ablak bezáró service
 	/// </summary>
-	class WPFWindowService : IWindowService {
+	public class WPFWindowService : IWindowService {
 		/// <summary>
 		/// Ablak
 		/// </summary>

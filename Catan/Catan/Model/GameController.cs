@@ -194,7 +194,7 @@ namespace Catan.Model
         /// <summary>
         /// Beállítja az összes hexagon szomszédait
         /// </summary>
-        public void setAllNeighbours()
+        public void SetAllNeighbours()
         {
             foreach (Hexagon h in Hexagons)
             {
