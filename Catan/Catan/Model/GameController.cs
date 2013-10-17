@@ -101,14 +101,16 @@ namespace Catan.Model
         {
             var set1 = h.Settlements[position];
             var set2 = h.Settlements[(position + 5) % 6];
-            if (set1 != null && set1.Owner == this.CurrentPlayer || set2 != null && set2.Owner == this.CurrentPlayer)
-            {
-                throw new Exception("Csak település mellé lehet utat építeni!");
-            }
-            else
+            var road1 = h.Roads[(position +1) % 6];
+            var road2 = h.Roads[(position + 5) % 6];
+            if ((set1 != null && set1.Owner == CurrentPlayer || set2 != null && set2.Owner == CurrentPlayer) || road1.Color == CurrentPlayer.Color || road2.Color == CurrentPlayer.Color)
             {
                 CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 h.SetRoad(CurrentPlayer, position);
+            }
+            else
+            {
+                throw new Exception("Csak saját település vagy saját út mellé lehet utat építeni!");
             }
         }
 
