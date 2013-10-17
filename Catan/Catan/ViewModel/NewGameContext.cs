@@ -24,8 +24,6 @@ namespace Catan.ViewModel
         /// </summary>
         private List<string> _SelectedPlayers;
 
-        private int _TableSize;
-
         /// <summary>
         /// A játéktábla nézetmodellje
         /// </summary>
@@ -93,17 +91,6 @@ namespace Catan.ViewModel
 				};
             }
         }
-
-        public int TableSize
-        {
-            get { return _TableSize; }
-            set
-            {
-                _TableSize = value;
-                OnPropertyChanged(() => TableSize);
-            }
-        }
-
 
         /// <summary>
         /// Aktív színek állítását figyelő metódus
