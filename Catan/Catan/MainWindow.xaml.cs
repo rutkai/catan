@@ -23,7 +23,10 @@ namespace Catan
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        private void MainWindow_OnActivated(object sender, EventArgs e)
+        {
             var context = new GameTableContext(7, new WPFWindowService(this));
 
             /*context.GameCells = new List<GameCellContext>()
@@ -39,13 +42,13 @@ namespace Catan
             var random = new Random();
 
             var materials = new[]
-				                {
-									Material.Wood,
-									Material.Wool, 
-									Material.Clay, 
-									Material.Wheat, 
-									Material.Iron
-				                };
+            {
+                Material.Wood,
+                Material.Wool,
+                Material.Clay,
+                Material.Wheat,
+                Material.Iron
+            };
 
             for (var j = 0; j < 7; ++j) {
                 for (var i = 0; i < 7 - Math.Abs(3 - j); ++i) {
@@ -60,7 +63,8 @@ namespace Catan
             NewGameWindow newGameWindow = new NewGameWindow();
             var newGameContext = new NewGameContext(context, new Size(7, 7), new WPFWindowService(newGameWindow));
             newGameWindow.DataContext = newGameContext;
-            newGameWindow.ShowDialog();
+            if (newGameWindow.ShowDialog() == false)
+                Close();
 
             DataContext = context;
         }

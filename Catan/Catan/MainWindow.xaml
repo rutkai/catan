@@ -5,6 +5,7 @@
 				xmlns:System="clr-namespace:System;assembly=mscorlib"
 				xmlns:ViewModel="clr-namespace:Catan.ViewModel"
 				xmlns:Converters="clr-namespace:Catan.ViewModel.Converters"
+				Loaded="MainWindow_OnActivated"
 				Title="Catan - The Game"
 				Height="700"
 				Width="800"
