@@ -74,7 +74,8 @@
 					 Grid.Column="0"
 					 Grid.Row="4"
 					 VerticalAlignment="Center">Narancs játékos neve:</Label>
-		<Label Grid.Column="0" Grid.Row="5">
+		<Label Grid.Column="0"
+					 Grid.Row="5">
 			Tábla mérete:
 		</Label>
 		<TextBox Name="txtPlayerName1"
@@ -106,7 +107,12 @@
 						 Text="{Binding Players[3].Name}"
 						 IsEnabled="{Binding EnabledPlayers[3]}" />
 
-		<ComboBox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+		<ComboBox Grid.ColumnSpan="2"
+							Grid.Column="1"
+							Grid.Row="5"
+							SelectedIndex="0"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Center">
 			<ComboBoxItem Content="Kicsi">
 				<ComboBoxItem.Tag>
 					<system:Int32>5</system:Int32>
