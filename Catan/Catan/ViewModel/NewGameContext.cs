@@ -132,15 +132,22 @@ namespace Catan.ViewModel
 							}
 						}
 
-						if (players.Count > 1)
+						if (players.Count <= 1)
 						{
-							GameController.Instance.Init((uint)tableSize.Width, players);
-							CloseCommand();
+                            MessageBox.Show("Legalább két játékos kell!");
 						}
-						else
+                        else if (players.Any(x => x.Name.Length < 2))
+                        {
+                            MessageBox.Show("A játékosok nevének legalább kettő karakter hosszúnak kell lenni!");
+                        }
+                        else
 						{
-							MessageBox.Show("Legalább két játékos kell!");
+                            GameController.Instance.Init((uint)tableSize.Width, players);
+                            CloseCommand();
 						}
+
+                        
+
 					}));
 			}
 		}
