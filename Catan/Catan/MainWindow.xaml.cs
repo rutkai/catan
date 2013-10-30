@@ -63,8 +63,8 @@ namespace Catan
             NewGameWindow newGameWindow = new NewGameWindow();
             var newGameContext = new NewGameContext(context, new Size(7, 7), new WPFWindowService(newGameWindow));
             newGameWindow.DataContext = newGameContext;
-            if (newGameWindow.ShowDialog() == false)
-                Close();
+
+            newGameWindow.ShowDialog();
 
             DataContext = context;
         }

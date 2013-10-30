@@ -137,9 +137,6 @@ namespace Catan.ViewModel
                             GameController.Instance.Init((uint)tableSize.Width, players);
                             CloseCommand();
                         }
-
-
-
                     }));
             }
         }

@@ -134,6 +134,7 @@
 								 Grid.Column="2"
 								 Grid.Row="6">
 			<Button IsDefault="True"
+							IsCancel="False"
 							Command="{Binding NewGameCommand}">Új játék</Button>
 
 			<Button IsCancel="True">Kilépés</Button>
