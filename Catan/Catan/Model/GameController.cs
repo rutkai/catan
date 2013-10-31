@@ -119,9 +119,11 @@ namespace Catan.Model
         /// </summary>
         public void BuildSettlement(int position, Hexagon h)
         {
-            var set1 = h.Settlements[(position + 1) % 6];
-            var set2 = h.Settlements[(position + 5) % 6];
-            var set3 = h.Neighbours[(position + 1) % 6].GetSettlement((position + 5) % 6);
+            Settlement set1 = h.Settlements[(position + 1) % 6];
+            Settlement set2 = h.Settlements[(position + 5) % 6];
+            Settlement set3 = null;
+            if(h.Neighbours[(position + 1) % 6] != null)
+               set3 = h.Neighbours[(position + 1) % 6].GetSettlement((position + 5) % 6);
 
             if (set1 != null || set2 != null || set3 != null)
             {
@@ -129,9 +131,9 @@ namespace Catan.Model
             }
             else
             {
-                Settlement set = h.GetSettlement(position);
-                set = CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                h.SetTown(set, position);
+                    Settlement set = h.GetSettlement(position);
+                    set = CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    h.SetTown(set, position);
             }
         }
 
