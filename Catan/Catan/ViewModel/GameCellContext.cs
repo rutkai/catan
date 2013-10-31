@@ -210,7 +210,7 @@ namespace Catan.ViewModel
 							}
 							catch (Exception ex)
 							{
-								GameTable.WindowService.ShowMessageBox(ex.Message, "Catan");
+                                GameTable.WindowService.ShowMessageBox(ex.Message, "Catan"); 
 							}
 						},
 						index => !string.IsNullOrWhiteSpace(index)));

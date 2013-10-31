@@ -1,0 +1,18 @@
+szomszédos csúcsokra lehet települést építeni, ha eggyel nagyobb számú csúcson van a már létezõ település
+
+Kereskedelemnél angolul lehet kiválasztani a nyersanyagokat
+Enged úgy eladni nyersanyagok, hogy nincs elég (0-ról -1-re lelehet menni)
+	Ha túl sokat akarok eladni abból, amibõl nincs, akkor GameTableContext-ben 185. sorban ArgumentOutOfRangeExcetion vagy XamlParseException (Value must be greater than MinValue of 1)
+	Nem mindig tûnik el egyszerre a nyersanyag, bedobom a közösbe
+Nem lehet tovább lépni ha elfogy a nyersanyag (pl 5 település építése esetén)
+
+	
+Ha a sziget szélére kattintok település építésnél (ha nincs szomszéd vagy bizonoy esetekben, ah van akkor is): "Object reference not set to an instance of an object"
+
+Lehet névtelen játékos
+
+Nem bug:
+A nyersanyag progressbar 20-nál eléri a maximumot, de a darabszám megy tovább 
+Nagyban kihozza a nyolcszöget, de a kicsire is berajzolja a "Épit x" négyzeteket (direkt?)
+"Csak település mellé lehet utat építeni" - ez biztos? és ha igen, akkor nem csak saját mellé?
+	Ha a nyolcszög két szembenlévõ csúcsára teszek települést, nem lehet összekötni õket

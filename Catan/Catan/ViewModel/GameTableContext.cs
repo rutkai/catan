@@ -142,7 +142,15 @@ namespace Catan.ViewModel
 				return Lazy.Init(ref _StepCommand, () => new ActionCommand(
 					() =>
 					{
-						GameController.Instance.Step();
+                        try
+                        {
+                            GameController.Instance.Step();
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.Message);
+                            WindowService.Close();
+                        }
 						OnPropertyChanged(() => CurrentPlayer, 
 										  () => TradeContext, 
 										  () => DiceResult, 

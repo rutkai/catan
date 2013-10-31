@@ -77,7 +77,8 @@ namespace Catan.Model
         {
             if (HasWinner())
             {
-                //vmit ki kéne íratni!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                Player winner = Players.First(x => (x.GetPoints() >= WinnerScore));
+                throw new Exception("Játék vége! Nyert: " + winner.Name);
             }
             else
             {
