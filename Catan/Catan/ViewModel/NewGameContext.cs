@@ -30,14 +30,14 @@ namespace Catan.ViewModel
         public GameTableContext GameTableContext;
 
         /// <summary>
-        /// A tábla méretei
-        /// </summary>
-        protected Size tableSize;
-
-        /// <summary>
         /// A nézethez hozzáférést nyújtú interfész
         /// </summary>
         protected IWindowService WindowService;
+
+        /// <summary>
+        /// Tábla méretei
+        /// </summary>
+        protected int _TableSize;
 
         /// <summary>
         /// Konstruktor
@@ -46,10 +46,10 @@ namespace Catan.ViewModel
         /// <param name="context">Játéktábla nézetmodellje</param>
         /// <param name="size">Játéktábla mérete</param>
         /// <param name="service">Nézethez hozzáférést nyújtó interfész</param>
-        public NewGameContext(GameTableContext context, Size size, IWindowService service)
+        public NewGameContext(GameTableContext context, int size, IWindowService service)
         {
             GameTableContext = context;
-            tableSize = size;
+            TableSize = size;
             WindowService = service;
             _SelectedPlayers = new List<string>();
 
@@ -134,7 +134,7 @@ namespace Catan.ViewModel
                             MessageBox.Show("A játékosok nevének legalább kettő karakter hosszúnak kell lenni!");
                         }
                         else {
-                            GameController.Instance.Init((uint)tableSize.Width, players);
+                            GameController.Instance.Init(TableSize, players);
                             CloseCommand();
                         }
                     }));
@@ -149,5 +149,27 @@ namespace Catan.ViewModel
             WindowService.Close();
         }
 
+        public int TableSize
+        {
+            get { return _TableSize; }
+            set
+            {
+                _TableSize = value;
+                OnPropertyChanged(() => TableSize);
+            }
+        }
+
+        public int WinnerScore
+        {
+            get
+            {
+                return GameController.Instance.WinnerScore;
+            }
+            set
+            {
+                GameController.Instance.WinnerScore = value;
+                OnPropertyChanged(() => WinnerScore);
+            }
+        }
     }
 }

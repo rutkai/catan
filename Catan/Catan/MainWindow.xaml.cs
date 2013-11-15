@@ -61,7 +61,7 @@ namespace Catan
 
             GameController.Instance.SetAllNeighbours();
             NewGameWindow newGameWindow = new NewGameWindow();
-            var newGameContext = new NewGameContext(context, new Size(7, 7), new WPFWindowService(newGameWindow));
+            var newGameContext = new NewGameContext(context, 7, new WPFWindowService(newGameWindow));
             newGameWindow.DataContext = newGameContext;
 
             newGameWindow.ShowDialog();
