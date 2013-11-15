@@ -17,6 +17,7 @@ namespace Catan.Model
         public int WinnerScore = 9;
         private int _CurrentPlayerIndex;
         private Player Winner = null;
+        private int size = 7;
 
         public List<Hexagon> Hexagons;
 
@@ -202,6 +203,7 @@ namespace Catan.Model
         /// </summary>
         public void SetAllNeighbours()
         {
+            int half = (int)(Math.Floor(size/2.0));
             foreach (Hexagon h in Hexagons)
             {
                 //0. szomszéd
@@ -214,11 +216,11 @@ namespace Catan.Model
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow() - 1)));
                 }
                 //1. szomszéd
-                if ((h.Id.getRow() == 0 && h.Id.getCol() >= 3) || h.Id.getCol() == 6)
+                if ((h.Id.getRow() == 0 && h.Id.getCol() >= half) || h.Id.getCol() == size-1)
                 {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() < 3)
+                else if (h.Id.getCol() < half)
                 {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow())));
                 }
@@ -227,11 +229,11 @@ namespace Catan.Model
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow() - 1)));
                 }
                 //2. szomszéd
-                if (h.Id.getCol() == 6 || h.Id.getCol() + h.Id.getRow() == 9)
+                if (h.Id.getCol() == size-1 || h.Id.getCol() + h.Id.getRow() == size-1+half)
                 {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() < 3)
+                else if (h.Id.getCol() < half)
                 {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow() + 1)));
                 }
@@ -240,7 +242,7 @@ namespace Catan.Model
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow())));
                 }
                 //3. szomszéd
-                if (h.Id.getCol() + 3 == h.Id.getRow() || h.Id.getCol() + h.Id.getRow() == 9)
+                if (h.Id.getCol() + half == h.Id.getRow() || h.Id.getCol() + h.Id.getRow() == size-1+half)
                 {
                     h.Neighbours.Add(null);
                 }
@@ -249,11 +251,11 @@ namespace Catan.Model
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow() + 1)));
                 }
                 //4. szomszéd
-                if (h.Id.getCol() + 3 == h.Id.getRow() || h.Id.getCol() == 0)
+                if (h.Id.getCol() + half == h.Id.getRow() || h.Id.getCol() == 0)
                 {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() <= 3)
+                else if (h.Id.getCol() <= half)
                 {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
                 }
@@ -262,11 +264,11 @@ namespace Catan.Model
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow() + 1)));
                 }
                 //5. szomszéd
-                if ((h.Id.getCol() <= 3 && h.Id.getRow() == 0) || h.Id.getCol() == 0)
+                if ((h.Id.getCol() <= half && h.Id.getRow() == 0) || h.Id.getCol() == 0)
                 {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() <= 3)
+                else if (h.Id.getCol() <= half)
                 {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow() - 1)));
                 }
