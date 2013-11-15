@@ -55,7 +55,7 @@ namespace Catan.Model
         /// <summary>
         /// Játékvezérlő inicializálása
         /// </summary>
-        public void Init(uint mapSize, IEnumerable<Player> players)
+        public void Init(uint mapSize, int winnersc, IEnumerable<Player> players)
         {
             if (players == null)
                 throw new ArgumentNullException("players");
@@ -67,6 +67,7 @@ namespace Catan.Model
 
             Players = _players;
             _CurrentPlayerIndex = 0;
+            WinnerScore = winnersc;
             Map = new Map(mapSize);
         }
 

@@ -39,7 +39,7 @@ namespace Catan.ViewModel
         {
             //_BackgroundImage = new BitmapImage(new Uri("Images//sea_field.png"));
             _TableSize = (int)size;
-            GameController.Instance.Init(size, new[] { new Player("Gipsz Jakab", PlayerColor.Blue),
+            GameController.Instance.Init(size, 9, new[] { new Player("Gipsz Jakab", PlayerColor.Blue),
 														new Player("Játékos 2", PlayerColor.Red) });
 
             if (service == null)
