@@ -227,13 +227,13 @@ namespace Catan.Model
 			int point = 0;
 			foreach (Settlement s in Settlements)
 			{
-				if (s.GetType().ToString() == "Settlement")
+				if (s is Town)
 				{
-					point++;
+                    point += 2;
 				}
 				else
 				{
-					point += 2;
+                    point++;
 				}
 			}
 			if (LongestRoad)
