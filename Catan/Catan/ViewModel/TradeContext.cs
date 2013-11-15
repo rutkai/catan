@@ -44,7 +44,9 @@ namespace Catan.ViewModel
         /// </summary>
         public IEnumerable<TradeItemContext> MyTradeItems
         {
-            get { return Player.TradeItems.Values.Select(item => new TradeItemContext(this, item)).ToArray(); }
+            get { return Player.TradeItems.Values
+                               .Where(item => item.Quantity > 0)
+                               .Select(item => new TradeItemContext(this, item)).ToArray(); }
         }
 
         public IEnumerable<TradeItemContext> TradeItems

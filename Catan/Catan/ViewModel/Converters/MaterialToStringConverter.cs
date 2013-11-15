@@ -41,9 +41,12 @@ namespace Catan.ViewModel.Converters
 		/// <param name="value">The value produced by the binding source.</param><param name="targetType">The type of the binding target property.</param><param name="parameter">The converter parameter to use.</param><param name="culture">The culture to use in the converter.</param>
 		object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (!(value is Material))
-				throw new Exception("Nem megfelelő típusú a konvertálandó objektum!");
+            if (string.IsNullOrWhiteSpace(value.ToString()))
+                return Material.Clay;
 
+            if (!(value is Material))
+                throw new Exception("Nem megfelelő típusú a konvertálandó objektum!");
+         
 			return Convert((Material)value, targetType, parameter, culture);
 		}
 
