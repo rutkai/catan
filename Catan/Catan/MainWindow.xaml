@@ -9,7 +9,7 @@
 			<ItemsControl ItemsSource="{Binding GameCells}" ClipToBounds="True">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<View:GameCanvas Rows="{Binding TableSize.Width}" Columns="{Binding TableSize.Height}" IsItemsHost="True" />
+						<View:GameCanvas Rows="{Binding TableSize}" Columns="{Binding TableSize}" IsItemsHost="True" />
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 

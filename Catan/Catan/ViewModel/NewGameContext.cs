@@ -134,7 +134,7 @@ namespace Catan.ViewModel
                             MessageBox.Show("A játékosok nevének legalább kettő karakter hosszúnak kell lenni!");
                         }
                         else {
-                            GameController.Instance.Init(TableSize, players);
+                            GameController.Instance.Init((uint)TableSize, players);
                             CloseCommand();
                         }
                     }));

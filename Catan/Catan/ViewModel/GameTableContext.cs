@@ -23,7 +23,7 @@ namespace Catan.ViewModel
         private ActionCommand _ShowNewGameWindowCommand;
         private IEnumerable<GameCellContext> _GameCells;
         private GameCellContext _SelectedGameCell;
-        private Size _TableSize;
+        private int _TableSize;
         private DelegateCommand<GameCellContext> _SelectGameCellCommand;
         private ActionCommand _StepCommand;
         private ImageSource _BackgroundImage;
@@ -31,24 +31,15 @@ namespace Catan.ViewModel
         public IFace.IWindowService WindowService { get; set; }
 
         public GameTableContext(IFace.IWindowService service)
-            : this(5, 5, service)
+            : this(5, service)
         {
         }
 
         public GameTableContext(uint size, IWindowService service)
-            : this(size, size, service)
-        {
-
-        }
-
-        /// <summary>
-        /// Konstruktor, ami megkapja paraméteréül a tábla méretét
-        /// </summary>
-        private GameTableContext(uint width, uint height, IFace.IWindowService service)
         {
             //_BackgroundImage = new BitmapImage(new Uri("Images//sea_field.png"));
-            _TableSize = new Size(width, height);
-            GameController.Instance.Init(width, new[] { new Player("Gipsz Jakab", PlayerColor.Blue),
+            _TableSize = (int)size;
+            GameController.Instance.Init(size, new[] { new Player("Gipsz Jakab", PlayerColor.Blue),
 														new Player("Játékos 2", PlayerColor.Red) });
 
             if (service == null)
@@ -101,7 +92,7 @@ namespace Catan.ViewModel
         /// <summary>
         /// Tábla mérete
         /// </summary>
-        public Size TableSize
+        public int TableSize
         {
             get { return _TableSize; }
             set
