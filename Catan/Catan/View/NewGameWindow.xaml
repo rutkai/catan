@@ -29,21 +29,21 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<Label Name="lblPlayers" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Játékosok:</Label>
+		<Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Játékosok:</Label>
 		<xctk:CheckListBox x:Name="clbPlayers" Grid.Column="1" Grid.Row="0" SelectedItemsOverride="{Binding SelectedPlayers}" SelectedValue="{Binding SelectedPlayerValues}" ItemsSource="{Binding PlayerColors}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" BorderBrush="{x:Null}" />
-		<Label Name="lblPlayerName1" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Kék játékos neve:</Label>
-		<Label Name="lblPlayerName2" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Piros játékos neve:</Label>
-		<Label Name="lblPlayerName3" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Zöld játékos neve:</Label>
-		<Label Name="lblPlayerName4" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Narancs játékos neve:</Label>
+		<Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Kék játékos neve:</Label>
+		<Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Piros játékos neve:</Label>
+		<Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Zöld játékos neve:</Label>
+		<Label Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Narancs játékos neve:</Label>
 		<Label Grid.Column="0" Grid.Row="5">
 			Tábla mérete:
 		</Label>
-		<TextBox Name="txtPlayerName1" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[0].Name}" IsEnabled="{Binding EnabledPlayers[0]}" />
-		<TextBox Name="txtPlayerName2" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[1].Name}" IsEnabled="{Binding EnabledPlayers[1]}" />
-		<TextBox Name="txtPlayerName3" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[2].Name}" IsEnabled="{Binding EnabledPlayers[2]}" />
-		<TextBox Name="txtPlayerName4" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[3].Name}" IsEnabled="{Binding EnabledPlayers[3]}" />
+		<TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[0].Name}" IsEnabled="{Binding EnabledPlayers[0]}" />
+		<TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[1].Name}" IsEnabled="{Binding EnabledPlayers[1]}" />
+		<TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[2].Name}" IsEnabled="{Binding EnabledPlayers[2]}" />
+		<TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding Players[3].Name}" IsEnabled="{Binding EnabledPlayers[3]}" />
 
-		<ComboBox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+		<ComboBox SelectedValue="{Binding TableSize}" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedValuePath="Tag">
 			<ComboBoxItem Content="Kicsi">
 				<ComboBoxItem.Tag>
 					<system:Int32>5</system:Int32>
