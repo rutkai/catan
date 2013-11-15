@@ -1,42 +1,23 @@
-﻿<Window x:Class="Catan.MainWindow"
-				xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-				xmlns:View="clr-namespace:Catan.View"
-				xmlns:System="clr-namespace:System;assembly=mscorlib"
-				xmlns:ViewModel="clr-namespace:Catan.ViewModel"
-				xmlns:Converters="clr-namespace:Catan.ViewModel.Converters"
-				Loaded="MainWindow_OnActivated"
-				Title="Catan - The Game"
-				Height="700"
-				Width="800"
-				Top="20">
+﻿<Window x:Class="Catan.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:View="clr-namespace:Catan.View" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:ViewModel="clr-namespace:Catan.ViewModel" xmlns:Converters="clr-namespace:Catan.ViewModel.Converters" Loaded="MainWindow_OnActivated" Title="Catan - The Game" Height="700" Width="800" Top="20">
 	<Window.Resources>
 		<Converters:PlayerColorValueConverter x:Key="playerColorConverter" />
 		<Converters:MaterialToStringConverter x:Key="materialToStringConverter" />
 	</Window.Resources>
 	<Grid>
 
-		<Border BorderBrush="Black"
-						BorderThickness="2"
-						Background="LightBlue"
-						Visibility="Visible">
-			<ItemsControl ItemsSource="{Binding GameCells}"
-										ClipToBounds="True">
+		<Border BorderBrush="Black" BorderThickness="2" Background="LightBlue" Visibility="Visible">
+			<ItemsControl ItemsSource="{Binding GameCells}" ClipToBounds="True">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<View:GameCanvas Rows="{Binding TableSize.Width}"
-														 Columns="{Binding TableSize.Height}"
-														 IsItemsHost="True" />
+						<View:GameCanvas Rows="{Binding TableSize.Width}" Columns="{Binding TableSize.Height}" IsItemsHost="True" />
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 
 				<ItemsControl.ItemContainerStyle>
 					<Style TargetType="ContentPresenter">
 						<Style.Triggers>
-							<Trigger Property="IsMouseOver"
-											 Value="True">
-								<Setter Property="Panel.ZIndex"
-												Value="1000000" />
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Panel.ZIndex" Value="1000000" />
 							</Trigger>
 						</Style.Triggers>
 					</Style>
@@ -44,22 +25,14 @@
 
 				<ItemsControl.ItemTemplate>
 					<DataTemplate DataType="ViewModel:GameCellContext">
-						<Button DataContext="{Binding}"
-										Width="80"
-										Height="80"
-										Command="{Binding SelectCommand}">
+						<Button DataContext="{Binding}" Width="80" Height="80" Command="{Binding SelectCommand}">
 							<Button.Style>
 								<Style TargetType="Button">
-									<Setter Property="VerticalContentAlignment"
-													Value="Center" />
-									<Setter Property="HorizontalContentAlignment"
-													Value="Center" />
-									<Setter Property="Foreground"
-													Value="White" />
-									<Setter Property="FontSize"
-													Value="25" />
-									<Setter Property="FontWeight"
-													Value="Bold" />
+									<Setter Property="VerticalContentAlignment" Value="Center" />
+									<Setter Property="HorizontalContentAlignment" Value="Center" />
+									<Setter Property="Foreground" Value="White" />
+									<Setter Property="FontSize" Value="25" />
+									<Setter Property="FontWeight" Value="Bold" />
 									<Setter Property="Background">
 										<Setter.Value>
 											<ImageBrush ImageSource="{Binding BackgroundImage}" />
@@ -69,29 +42,19 @@
 										<Setter.Value>
 											<ContextMenu>
 												<ContextMenu.Resources>
-													<SolidColorBrush Color="DarkBlue"
-																					 x:Key="ColorResource" />
+													<SolidColorBrush Color="DarkBlue" x:Key="ColorResource" />
 													<Style TargetType="MenuItem">
 														<Setter Property="Template">
 															<Setter.Value>
 																<ControlTemplate TargetType="MenuItem">
 																	<Border x:Name="PART_BackgroundBorder">
-																		<TextBlock Padding="10 5 20 5"
-																							 x:Name="PART_Content"
-																							 Text="{TemplateBinding Header}" />
+																		<TextBlock Padding="10 5 20 5" x:Name="PART_Content" Text="{TemplateBinding Header}" />
 																	</Border>
 																	<ControlTemplate.Triggers>
-																		<Trigger Property="IsMouseOver"
-																						 Value="True">
-																			<Setter Property="Background"
-																							TargetName="PART_BackgroundBorder"
-																							Value="{StaticResource ColorResource}" />
-																			<Setter TargetName="PART_Content"
-																							Property="Foreground"
-																							Value="White" />
-																			<Setter TargetName="PART_Content"
-																							Property="FontWeight"
-																							Value="Bold" />
+																		<Trigger Property="IsMouseOver" Value="True">
+																			<Setter Property="Background" TargetName="PART_BackgroundBorder" Value="{StaticResource ColorResource}" />
+																			<Setter TargetName="PART_Content" Property="Foreground" Value="White" />
+																			<Setter TargetName="PART_Content" Property="FontWeight" Value="Bold" />
 																		</Trigger>
 																	</ControlTemplate.Triggers>
 																</ControlTemplate>
@@ -101,20 +64,13 @@
 												</ContextMenu.Resources>
 												<ContextMenu.Template>
 													<ControlTemplate>
-														<Border CornerRadius="4"
-																		Background="White"
-																		BorderBrush="{StaticResource ColorResource}"
-																		BorderThickness="2">
+														<Border CornerRadius="4" Background="White" BorderBrush="{StaticResource ColorResource}" BorderThickness="2">
 															<ItemsPresenter />
 														</Border>
 													</ControlTemplate>
 												</ContextMenu.Template>
-												<MenuItem Header="Város építése"
-																	ToolTip="Kattints ide, ha várost szeretnél építeni!"
-																	Command="{Binding BuildTownCommand}" />
-												<MenuItem Header="Út építése"
-																	ToolTip="Kattints ide, ha utat szeretnél építeni!"
-																	Command="{Binding BuildRoadCommand}" />
+												<MenuItem Header="Város építése" ToolTip="Kattints ide, ha várost szeretnél építeni!" Command="{Binding BuildTownCommand}" />
+												<MenuItem Header="Út építése" ToolTip="Kattints ide, ha utat szeretnél építeni!" Command="{Binding BuildRoadCommand}" />
 											</ContextMenu>
 										</Setter.Value>
 									</Setter>
@@ -122,24 +78,16 @@
 							</Button.Style>
 							<Button.Template>
 								<ControlTemplate TargetType="Button">
-									<View:GameCell Content="{Binding Value}"
-																 DataContext="{TemplateBinding DataContext}"
-																 Width="{TemplateBinding Width}"
-																 Height="{TemplateBinding Height}">
+									<View:GameCell Content="{Binding Value}" DataContext="{TemplateBinding DataContext}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
 										<View:GameCell.Style>
 											<Style TargetType="View:GameCell">
-												<Setter Property="Background"
-																Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
+												<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
 												<Style.Triggers>
 
-													<Trigger Property="IsMouseOver"
-																	 Value="True">
+													<Trigger Property="IsMouseOver" Value="True">
 														<Setter Property="RenderTransform">
 															<Setter.Value>
-																<ScaleTransform ScaleX="1.4"
-																								ScaleY="1.4"
-																								CenterX="40"
-																								CenterY="40" />
+																<ScaleTransform ScaleX="1.4" ScaleY="1.4" CenterX="40" CenterY="40" />
 															</Setter.Value>
 														</Setter>
 													</Trigger>
@@ -155,13 +103,7 @@
 			</ItemsControl>
 		</Border>
 
-		<Border BorderBrush="Black"
-						BorderThickness="0 0 2 2"
-						CornerRadius="0 0 10 0"
-						VerticalAlignment="Top"
-						MinWidth="100"
-						MinHeight="100"
-						HorizontalAlignment="Left">
+		<Border BorderBrush="Black" BorderThickness="0 0 2 2" CornerRadius="0 0 10 0" VerticalAlignment="Top" MinWidth="100" MinHeight="100" HorizontalAlignment="Left">
 			<Border.Background>
 				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
 			</Border.Background>
@@ -169,18 +111,24 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<Grid Margin="5">
-							<ProgressBar Minimum="0"
-													 Maximum="20"
-													 Background="Green"
-													 Foreground="DarkGreen"
-													 Value="{Binding Item2, Mode=OneWay}" />
-							<TextBlock VerticalAlignment="Center"
-												 Foreground="White"
-												 FontWeight="Bold"
-												 Margin="0 3 0 3"
-												 HorizontalAlignment="Center">
-								<TextBlock Text="{Binding Item1, Mode=OneWay, Converter={StaticResource materialToStringConverter}}" />
-								(<TextBlock Text="{Binding Item2, Mode=OneWay}" />)
+							<Border BorderBrush="Black" BorderThickness="1">
+								<ProgressBar Minimum="0" Maximum="{Binding MaximumMaterialQuantity}" Background="Green" Value="{Binding Quantity, Mode=OneWay}">
+									<ProgressBar.Style>
+										<Style TargetType="ProgressBar">
+											<Setter Property="BorderThickness" Value="0" />
+											<Setter Property="Foreground" Value="DarkGreen" />
+											<Style.Triggers>
+												<DataTrigger Binding="{Binding IsFull}" Value="True">
+													<Setter Property="Foreground" Value="OrangeRed" />
+												</DataTrigger>
+											</Style.Triggers>
+										</Style>
+									</ProgressBar.Style>
+								</ProgressBar>
+							</Border>
+							<TextBlock VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Margin="0 3 0 3" HorizontalAlignment="Center">
+								<TextBlock Text="{Binding Material, Mode=OneWay, Converter={StaticResource materialToStringConverter}}" />
+								(<TextBlock Text="{Binding Quantity, Mode=OneWay}" />)
 							</TextBlock>
 						</Grid>
 					</DataTemplate>
@@ -188,49 +136,24 @@
 			</ItemsControl>
 		</Border>
 
-		<Border BorderBrush="Black"
-						BorderThickness="2 0 0 2"
-						VerticalAlignment="Top"
-						Padding="5"
-						MinWidth="150"
-						CornerRadius="0 0 0 10"
-						Visibility="Visible"
-						HorizontalAlignment="Right"
-						Width="173">
+		<Border BorderBrush="Black" BorderThickness="2 0 0 2" VerticalAlignment="Top" Padding="5" MinWidth="150" CornerRadius="0 0 0 10" Visibility="Visible" HorizontalAlignment="Right" Width="173">
 			<Border.Background>
 				<SolidColorBrush Color="{Binding CurrentPlayer.Color, Converter={StaticResource playerColorConverter}}" />
 			</Border.Background>
 			<StackPanel Margin="0,0,0,-2">
 				<StackPanel.Resources>
 					<Style TargetType="TextBlock">
-						<Setter Property="FontWeight"
-										Value="Bold" />
-						<Setter Property="Foreground"
-										Value="White" />
-						<Setter Property="Margin"
-										Value="0 0 0 10" />
-						<Setter Property="HorizontalAlignment"
-										Value="Center" />
+						<Setter Property="FontWeight" Value="Bold" />
+						<Setter Property="Foreground" Value="White" />
+						<Setter Property="Margin" Value="0 0 0 10" />
+						<Setter Property="HorizontalAlignment" Value="Center" />
 					</Style>
 				</StackPanel.Resources>
 
-				<TextBlock Foreground="White"
-									 FontWeight="Bold">Kockadobás eredménye</TextBlock>
-				<StackPanel HorizontalAlignment="Center"
-										VerticalAlignment="Center"
-										Orientation="Horizontal">
-					<Label Content="{Binding DiceResult[0]}"
-								 Width="25"
-								 HorizontalAlignment="Left"
-								 VerticalAlignment="Center"
-								 FontWeight="Bold"
-								 FontSize="16" />
-					<Label Content="{Binding DiceResult[1]}"
-								 Width="25"
-								 HorizontalAlignment="Right"
-								 VerticalAlignment="Center"
-								 FontSize="16"
-								 FontWeight="Bold" />
+				<TextBlock Foreground="White" FontWeight="Bold">Kockadobás eredménye</TextBlock>
+				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+					<Label Content="{Binding DiceResult[0]}" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
+					<Label Content="{Binding DiceResult[1]}" Width="25" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" />
 				</StackPanel>
 				<TextBlock Text="{Binding CurrentPlayer.Name}" />
 				<!--Button Command="{Binding ShowNewGameWindowCommand}"
@@ -241,10 +164,8 @@
 						<InlineUIContainer>
               <TextBlock Text="{Binding CurrentPlayer.Gold}" />
             </InlineUIContainer></TextBlock>
-				<Button Command="{Binding ShowTradeWindowCommand}"
-								Content="Kereskedelem" />
-				<Button Command="{Binding StepCommand}"
-								Content="Kör vége" />
+				<Button Command="{Binding ShowTradeWindowCommand}" Content="Kereskedelem" />
+				<Button Command="{Binding StepCommand}" Content="Kör vége" />
 			</StackPanel>
 		</Border>
 
@@ -252,10 +173,8 @@
 			<View:GameCellOptions.Style>
 				<Style TargetType="View:GameCellOptions">
 					<Style.Triggers>
-						<DataTrigger Binding="{Binding SelectedGameCell}"
-												 Value="{x:Null}">
-							<Setter Property="Visibility"
-											Value="Hidden" />
+						<DataTrigger Binding="{Binding SelectedGameCell}" Value="{x:Null}">
+							<Setter Property="Visibility" Value="Hidden" />
 						</DataTrigger>
 					</Style.Triggers>
 				</Style>
