@@ -18,6 +18,7 @@ namespace Catan.Model
         private int _CurrentPlayerIndex;
         private Player Winner = null;
         private int size = 7;
+        private int cellNumber = 0;
 
         public List<Hexagon> Hexagons;
 
@@ -69,6 +70,12 @@ namespace Catan.Model
             Players = _players;
             _CurrentPlayerIndex = 0;
             WinnerScore = winnersc;
+            size = (int)mapSize;
+            for (int i = size - (int)Math.Floor(size / 2.0); i < size; i++)
+            {
+                cellNumber += i * 2;
+            }
+            cellNumber += size;
             Map = new Map(mapSize);
         }
 
@@ -275,6 +282,37 @@ namespace Catan.Model
                 else
                 {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
+                }
+
+                var random = new Random();
+
+                while(h.Neighbours.Exists(x => (x != null && x.ProduceNumber == h.ProduceNumber)))
+                {
+                    h.ProduceNumber = random.Next(2, 13);
+                }
+                int shouldBeNum = (cellNumber*5)/36+1;
+                int numberOfSixs = Hexagons.FindAll(x => x.ProduceNumber == 6).Count();
+                int numberOfEights = Hexagons.FindAll(x => x.ProduceNumber == 8).Count();
+                if (numberOfSixs < shouldBeNum)
+                {
+                    for (int i = 0; i < shouldBeNum - numberOfSixs; i++ )
+                    {
+                        Hexagons.Find(x => (x.ProduceNumber!= 6 && !x.Neighbours.Exists(y => y!=null && y.ProduceNumber==6))).ProduceNumber=6;
+                    }
+                }
+                if (numberOfEights < shouldBeNum)
+                {
+                    for (int i = 0; i < shouldBeNum - numberOfSixs; i++)
+                    {
+                        Hexagons.Find(x => (x.ProduceNumber != 8 && !x.Neighbours.Exists(y => y!=null && y.ProduceNumber == 8))).ProduceNumber = 8;
+                    }
+                }
+                foreach (Material m in (Material[])Enum.GetValues(typeof(Material)))
+                {
+                    if (!Hexagons.Exists(x => x.Material == m))
+                    {
+                        Hexagons[random.Next(0, cellNumber)].Material = m;
+                    }
                 }
             }
         }
