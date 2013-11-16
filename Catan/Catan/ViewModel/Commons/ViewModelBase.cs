@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
-namespace Catan.ViewModel
+namespace Catan.ViewModel.Commons
 {
 	/// <summary>
 	/// Nézetmodellek absztrakt ősosztálya

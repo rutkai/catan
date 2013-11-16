@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using Catan.Common;
 using Catan.Model;
+using Catan.ViewModel.Commons;
 
 namespace Catan.ViewModel
 {

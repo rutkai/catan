@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using Catan.Common;
 using Catan.Model;
+using Catan.ViewModel.Commons;
 
 namespace Catan.ViewModel
 {

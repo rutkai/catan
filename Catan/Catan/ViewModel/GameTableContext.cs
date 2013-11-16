@@ -11,6 +11,8 @@ using Catan.Common;
 using Catan.IFace;
 using Catan.Model;
 using Catan.View;
+using Catan.View.Services;
+using Catan.ViewModel.Commons;
 
 namespace Catan.ViewModel
 {

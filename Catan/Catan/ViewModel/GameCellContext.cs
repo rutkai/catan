@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Catan.Common;
 using Catan.Model;
+using Catan.ViewModel.Commons;
 
 namespace Catan.ViewModel
 {

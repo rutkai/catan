@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Catan.Model;
 using Catan.View;
+using Catan.View.Services;
 using Catan.ViewModel;
 
 namespace Catan

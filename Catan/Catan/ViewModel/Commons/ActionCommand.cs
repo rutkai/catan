@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace Catan.ViewModel
+namespace Catan.ViewModel.Commons
 {
 	/// <summary>
 	/// Akció parancs

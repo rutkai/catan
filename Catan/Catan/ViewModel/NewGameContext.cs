@@ -8,6 +8,7 @@ using Catan.Common;
 using Catan.Model;
 using Catan.View;
 using Catan.IFace;
+using Catan.ViewModel.Commons;
 using Catan.ViewModel.Converters;
 
 namespace Catan.ViewModel

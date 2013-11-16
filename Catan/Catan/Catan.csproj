@@ -79,7 +79,7 @@
     <Compile Include="ViewModel\NewGameContext.cs" />
     <Compile Include="ViewModel\TradeContext.cs" />
     <Compile Include="ViewModel\TradeItemContext.cs" />
-    <Compile Include="ViewModel\WPFWindowService.cs" />
+    <Compile Include="View\Services\WPFWindowService.cs" />
     <Compile Include="View\GameCellOptions.xaml.cs">
       <DependentUpon>GameCellOptions.xaml</DependentUpon>
     </Compile>
@@ -102,11 +102,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\SizeExtension.cs" />
-    <Compile Include="ViewModel\ActionCommand.cs" />
-    <Compile Include="ViewModel\DelegateCommand.cs" />
+    <Compile Include="ViewModel\Commons\ActionCommand.cs" />
+    <Compile Include="ViewModel\Commons\DelegateCommand.cs" />
     <Compile Include="ViewModel\GameCellContext.cs" />
     <Compile Include="ViewModel\GameTableContext.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\Commons\ViewModelBase.cs" />
     <Compile Include="View\GameCanvas.cs" />
     <Compile Include="View\GameCell.xaml.cs">
       <DependentUpon>GameCell.xaml</DependentUpon>
