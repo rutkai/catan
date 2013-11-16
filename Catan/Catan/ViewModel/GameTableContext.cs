@@ -79,7 +79,26 @@ namespace Catan.ViewModel
             if (service == null)
                 throw new ArgumentNullException("service");
             WindowService = service;
-            GamePhase = GamePhase.Initialization; 
+            GamePhase = GamePhase.Initialization;
+            InitializeGame();
+        }
+
+        private GameTableContext InitializeGame()
+        {
+            var players = Players.ToList();
+            List<Player> newPlayers = new List<Player>();
+            var random = new Random();
+
+            while (players.Any())
+            {
+                var index = random.Next(0, players.Count);
+                newPlayers.Add(players[index]);
+                players.RemoveAt(index);
+            }
+
+            GameController.Instance.Init((uint)TableSize, 10, newPlayers);
+
+            return this;
         }
 
         /// <summary>

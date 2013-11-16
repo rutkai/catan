@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -66,7 +67,8 @@ namespace Catan
             newGameWindow.DataContext = newGameContext;
 
             newGameWindow.ShowDialog();
-
+            context = new GameTableContext((uint)newGameContext.TableSize, new WPFWindowService(this));
+            context.GameCells = new List<GameCellContext>();
             DataContext = context;
         }
     }
