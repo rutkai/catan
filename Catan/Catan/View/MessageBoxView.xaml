@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Catan.View.MessageBoxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:Catan.ViewModel"
+             xmlns:converters="clr-namespace:Catan.ViewModel.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Button Command="{Binding Context.ClearMessageCommand}">
+    <Button.Template>
+      <ControlTemplate TargetType="Button">
+        <Border>
+          <Border.Background>
+            <SolidColorBrush Color="Black" Opacity="0.5"/>
+          </Border.Background>
+          <StackPanel VerticalAlignment="Center">
+            <Border>
+              <Border.Resources>
+                <converters:ToUpperCaseConverter x:Key="toUpperCaseConverter" />
+              </Border.Resources>
+              <Border.Style>
+                <Style TargetType="Border">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Title}" Value="">
+                      <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding MessageType}" Value="Information">
+                      <Setter Property="Background" Value="DarkGreen" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding MessageType}" Value="Warning">
+                      <Setter Property="Background" Value="DarkOrange" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding MessageType}" Value="Error">
+                      <Setter Property="Background" Value="Red" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Border.Style>
+              <TextBlock Text="{Binding Title, Converter={StaticResource toUpperCaseConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right"
+                         Margin="0 0 15 0"
+                         Foreground="White" FontSize="15" FontWeight="Light"/>
+            </Border>
+            <Border>
+              <Border.Style>
+                <Style TargetType="Border">
+                  <Setter Property="MinHeight" Value="100" />
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding MessageType}" Value="Information">
+                      <Setter Property="Background">
+                        <Setter.Value>
+                          <SolidColorBrush Color="DarkGreen" Opacity="0.5" />
+                        </Setter.Value>
+                      </Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding MessageType}" Value="Warning">
+                      <Setter Property="Background">
+                        <Setter.Value>
+                          <SolidColorBrush Color="DarkOrange" Opacity="0.5" />
+                        </Setter.Value>
+                      </Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding MessageType}" Value="Error">
+                      <Setter Property="Background">
+                        <Setter.Value>
+                          <SolidColorBrush Color="Red" Opacity="0.5" />
+                        </Setter.Value>
+                      </Setter>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Border.Style>
+              <TextBlock Text="{Binding Message}" TextWrapping="Wrap"
+                         TextAlignment="Center"
+                         Foreground="White" 
+                         FontSize="45" FontWeight="Bold"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center" />
+            </Border>
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Button.Template>
+  </Button>
+</UserControl>

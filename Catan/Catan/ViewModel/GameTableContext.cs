@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,9 +29,40 @@ namespace Catan.ViewModel
         private int _TableSize;
         private DelegateCommand<GameCellContext> _SelectGameCellCommand;
         private ActionCommand _StepCommand;
+        private MessageContext _RuntimeMessage;
         private ImageSource _BackgroundImage;
+        private ActionCommand _ClearMessageCommand;
+        private GamePhase _GamePhase;
 
         public IFace.IWindowService WindowService { get; set; }
+
+        public GamePhase GamePhase
+        {
+            get { return _GamePhase; }
+            set
+            {
+                _GamePhase = value;
+                switch (value)
+                {
+                    case GamePhase.Initialization:
+                        ShowMessage("Játékosok sorrendjének megállapítása ...", "Játék kezdete");
+                        break;
+                    case GamePhase.FirstPhase:
+                        ShowMessage("Első falu és a hozzátartozó út megépítése ...", "Első fázis");
+                        break;
+                    case GamePhase.SecondPhase:
+                        ShowMessage("Első város és a hozzátartozó út megépítése ...", "Második fázis");
+                        break;
+                    case GamePhase.Game:
+                        ShowMessage("Kezdődjön a játék!");
+                        break;
+                    case GamePhase.GameOver:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("value");
+                }
+            }
+        }
 
         public GameTableContext(IFace.IWindowService service)
             : this(5, service)
@@ -47,6 +79,7 @@ namespace Catan.ViewModel
             if (service == null)
                 throw new ArgumentNullException("service");
             WindowService = service;
+            GamePhase = GamePhase.Initialization; 
         }
 
         /// <summary>
@@ -134,6 +167,7 @@ namespace Catan.ViewModel
                     () => {
                         try {
                             GameController.Instance.Step();
+                            ShowMessage(string.Format("Következő játékos: {0}", CurrentPlayer.Name), "Játék állása", MessageType.Error);
                         }
                         catch (Exception e) {
                             MessageBox.Show(e.Message);
@@ -230,7 +264,7 @@ namespace Catan.ViewModel
         }
 
         public List<object> Materials
-        {   
+        {
             get
             {
                 return CurrentPlayer.Materials
@@ -242,5 +276,40 @@ namespace Catan.ViewModel
                                     .ToList<object>();
             }
         }
+
+        public MessageContext RuntimeMessage
+        {
+            get { return _RuntimeMessage; }
+            protected set
+            {
+                _RuntimeMessage = value;
+                OnPropertyChanged(() => RuntimeMessage);
+            }
+        }
+
+        protected GameTableContext ShowMessage(string message, string title = "", MessageType messageType = MessageType.Information)
+        {
+            if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException("message");
+            RuntimeMessage = new MessageContext(this, message, title, messageType);
+            return this;
+        }
+
+        public ActionCommand ClearMessageCommand
+        {
+            get
+            {
+                if (_ClearMessageCommand == null)
+                    _ClearMessageCommand = new ActionCommand(() => {
+                        RuntimeMessage = null;
+                    });
+
+                return _ClearMessageCommand;
+            }
+        }
+    }
+
+    public enum GamePhase
+    {
+        Initialization, FirstPhase, SecondPhase, Game, GameOver
     }
 }
