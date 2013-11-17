@@ -114,7 +114,7 @@ namespace Catan.Model
             var set2 = h.Settlements[(position + 5) % 6];
             var road1 = h.Roads[(position +1) % 6];
             var road2 = h.Roads[(position + 5) % 6];
-            if ((set1 != null && set1.Owner == CurrentPlayer || set2 != null && set2.Owner == CurrentPlayer) || (road1 != null && road1.Color == CurrentPlayer.Color) || (road2 != null && road2.Color == CurrentPlayer.Color))
+            if ((set1 != null && set1.Owner == CurrentPlayer || set2 != null && set2.Owner == CurrentPlayer) || (road1 != null && road1.Player.Color == CurrentPlayer.Color) || (road2 != null && road2.Player.Color == CurrentPlayer.Color))
             {
                 CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 h.SetRoad(CurrentPlayer, position);

@@ -72,7 +72,7 @@ namespace Catan.Model
 		/// Ha van út, a gazdája van benne, egyébként null.
 		/// 6 elemû tömb. Elsõ elem 1 óránál, a többi az óramutató járásának megfelelõen.
 		/// </summary>
-		public Player[] Roads { get; set; }
+		public Road[] Roads { get; set; }
 		/// <summary>
 		/// Települések a csúcsokon. Ahol nincs ott null.
 		/// 6 elemû tömb, elsõ eleme a 12 óránál található település, a többi az óramutató
@@ -99,7 +99,7 @@ namespace Catan.Model
 			else
 				Neighbours = new List<Hexagon>(neighbours);
 			Settlements = new Settlement[6];
-			Roads = new Player[6];
+			Roads = new Road[6];
 		}
 
 		public Hexid Id
@@ -128,7 +128,7 @@ namespace Catan.Model
 		/// Lekéri az adott pozíción található utat.
 		/// </summary>
 		/// <param name="Position"></param>
-		public Player GetRoad(int Position)
+		public Road GetRoad(int Position)
 		{
 			if (Position >= 0 && Position <= 5)
 			{
@@ -157,10 +157,10 @@ namespace Catan.Model
 		{
             if (position >= 0 && position <= 5)
             {
-                Roads[position] = player;
+                Roads[position] = new Road { Player = player };
                 var hexagon = Neighbours[position];
-                if (hexagon!= null)
-                    Neighbours[position].Roads[(position + 3) % 6]=player;
+                if (hexagon != null)
+                    Neighbours[position].Roads[(position + 3) % 6] = new Road { Player = player };
             }
 			
 		}

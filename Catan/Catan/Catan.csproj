@@ -69,6 +69,7 @@
     <Compile Include="Model\Material.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\PlayerColor.cs" />
+    <Compile Include="Model\Road.cs" />
     <Compile Include="Model\Settlement.cs" />
     <Compile Include="Model\Town.cs" />
     <Compile Include="Model\TradeItem.cs" />
