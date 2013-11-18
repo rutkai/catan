@@ -67,8 +67,6 @@ namespace Catan
             newGameWindow.DataContext = newGameContext;
 
             newGameWindow.ShowDialog();
-            context = new GameTableContext((uint)newGameContext.TableSize, new WPFWindowService(this));
-            context.GameCells = new List<GameCellContext>();
             DataContext = context;
         }
     }

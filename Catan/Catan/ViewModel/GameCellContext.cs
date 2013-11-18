@@ -280,7 +280,8 @@ namespace Catan.ViewModel
         /// </summary>
         public Player[] Roads
         {
-            get { return _Hexagon.Roads.Select(road => road.Player).ToArray(); }
+            get { return _Hexagon.Roads.Where(road => road != null)
+                                       .Select(road => road.Player).ToArray(); }
             protected set
             {
                 _Hexagon.Roads = value.Select(player => new Road() { Player = player }).ToArray();
