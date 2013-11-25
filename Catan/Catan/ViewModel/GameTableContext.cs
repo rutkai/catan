@@ -29,6 +29,7 @@ namespace Catan.ViewModel
         private int _TableSize;
         private DelegateCommand<GameCellContext> _SelectGameCellCommand;
         private ActionCommand _StepCommand;
+        private ActionCommand _SaveCommand;
         private MessageContext _RuntimeMessage;
         private ImageSource _BackgroundImage;
         private ActionCommand _ClearMessageCommand;
@@ -196,6 +197,18 @@ namespace Catan.ViewModel
                                           () => TradeContext,
                                           () => DiceResult,
                                           () => Materials);
+                    }));
+            }
+        }
+
+        public ActionCommand SaveCommand
+        {
+            get
+            {
+                return Lazy.Init(ref _SaveCommand, () => new ActionCommand(
+                    () =>
+                    {
+                        GameController.Instance.Save();
                     }));
             }
         }

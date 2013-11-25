@@ -22,8 +22,10 @@ namespace Catan.Model
             XmlDocument doc = new XmlDocument();
             XmlNode docNode = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
             doc.AppendChild(docNode);
+            XmlNode tableNode = doc.CreateElement("Table");
+            doc.AppendChild(tableNode);
             XmlNode hexagonsNode = doc.CreateElement("Hexagons");
-            doc.AppendChild(hexagonsNode);
+            tableNode.AppendChild(hexagonsNode);
             foreach (var hex in hexagons)
             {
                 XmlNode hexagonNode = doc.CreateElement("Hexagon");
@@ -44,11 +46,11 @@ namespace Catan.Model
                 XmlNode settlementsNode = doc.CreateElement("Settlements");
                 hexagonNode.AppendChild(settlementsNode);
 
-                XmlNode settlementNode = doc.CreateElement("Settlement");
                 for (var i=0; i<hex.Settlements.Length; ++i)
                 {
                     if (hex.Settlements[i] != null)
                     {
+                        XmlNode settlementNode = doc.CreateElement("Settlement");
                         XmlAttribute nodeNumberAttribute = doc.CreateAttribute("nodeNumber");
                         nodeNumberAttribute.Value = i.ToString();
                         settlementNode.Attributes.Append(nodeNumberAttribute);
@@ -58,29 +60,31 @@ namespace Catan.Model
                         XmlAttribute ownerAttribute = doc.CreateAttribute("owner");
                         ownerAttribute.Value = hex.Settlements[i].Owner.Name;
                         settlementNode.Attributes.Append(ownerAttribute);
+                        settlementsNode.AppendChild(settlementNode);
                     }
                 }
                 
-                settlementsNode.AppendChild(settlementNode);
-
                 XmlNode roadsNode = doc.CreateElement("Roads");
                 hexagonNode.AppendChild(roadsNode);
 
-                XmlNode roadNode = doc.CreateElement("Road");
                 for (var i = 0; i < hex.Roads.Length; ++i)
                 {
-                    XmlAttribute sideAttribute = doc.CreateAttribute("side");
-                    sideAttribute.Value = i.ToString();
-                    roadNode.Attributes.Append(sideAttribute);
-                    XmlAttribute ownerAttribute = doc.CreateAttribute("owner");
-                    ownerAttribute.Value = hex.Roads[i].Player.Color.ToString();
-                    roadNode.Attributes.Append(ownerAttribute);
+                    if (hex.Roads[i] != null)
+                    {
+                        XmlNode roadNode = doc.CreateElement("Road");
+                        XmlAttribute sideAttribute = doc.CreateAttribute("side");
+                        sideAttribute.Value = i.ToString();
+                        roadNode.Attributes.Append(sideAttribute);
+                        XmlAttribute ownerAttribute = doc.CreateAttribute("owner");
+                        ownerAttribute.Value = hex.Roads[i].Player.Color.ToString();
+                        roadNode.Attributes.Append(ownerAttribute);
+                        roadsNode.AppendChild(roadNode);
+                    }
                 }
-                roadsNode.AppendChild(roadNode);
             }
 
             XmlNode playersNode = doc.CreateElement("Players");
-            doc.AppendChild(playersNode);
+            tableNode.AppendChild(playersNode);
             foreach (var player in players)
             {
                 XmlNode playerNode = doc.CreateElement("Player");
@@ -105,8 +109,7 @@ namespace Catan.Model
                 playerNode.AppendChild(materialsNode);
                 playersNode.AppendChild(playerNode);
             }
-
-            doc.Save("catan.xml");
+            doc.Save("savegame.xml");
         }
 
         /// <summary>
