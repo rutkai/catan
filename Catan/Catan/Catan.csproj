@@ -73,6 +73,7 @@
     <Compile Include="Model\Settlement.cs" />
     <Compile Include="Model\Town.cs" />
     <Compile Include="Model\TradeItem.cs" />
+    <Compile Include="Model\XmlManager.cs" />
     <Compile Include="ViewModel\Converters\MaterialToStringConverter.cs" />
     <Compile Include="ViewModel\Converters\PlayerColorValueConverter.cs" />
     <Compile Include="ViewModel\Converters\StringToInteger.cs" />

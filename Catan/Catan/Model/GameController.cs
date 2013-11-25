@@ -317,5 +317,15 @@ namespace Catan.Model
                 }
             }
         }
+
+        public void Save()
+        {
+            XmlManager.Save(Hexagons, Players);
+        }
+
+        public void Load()
+        {
+            XmlManager.Load();
+        }
     }
 }

@@ -166,7 +166,8 @@
             </InlineUIContainer></TextBlock>
         <Button Command="{Binding ShowTradeWindowCommand}" Content="Kereskedelem" />
         <Button Command="{Binding StepCommand}" Content="Kör vége" />
-      </StackPanel>
+        <Button Command="{Binding SaveCommand}" Content="Mentés" />
+        </StackPanel>
     </Border>
 
     <View:GameCellOptions DataContext="{Binding}">
