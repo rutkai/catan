@@ -21,6 +21,11 @@ namespace Catan.ViewModel
         private ActionCommand _NewGame;
 
         /// <summary>
+        /// Betöltési akció
+        /// </summary>
+        private ActionCommand _LoadCommand;
+        
+        /// <summary>
         /// A kiválasztott játékosok listája
         /// </summary>
         private List<string> _SelectedPlayers;
@@ -138,6 +143,21 @@ namespace Catan.ViewModel
                             GameController.Instance.Init((uint)TableSize, WinnerScore, players);
                             CloseCommand();
                         }
+                    }));
+            }
+        }
+
+        /// <summary>
+        /// Játék lementett állapotának visszatöltése
+        /// </summary>
+        public ActionCommand LoadCommand
+        {
+            get
+            {
+                return Lazy.Init(ref _LoadCommand, () => new ActionCommand(
+                    () =>
+                    {
+                        GameController.Instance.Load();
                     }));
             }
         }
