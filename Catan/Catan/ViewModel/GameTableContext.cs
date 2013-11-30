@@ -230,9 +230,9 @@ namespace Catan.ViewModel
         {
             if (player == null) throw new ArgumentNullException("player");
 
-            var roadsCount = GameCells.Sum(cell => cell.Roads.Count(road => road == player));
-            var settlementsCount = GameCells.Sum(cell => player.Settlements.Where(settlement => settlement != null)
-                                                                         .Count(settlement => !(settlement is Town) && settlement.Owner == player));
+            var roadsCount = player.Roads.Count();
+            var settlementsCount = player.Settlements.Where(settlement => settlement != null)
+                                                     .Count(settlement => !(settlement is Town) && settlement.Owner == player);
 
             return roadsCount == 1 && settlementsCount == 1;
         }
@@ -241,9 +241,9 @@ namespace Catan.ViewModel
         {
             if (player == null) throw new ArgumentNullException("player");
 
-            var roadsCount = GameCells.Sum(cell => cell.Roads.Count(road => road == player));
+            var roadsCount = player.Roads.Count();
             var settlementsCount = GameCells.Sum(cell => player.Settlements.Where(settlement => settlement != null)
-                                                                         .Count(settlement => (settlement is Town) && settlement.Owner == player));
+                                                                           .Count(settlement => (settlement is Town) && settlement.Owner == player));
 
             return roadsCount == 2 && settlementsCount == 1;
         }
@@ -280,6 +280,8 @@ namespace Catan.ViewModel
                                         GamePhase = GamePhase.SecondPhase;
                                     break;
                                 case GamePhase.SecondPhase:
+                                    if (Players.All(CheckSecondPhase))
+                                        GamePhase = GamePhase.Game;
                                     break;
                                 case GamePhase.Game:
                                     break;

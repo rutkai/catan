@@ -49,6 +49,7 @@ namespace Catan.Model
         /// Települések listája.
         /// </summary>
         public List<Settlement> Settlements { get; protected set; }
+        public List<Road> Roads { get; protected set; }
         public Material m_Material;
         public PlayerColor m_PlayerColor;
         public Settlement m_Settlement;
@@ -71,6 +72,7 @@ namespace Catan.Model
             Color = color;
             Materials = new Dictionary<Material, int>();
             Settlements = new List<Settlement>();
+            Roads = new List<Road>();
             TradeItems = new Dictionary<Material, TradeItem>();
             Gold = 1000;
             Materials.Add(Material.Clay, 5);
