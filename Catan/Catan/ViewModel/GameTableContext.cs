@@ -242,7 +242,7 @@ namespace Catan.ViewModel
             if (player == null) throw new ArgumentNullException("player");
 
             var roadsCount = GameCells.Sum(cell => cell.Roads.Count(road => road == player));
-            var settlementsCount = GameCells.Sum(cell => cell.Settlements.Where(settlement => settlement != null)
+            var settlementsCount = GameCells.Sum(cell => player.Settlements.Where(settlement => settlement != null)
                                                                          .Count(settlement => (settlement is Town) && settlement.Owner == player));
 
             return roadsCount == 2 && settlementsCount == 1;

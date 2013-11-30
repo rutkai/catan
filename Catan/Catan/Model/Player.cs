@@ -48,7 +48,7 @@ namespace Catan.Model
         /// <summary>
         /// Települések listája.
         /// </summary>
-        public List<Settlement> Settlements;
+        public List<Settlement> Settlements { get; protected set; }
         public Material m_Material;
         public PlayerColor m_PlayerColor;
         public Settlement m_Settlement;
