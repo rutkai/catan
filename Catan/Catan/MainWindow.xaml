@@ -264,9 +264,10 @@
         <TextBlock RenderTransformOrigin="-0.684,0.787"><Run Text="Arany: " /><Run Text=" " /><InlineUIContainer>
 						<TextBlock Text="{Binding CurrentPlayer.Gold}" />
 					</InlineUIContainer></TextBlock>
-        <Button Command="{Binding ShowTradeWindowCommand}"
-                IsEnabled="{Binding IsTradeEnabled}"
-                Content="Kereskedelem" />
+        <ToggleButton Command="{Binding ShowTradeWindowCommand}"
+                      IsChecked="{Binding IsTradeMode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                      IsEnabled="{Binding IsTradeEnabled}"
+                      Content="Kereskedelem" />
         <Button Command="{Binding StepCommand}"
                 Content="Kör vége" />
         <Button Command="{Binding SaveCommand}"
@@ -288,6 +289,19 @@
       </View:GameCellOptions.Style>
     </View:GameCellOptions>
 
+    <View:TradeControlView DataContext="{Binding TradeContext}">
+      <View:TradeControlView.Style>
+        <Style TargetType="View:TradeControlView">
+          <Setter Property="Visibility" Value="Collapsed" />
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding GameTableContext.IsTradeMode}" Value="True">
+              <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </View:TradeControlView.Style>
+    </View:TradeControlView>
+    
     <View:NewGameView DataContext="{Binding NewGameContext}">
       <View:NewGameView.Style>
         <Style TargetType="{x:Type View:NewGameView}">

@@ -37,6 +37,9 @@ namespace Catan.ViewModel
         private GamePhase _GamePhase;
         private NewGameContext _NewGameContext;
         private bool _IsTradeEnabled;
+        private bool _IsTradeMode;
+        private TradeContext _TradeContext;
+        private ActionCommand _CloseTradeWindowCommand;
 
         public IFace.IWindowService WindowService { get; set; }
 
@@ -72,6 +75,7 @@ namespace Catan.ViewModel
                         IsTradeEnabled = true;
                         break;
                     case GamePhase.GameOver:
+                        ShowMessage("Gratulálunk nyertél!", "Vége a játéknak");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("value");
@@ -150,7 +154,7 @@ namespace Catan.ViewModel
 
             GameController.Instance.Step();
 
-            GamePhase = GamePhase.FirstPhase;
+            GamePhase = GamePhase.Game;
 
             return this;
         }
@@ -287,6 +291,9 @@ namespace Catan.ViewModel
                                         GamePhase = GamePhase.Game;
                                     break;
                                 case GamePhase.Game:
+                                    if (GameController.Instance.HasWinner()) {
+                                        GamePhase = GamePhase.GameOver;
+                                    }
                                     break;
                                 case GamePhase.GameOver:
                                     break;
@@ -320,9 +327,11 @@ namespace Catan.ViewModel
 
         public TradeContext TradeContext
         {
-            get
+            get { return _TradeContext; }
+            set
             {
-                return new TradeContext(this, CurrentPlayer);
+                _TradeContext = value;
+                OnPropertyChanged(() => TradeContext);
             }
         }
 
@@ -346,6 +355,16 @@ namespace Catan.ViewModel
             }
         }
 
+        public bool IsTradeMode
+        {
+            get { return _IsTradeMode; }
+            set
+            {
+                _IsTradeMode = value;
+                OnPropertyChanged(() => IsTradeMode);
+            }
+        }
+
         public ActionCommand ShowTradeWindowCommand
         {
             get
@@ -353,13 +372,19 @@ namespace Catan.ViewModel
                 return Lazy.Init(ref _ShowTradeWindowCommand,
                     () => new ActionCommand(
                         () => {
-                            var tradeControl = new TradeView();
-                            tradeControl.SetBinding(FrameworkElement.DataContextProperty,
-                                new Binding("TradeContext") {
-                                    Source = this
-                                });
-                            tradeControl.ShowDialog();
+                            TradeContext = new TradeContext(this, CurrentPlayer);
                         }));
+            }
+        }
+
+        public ActionCommand CloseTradeWindowCommand
+        {
+            get
+            {
+                return Lazy.Init(ref _CloseTradeWindowCommand, () =>
+                    new ActionCommand(() => {
+                        IsTradeMode = false;
+                    }));
             }
         }
 

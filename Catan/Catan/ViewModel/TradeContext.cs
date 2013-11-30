@@ -16,7 +16,7 @@ namespace Catan.ViewModel
     {
         private DelegateCommand<object> _AddCommand;
         private DelegateCommand<Material> _DeleteCommand;
-        public GameTableContext GameTableContext;
+        public GameTableContext GameTableContext { get; protected set; }
         protected Player Player { get; set; }
 
         public TradeContext(GameTableContext context, Player player)
