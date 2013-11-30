@@ -90,11 +90,15 @@ namespace Catan.ViewModel
 
             if (service == null)
                 throw new ArgumentNullException("service");
+
+
+            Messages = new Queue<MessageContext>();
             WindowService = service;
             NewGameContext = new NewGameContext(this, new[] { new Player("1. játékos", PlayerColor.Blue),
 														      new Player("2. játékos", PlayerColor.Red),
                                                               new Player("3. játékos", PlayerColor.Orange),
                                                               new Player("4. játékos", PlayerColor.Red), });
+
             NewGameContext.Closed += (sender, args) => InitializeGame(sender as NewGameContext);
         }
 
@@ -141,8 +145,9 @@ namespace Catan.ViewModel
 
             GameController.Instance.SetAllNeighbours();
 
-            if (StepCommand.CanExecute(null))
-                StepCommand.Execute(null);
+            GameController.Instance.Step();
+
+            GamePhase = GamePhase.FirstPhase;
 
             return this;
         }
@@ -221,6 +226,28 @@ namespace Catan.ViewModel
             }
         }
 
+        private bool CheckFirstPhase(Player player)
+        {
+            if (player == null) throw new ArgumentNullException("player");
+
+            var roadsCount = GameCells.Sum(cell => cell.Roads.Count(road => road == player));
+            var settlementsCount = GameCells.Sum(cell => player.Settlements.Where(settlement => settlement != null)
+                                                                         .Count(settlement => !(settlement is Town) && settlement.Owner == player));
+
+            return roadsCount == 1 && settlementsCount == 1;
+        }
+
+        private bool CheckSecondPhase(Player player)
+        {
+            if (player == null) throw new ArgumentNullException("player");
+
+            var roadsCount = GameCells.Sum(cell => cell.Roads.Count(road => road == player));
+            var settlementsCount = GameCells.Sum(cell => cell.Settlements.Where(settlement => settlement != null)
+                                                                         .Count(settlement => (settlement is Town) && settlement.Owner == player));
+
+            return roadsCount == 2 && settlementsCount == 1;
+        }
+
         /// <summary>
         /// Játékban való lépés
         /// </summary>
@@ -229,10 +256,39 @@ namespace Catan.ViewModel
             get
             {
                 return Lazy.Init(ref _StepCommand, () => new ActionCommand(
+                    param => {
+                        if (GamePhase == GamePhase.FirstPhase) {
+                            bool result = CheckFirstPhase(CurrentPlayer);
+                            if (!result)
+                                ShowMessage("Építened kell egy falut és egy utat!", "Információ", MessageType.Warning);
+
+                            return result;
+                        }
+                        if (GamePhase == GamePhase.SecondPhase) {
+                            var result = CheckSecondPhase(CurrentPlayer);
+                            if (!result)
+                                ShowMessage("Építened kell egy várost és egy falut!", "Információ", MessageType.Warning);
+                            return result;
+                        }
+                        return true;
+                    },
                     () => {
                         try {
+                            switch (GamePhase) {
+                                case GamePhase.FirstPhase:
+                                    if (Players.All(CheckFirstPhase))
+                                        GamePhase = GamePhase.SecondPhase;
+                                    break;
+                                case GamePhase.SecondPhase:
+                                    break;
+                                case GamePhase.Game:
+                                    break;
+                                case GamePhase.GameOver:
+                                    break;
+                            }
+
                             GameController.Instance.Step();
-                            ShowMessage(string.Format("Következő játékos: {0}", CurrentPlayer.Name), "Játék állása", MessageType.Error);
+                            ShowMessage(string.Format("Következő játékos: {0}", CurrentPlayer.Name), "Játék állása", MessageType.Information);
                         }
                         catch (Exception e) {
                             MessageBox.Show(e.Message);
@@ -280,14 +336,16 @@ namespace Catan.ViewModel
             get
             {
                 return Lazy.Init(ref _ShowTradeWindowCommand,
-                    () => new ActionCommand(() => {
-                        var tradeControl = new TradeView();
-                        tradeControl.SetBinding(FrameworkElement.DataContextProperty,
-                            new Binding("TradeContext") {
-                                Source = this
-                            });
-                        tradeControl.ShowDialog();
-                    }));
+                    () => new ActionCommand(
+                        param => GamePhase == GamePhase.Game,
+                        () => {
+                            var tradeControl = new TradeView();
+                            tradeControl.SetBinding(FrameworkElement.DataContextProperty,
+                                new Binding("TradeContext") {
+                                    Source = this
+                                });
+                            tradeControl.ShowDialog();
+                        }));
             }
         }
 
@@ -363,10 +421,14 @@ namespace Catan.ViewModel
             }
         }
 
+        protected Queue<MessageContext> Messages { get; set; }
+
         public GameTableContext ShowMessage(string message, string title = "", MessageType messageType = MessageType.Information)
         {
             if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException("message");
-            RuntimeMessage = new MessageContext(this, message, title, messageType);
+            Messages.Enqueue(new MessageContext(this, message, title, messageType));
+            if (RuntimeMessage == null)
+                RuntimeMessage = Messages.Dequeue();
             return this;
         }
 
@@ -376,7 +438,10 @@ namespace Catan.ViewModel
             {
                 if (_ClearMessageCommand == null)
                     _ClearMessageCommand = new ActionCommand(() => {
-                        RuntimeMessage = null;
+                        if (Messages.Any())
+                            RuntimeMessage = Messages.Dequeue();
+                        else
+                            RuntimeMessage = null;
                     });
 
                 return _ClearMessageCommand;
