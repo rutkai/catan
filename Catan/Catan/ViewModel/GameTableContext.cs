@@ -141,6 +141,9 @@ namespace Catan.ViewModel
 
             GameController.Instance.SetAllNeighbours();
 
+            if (StepCommand.CanExecute(null))
+                StepCommand.Execute(null);
+
             return this;
         }
 

@@ -94,9 +94,6 @@
     <Compile Include="View\GameCellOptions.xaml.cs">
       <DependentUpon>GameCellOptions.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\NewGameWindow.xaml.cs">
-      <DependentUpon>NewGameWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\TradeControl.xaml.cs">
       <DependentUpon>TradeControl.xaml</DependentUpon>
     </Compile>
@@ -136,10 +133,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NewGameView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\NewGameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
