@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace Catan.Model
 {
@@ -17,7 +16,7 @@ namespace Catan.Model
         /// </summary>
         /// <param name="hexagons">Mezők</param>
         /// <param name="players">Játékosok</param>
-        public static void Save(List<Hexagon> hexagons, IEnumerable<Player> players)
+        public static void Save(string filename, List<Hexagon> hexagons, IEnumerable<Player> players)
         {
             XmlDocument doc = new XmlDocument();
             XmlNode docNode = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -102,15 +101,62 @@ namespace Catan.Model
                 playerNode.AppendChild(materialsNode);
                 playersNode.AppendChild(playerNode);
             }
-            doc.Save("savegame.xml");
+            doc.Save(filename);
         }
 
         /// <summary>
-        /// 
+        /// Xml visszatöltése lementett állapotból
         /// </summary>
-        public static void Load()
+        /// <param name="filename">betöltendő fájlnév</param>
+        public static void Load(String filename)
         {
+            int size;
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filename);
 
+            XmlNodeList hnodes = doc.DocumentElement.SelectNodes("/Table/Hexagons/Hexagon");
+            size = Convert.ToInt32(hnodes[hnodes.Count - 1].Attributes["col"].Value) + 1;
+            foreach (XmlNode node in hnodes)
+            {
+                //Console.Write("<" + node.Name);
+                if (node.Attributes.Count != 0)
+                {
+                    foreach (XmlAttribute attr in node.Attributes)
+                    {
+                        //Console.Write(" " + attr.Name + "='" + attr.Value + "' ");
+                    }
+                }
+                XmlNode settlNode = node.ChildNodes[0];
+                if (settlNode.HasChildNodes)
+                {
+                    //Console.Write("     <" + f.ChildNodes[0].Name);
+                    foreach (XmlAttribute attr in settlNode.ChildNodes[0].Attributes)
+                    {
+                        //Console.Write(" " + attr.Name + "='" + attr.Value + "' ");
+                    }
+                }
+                XmlNode roadNode = node.ChildNodes[1];
+                if (roadNode.HasChildNodes)
+                {
+                    //Console.Write("     <" + g.ChildNodes[0].Name);
+                    foreach (XmlAttribute attr in roadNode.ChildNodes[0].Attributes)
+                    {
+                        //Console.Write(" " + attr.Name + "='" + attr.Value + "' ");
+                    }
+                }
+            }
+
+            XmlNodeList pnodes = doc.DocumentElement.SelectNodes("/Table/Players/Player");
+            foreach (XmlNode node in pnodes)
+            {
+                if (node.Attributes.Count != 0)
+                {
+                    foreach (XmlAttribute attr in node.Attributes)
+                    {
+                        
+                    }
+                }   
+            }
         }
     }
 }

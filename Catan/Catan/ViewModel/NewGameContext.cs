@@ -125,7 +125,7 @@ namespace Catan.ViewModel
                         Filter = "Játék fájlok (*.xml)|*.xml"
                     };
                     if (dialog.ShowDialog() == true) {
-                        GameController.Instance.Load();
+                        GameController.Instance.Load(dialog.FileName);
                         GameTableContext.ShowMessage("Játék sikeresen betöltődött ...", "Betöltés sikeres");
                         Close();
                     }

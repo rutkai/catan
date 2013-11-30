@@ -72,7 +72,8 @@ namespace Catan.Model
             WinnerScore = winnersc;
             size = (int)mapSize;
             cellNumber = 0;
-            for (int i = size - (int)Math.Floor(size / 2.0); i < size; i++) {
+            for (int i = size - (int)Math.Floor(size / 2.0); i < size; i++)
+            {
                 cellNumber += i * 2;
             }
             cellNumber += size;
@@ -84,18 +85,21 @@ namespace Catan.Model
         /// </summary>
         public void Step()
         {
-            if (HasWinner()) {
+            if (HasWinner())
+            {
                 Player winner = Players.First(x => (x.GetPoints() >= WinnerScore));
                 throw new Exception("Játék vége! Nyert: " + winner.Name);
             }
-            else {
+            else
+            {
                 if (Players != null && Players.Count() > 0)
                     _CurrentPlayerIndex = (_CurrentPlayerIndex + 1) % Players.Count();
                 Random dobas = new Random();
                 Dobas1 = dobas.Next(1, 7);
                 Dobas2 = dobas.Next(1, 7);
                 int result = Dobas1 + Dobas2;
-                foreach (Hexagon h in Hexagons) {
+                foreach (Hexagon h in Hexagons)
+                {
                     h.Produce(result);
                 }
             }
@@ -110,11 +114,13 @@ namespace Catan.Model
             var set2 = h.Settlements[(position + 5) % 6];
             var road1 = h.Roads[(position + 1) % 6];
             var road2 = h.Roads[(position + 5) % 6];
-            if ((set1 != null && set1.Owner == CurrentPlayer || set2 != null && set2.Owner == CurrentPlayer) || (road1 != null && road1.Player.Color == CurrentPlayer.Color) || (road2 != null && road2.Player.Color == CurrentPlayer.Color)) {
+            if ((set1 != null && set1.Owner == CurrentPlayer || set2 != null && set2.Owner == CurrentPlayer) || (road1 != null && road1.Player.Color == CurrentPlayer.Color) || (road2 != null && road2.Player.Color == CurrentPlayer.Color))
+            {
                 CurrentPlayer.BuildRoad(isFree); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 h.SetRoad(CurrentPlayer, position);
             }
-            else {
+            else
+            {
                 throw new Exception("Csak saját település vagy saját út mellé lehet utat építeni!");
             }
         }
@@ -130,10 +136,12 @@ namespace Catan.Model
             if (h.Neighbours[(position + 1) % 6] != null)
                 set3 = h.Neighbours[(position + 1) % 6].GetSettlement((position + 5) % 6);
 
-            if (set1 != null || set2 != null || set3 != null) {
+            if (set1 != null || set2 != null || set3 != null)
+            {
                 throw new Exception("Szomszédos csúcsokra nem építhető település!");
             }
-            else {
+            else
+            {
                 Settlement set = h.GetSettlement(position);
                 set = CurrentPlayer.BuildSettlement(isFree); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 h.SetTown(set, position);
@@ -155,8 +163,10 @@ namespace Catan.Model
         public bool HasWinner()
         {
             bool isWinner = false;
-            foreach (Player p in Players) {
-                if (p.GetPoints() >= WinnerScore) {
+            foreach (Player p in Players)
+            {
+                if (p.GetPoints() >= WinnerScore)
+                {
                     isWinner = true;
                     Winner = p;
                 }
@@ -175,7 +185,8 @@ namespace Catan.Model
             /// <summary>
             /// Fisher–Yates shuffle
             /// </summary>
-            for (int i = Players.Count() - 1; i > 0; i--) {
+            for (int i = Players.Count() - 1; i > 0; i--)
+            {
                 j = Convert.ToInt32(new Random(i));
                 Player temp = Players.ToArray()[j];
                 Players.ToArray()[j] = Players.ToArray()[i];
@@ -202,63 +213,81 @@ namespace Catan.Model
         {
             int half = (int)(Math.Floor(size / 2.0));
             var random = new Random();
-            foreach (Hexagon h in Hexagons) {
+            foreach (Hexagon h in Hexagons)
+            {
                 //0. szomszéd
-                if (h.Id.getRow() == 0) {
+                if (h.Id.getRow() == 0)
+                {
                     h.Neighbours.Add(null);
                 }
-                else {
+                else
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow() - 1)));
                 }
                 //1. szomszéd
-                if ((h.Id.getRow() == 0 && h.Id.getCol() >= half) || h.Id.getCol() == size - 1) {
+                if ((h.Id.getRow() == 0 && h.Id.getCol() >= half) || h.Id.getCol() == size - 1)
+                {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() < half) {
+                else if (h.Id.getCol() < half)
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow())));
                 }
-                else {
+                else
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow() - 1)));
                 }
                 //2. szomszéd
-                if (h.Id.getCol() == size - 1 || h.Id.getCol() + h.Id.getRow() == size - 1 + half) {
+                if (h.Id.getCol() == size - 1 || h.Id.getCol() + h.Id.getRow() == size - 1 + half)
+                {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() < half) {
+                else if (h.Id.getCol() < half)
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow() + 1)));
                 }
-                else {
+                else
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() + 1 && x.Id.getRow() == h.Id.getRow())));
                 }
                 //3. szomszéd
-                if (h.Id.getCol() + half == h.Id.getRow() || h.Id.getCol() + h.Id.getRow() == size - 1 + half) {
+                if (h.Id.getCol() + half == h.Id.getRow() || h.Id.getCol() + h.Id.getRow() == size - 1 + half)
+                {
                     h.Neighbours.Add(null);
                 }
-                else {
+                else
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() && x.Id.getRow() == h.Id.getRow() + 1)));
                 }
                 //4. szomszéd
-                if (h.Id.getCol() + half == h.Id.getRow() || h.Id.getCol() == 0) {
+                if (h.Id.getCol() + half == h.Id.getRow() || h.Id.getCol() == 0)
+                {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() <= half) {
+                else if (h.Id.getCol() <= half)
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
                 }
-                else {
+                else
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow() + 1)));
                 }
                 //5. szomszéd
-                if ((h.Id.getCol() <= half && h.Id.getRow() == 0) || h.Id.getCol() == 0) {
+                if ((h.Id.getCol() <= half && h.Id.getRow() == 0) || h.Id.getCol() == 0)
+                {
                     h.Neighbours.Add(null);
                 }
-                else if (h.Id.getCol() <= half) {
+                else if (h.Id.getCol() <= half)
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow() - 1)));
                 }
-                else {
+                else
+                {
                     h.Neighbours.Add(Hexagons.Find(x => (x.Id.getCol() == h.Id.getCol() - 1 && x.Id.getRow() == h.Id.getRow())));
                 }
 
-                while (h.Neighbours.Exists(x => (x != null && x.ProduceNumber == h.ProduceNumber))) {
+                while (h.Neighbours.Exists(x => (x != null && x.ProduceNumber == h.ProduceNumber)))
+                {
                     h.ProduceNumber = random.Next(2, 13);
                 }
             }
@@ -266,18 +295,24 @@ namespace Catan.Model
             int shouldBeNum = (cellNumber * 5) / 36 + 1;
             int numberOfSixs = Hexagons.FindAll(x => x.ProduceNumber == 6).Count();
             int numberOfEights = Hexagons.FindAll(x => x.ProduceNumber == 8).Count();
-            if (numberOfSixs < shouldBeNum) {
-                for (int i = 0; i < shouldBeNum - numberOfSixs; i++) {
+            if (numberOfSixs < shouldBeNum)
+            {
+                for (int i = 0; i < shouldBeNum - numberOfSixs; i++)
+                {
                     Hexagons.Find(x => (x.ProduceNumber != 6 && x.ProduceNumber != 8 && x.Neighbours.Any(y => y != null && y.ProduceNumber != 6))).ProduceNumber = 6;
                 }
             }
-            if (numberOfEights < shouldBeNum) {
-                for (int i = 0; i < shouldBeNum - numberOfSixs; i++) {
+            if (numberOfEights < shouldBeNum)
+            {
+                for (int i = 0; i < shouldBeNum - numberOfSixs; i++)
+                {
                     Hexagons.Find(x => (x.ProduceNumber != 8 && x.ProduceNumber != 6 && x.Neighbours.Any(y => y != null && y.ProduceNumber != 8))).ProduceNumber = 8;
                 }
             }
-            foreach (Material m in (Material[])Enum.GetValues(typeof(Material))) {
-                if (!Hexagons.Exists(x => x.Material == m)) {
+            foreach (Material m in (Material[])Enum.GetValues(typeof(Material)))
+            {
+                if (!Hexagons.Exists(x => x.Material == m))
+                {
                     Hexagons[random.Next(0, cellNumber)].Material = m;
                 }
             }
@@ -285,12 +320,12 @@ namespace Catan.Model
 
         public void Save()
         {
-            XmlManager.Save(Hexagons, Players);
+            XmlManager.Save("savegame.xml", Hexagons, Players);
         }
 
-        public void Load()
+        public void Load(String filename)
         {
-            XmlManager.Load();
+            XmlManager.Load(filename);
         }
     }
 }

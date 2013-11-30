@@ -321,6 +321,7 @@ namespace Catan.ViewModel
                 return Lazy.Init(ref _SaveCommand, () => new ActionCommand(
                     () => {
                         GameController.Instance.Save();
+                        ShowMessage("Játék sikeresen mentésre került ...", "Betöltés sikeres");
                     }));
             }
         }
