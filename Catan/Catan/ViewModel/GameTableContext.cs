@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Catan.ViewModel
     {
         private ActionCommand _ShowTradeWindowCommand;
         private ActionCommand _ShowNewGameWindowCommand;
-        private IEnumerable<GameCellContext> _GameCells;
+        private ObservableCollection<GameCellContext> _GameCells;
         private GameCellContext _SelectedGameCell;
         private int _TableSize;
         private DelegateCommand<GameCellContext> _SelectGameCellCommand;
@@ -56,7 +57,7 @@ namespace Catan.ViewModel
                 _GamePhase = value;
                 switch (value) {
                     case GamePhase.Initialization:
-                        ShowMessage("Játékosok sorrendjének megállapítása ...", "Játék kezdete");
+                        ShowMessage("Játékosok sorrendjének megállapítása ... kész.", "Játék kezdete");
                         break;
                     case GamePhase.FirstPhase:
                         ShowMessage("Első falu és a hozzátartozó út megépítése ...", "Első fázis");
@@ -90,19 +91,23 @@ namespace Catan.ViewModel
             if (service == null)
                 throw new ArgumentNullException("service");
             WindowService = service;
-            GamePhase = GamePhase.Initialization;
-            NewGameContext = new NewGameContext(new[] { new Player("1. játékos", PlayerColor.Blue),
-														new Player("2. játékos", PlayerColor.Red),
-                                                        new Player("3. játékos", PlayerColor.Orange),
-                                                        new Player("4. játékos", PlayerColor.Red), });
-            InitializeGame();
+            NewGameContext = new NewGameContext(this, new[] { new Player("1. játékos", PlayerColor.Blue),
+														      new Player("2. játékos", PlayerColor.Red),
+                                                              new Player("3. játékos", PlayerColor.Orange),
+                                                              new Player("4. játékos", PlayerColor.Red), });
+            NewGameContext.Closed += (sender, args) => InitializeGame(sender as NewGameContext);
         }
 
-        private GameTableContext InitializeGame()
+        private GameTableContext InitializeGame(NewGameContext newGameContext)
         {
-            var players = Players.ToList();
-            List<Player> newPlayers = new List<Player>();
+            if (newGameContext == null)
+                throw new ArgumentNullException("newGameContext");
+
+            var players = newGameContext.GetPlayers().ToList();
+            var newPlayers = new List<Player>();
             var random = new Random();
+
+            GamePhase = GamePhase.Initialization;
 
             while (players.Any()) {
                 var index = random.Next(0, players.Count);
@@ -110,7 +115,31 @@ namespace Catan.ViewModel
                 players.RemoveAt(index);
             }
 
-            GameController.Instance.Init((uint)TableSize, 10, newPlayers);
+            TableSize = newGameContext.TableSize;
+            GameController.Instance.Init((uint)TableSize, newGameContext.WinnerScore, newPlayers);
+
+            GameCells = new ObservableCollection<GameCellContext>();
+
+            random = new Random();
+
+            var materials = new[]
+            {
+                Material.Wood,
+                Material.Wool,
+                Material.Clay,
+                Material.Wheat,
+                Material.Iron
+            };
+
+            for (var j = 0; j < TableSize; ++j) {
+                for (var i = 0; i < TableSize - Math.Abs(Math.Floor(TableSize / 2.0) - j); ++i) {
+                    var h = new Hexagon(10, materials[random.Next(0, materials.Length)], new Hexid(j, i));
+                    GameCells.Add(new GameCellContext(this, h) { Value = random.Next(2, 13) });
+                    GameController.Instance.Hexagons.Add(h);
+                }
+            }
+
+            GameController.Instance.SetAllNeighbours();
 
             return this;
         }
@@ -147,7 +176,7 @@ namespace Catan.ViewModel
         /// <summary>
         /// Játéktáblán lévő cellák
         /// </summary>
-        public IEnumerable<GameCellContext> GameCells
+        public ObservableCollection<GameCellContext> GameCells
         {
             get { return _GameCells; }
             set
@@ -331,7 +360,7 @@ namespace Catan.ViewModel
             }
         }
 
-        protected GameTableContext ShowMessage(string message, string title = "", MessageType messageType = MessageType.Information)
+        public GameTableContext ShowMessage(string message, string title = "", MessageType messageType = MessageType.Information)
         {
             if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException("message");
             RuntimeMessage = new MessageContext(this, message, title, messageType);

@@ -39,7 +39,7 @@ namespace Catan
                                         new GameCellContext(context, new Hexagon(10, Material.Wool)) { Value = 4},
                                     };*/
 
-            context.GameCells = new List<GameCellContext>();
+            /*context.GameCells = new List<GameCellContext>();
 
             var random = new Random();
 
@@ -61,7 +61,7 @@ namespace Catan
                 }
             }
 
-            GameController.Instance.SetAllNeighbours();
+            GameController.Instance.SetAllNeighbours();*/
             /*NewGameWindow newGameWindow = new NewGameWindow();
             var newGameContext = new NewGameContext(context, 7, new WPFWindowService(newGameWindow));
             newGameWindow.DataContext = newGameContext;

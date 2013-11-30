@@ -24,12 +24,6 @@ namespace Catan.View
         public NewGameView()
         {
             InitializeComponent();
-            DataContext = new NewGameContext(new[] {
-                new Player("Red", PlayerColor.Red), 
-                new Player("Blue", PlayerColor.Blue), 
-                new Player("Orange", PlayerColor.Orange), 
-                new Player("Green", PlayerColor.Green), 
-            });
         }
     }
 }
