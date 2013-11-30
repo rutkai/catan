@@ -1,0 +1,205 @@
+﻿<UserControl x:Class="Catan.View.NewGameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:Catan.ViewModel.Converters"
+             xmlns:viewModel="clr-namespace:Catan.ViewModel"
+             mc:Ignorable="d"
+             d:DataContext="{x:Type viewModel:NewGameContext}"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+  <UserControl.Resources>
+    <Style TargetType="TextBlock"
+           x:Key="HeaderTextStyle">
+      <Setter Property="FontWeight"
+              Value="Bold" />
+    </Style>
+    <Style TargetType="TextBlock"
+           x:Key="MenuItemTextStyle"
+           BasedOn="{StaticResource HeaderTextStyle}">
+      <Setter Property="HorizontalAlignment"
+              Value="Right" />
+      <Setter Property="VerticalAlignment"
+              Value="Center" />
+      <Setter Property="Margin"
+              Value="0 0 10 0" />
+    </Style>
+  </UserControl.Resources>
+  <Border BorderThickness="3"
+          BorderBrush="Black"
+          CornerRadius="0 0 10 10"
+          Margin="60"
+          Background="LightSkyBlue">
+    <DockPanel>
+      <Border Background="DarkSlateBlue"
+              VerticalAlignment="Center"
+              Padding="0 20 0 20"
+              Margin="0 0 0 20"
+              DockPanel.Dock="Top">
+        <TextBlock FontWeight="Bold"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Text="Új játék kezdése"
+                   Foreground="GhostWhite" />
+      </Border>
+      <Grid Margin="20">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid IsSharedSizeScope="True">
+          <StackPanel>
+            <ItemsControl ItemsSource="{Binding Players}"
+                          VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="viewModel:ChoosablePlayer">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto"
+                                        MinWidth="100"
+                                        SharedSizeGroup="FirstColumn" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="30" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition MinHeight="40" />
+                    </Grid.RowDefinitions>
+                    <CheckBox IsChecked="{Binding IsChoosen}"
+                              VerticalAlignment="Center"
+                              HorizontalContentAlignment="Right"
+                              Margin="10 0 10 0"
+                              Grid.Column="0">
+                      <CheckBox.Content>
+                        <TextBlock FontWeight="Bold"
+                                   Text="Játékos neve:">
+                          <TextBlock.Style>
+                            <Style TargetType="TextBlock"
+                                   BasedOn="{StaticResource HeaderTextStyle}">
+                              <Setter Property="Foreground"
+                                      Value="Black" />
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChoosen}"
+                                             Value="False">
+                                  <Setter Property="Foreground"
+                                          Value="Gray" />
+                                </DataTrigger>
+                              </Style.Triggers>
+                            </Style>
+                          </TextBlock.Style>
+                        </TextBlock>
+                      </CheckBox.Content>
+                    </CheckBox>
+                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding IsChoosen}"
+                             VerticalAlignment="Center"
+                             Grid.Column="1" />
+
+                    <Border MaxHeight="20"
+                            MinHeight="20"
+                            MaxWidth="20"
+                            MinWidth="20"
+                            CornerRadius="5"
+                            Grid.Column="2">
+                      <Border.Resources>
+                        <converters:PlayerColorValueConverter x:Key="converter" />
+                      </Border.Resources>
+                      <Border.Background>
+                        <SolidColorBrush Color="{Binding Player.Color, Converter={StaticResource converter}}" />
+                      </Border.Background>
+                    </Border>
+
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Grid MinHeight="30">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="FirstColumn" />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Style="{StaticResource MenuItemTextStyle}"
+                         Text="Pálya mérete:" />
+              <DockPanel Grid.Column="1">
+                <TextBlock Style="{StaticResource HeaderTextStyle}"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Right">
+                  <TextBlock>(</TextBlock>
+                  <TextBlock Text="{Binding TableSize}" />
+                  <TextBlock>)</TextBlock>
+                </TextBlock>
+                <Slider Value="{Binding TableSize}"
+                        Minimum="7"
+                        Maximum="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center" />
+              </DockPanel>
+            </Grid>
+
+            <Grid MinHeight="30">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="FirstColumn" />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Style="{StaticResource MenuItemTextStyle}"
+                         VerticalAlignment="Center"
+                         Text="Elérhető maximális pontszám:" />
+              <DockPanel Grid.Column="1">
+                <TextBlock Style="{StaticResource HeaderTextStyle}"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Right">
+                  <TextBlock>(</TextBlock>
+                  <TextBlock Text="{Binding WinnerScore}" />
+                  <TextBlock>)</TextBlock>
+                </TextBlock>
+                <Slider Value="{Binding WinnerScore}"
+                        Minimum="9"
+                        Maximum="23"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center" />
+              </DockPanel>
+            </Grid>
+
+          </StackPanel>
+        </Grid>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    HorizontalAlignment="Right">
+          <StackPanel.Resources>
+            <Style TargetType="Button">
+              <Setter Property="Cursor" Value="Hand" />
+              <Setter Property="Margin" Value="30 0 0 0" />
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="Button">
+                    <TextBlock Text="{TemplateBinding Content}"
+                               FontWeight="Bold"
+                               Foreground="DarkSlateBlue"
+                               FontSize="18"
+                               x:Name="textBlock"/>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsMouseOver"
+                               Value="True">
+                        <Setter TargetName="textBlock"
+                                Property="Foreground"
+                                Value="Black" />
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </StackPanel.Resources>
+          <Button Command="{Binding NewGameCommand}">Indítás</Button>
+          <Button Command="{Binding LoadGameCommand}">Betöltés</Button>
+          <Button Command="{Binding ExitGameCommand}">Kilépés</Button>
+        </StackPanel>
+      </Grid>
+    </DockPanel>
+  </Border>
+</UserControl>

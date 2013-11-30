@@ -80,11 +80,15 @@
     <Compile Include="ViewModel\Converters\ToUpperCaseConverter.cs" />
     <Compile Include="ViewModel\Converters\ValueConverter.cs" />
     <Compile Include="ViewModel\MessageContext.cs" />
+    <Compile Include="ViewModel\ChoosablePlayer.cs" />
     <Compile Include="ViewModel\NewGameContext.cs" />
     <Compile Include="ViewModel\TradeContext.cs" />
     <Compile Include="ViewModel\TradeItemContext.cs" />
     <Compile Include="View\MessageBoxView.xaml.cs">
       <DependentUpon>MessageBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewGameView.xaml.cs">
+      <DependentUpon>NewGameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Services\WPFWindowService.cs" />
     <Compile Include="View\GameCellOptions.xaml.cs">
@@ -128,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MessageBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewGameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

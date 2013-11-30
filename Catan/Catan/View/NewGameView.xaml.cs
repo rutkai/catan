@@ -9,26 +9,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Catan.Model;
 using Catan.ViewModel;
-using NewGameContext = Catan.ViewModel.NewGameContext;
 
 namespace Catan.View
 {
     /// <summary>
-    /// Új játék ablak logikája
+    /// Interaction logic for NewGameView.xaml
     /// </summary>
-    public partial class NewGameWindow : Window
+    public partial class NewGameView : UserControl
     {
-
-        /// <summary>
-        /// Konstruktor
-        /// Felépíti a felületet
-        /// </summary>
-        public NewGameWindow()
+        public NewGameView()
         {
             InitializeComponent();
+            DataContext = new NewGameContext(new[] {
+                new Player("Red", PlayerColor.Red), 
+                new Player("Blue", PlayerColor.Blue), 
+                new Player("Orange", PlayerColor.Orange), 
+                new Player("Green", PlayerColor.Green), 
+            });
         }
     }
 }

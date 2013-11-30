@@ -34,8 +34,19 @@ namespace Catan.ViewModel
         private ImageSource _BackgroundImage;
         private ActionCommand _ClearMessageCommand;
         private GamePhase _GamePhase;
+        private NewGameContext _NewGameContext;
 
         public IFace.IWindowService WindowService { get; set; }
+
+        public NewGameContext NewGameContext
+        {
+            get { return _NewGameContext; }
+            protected set
+            {
+                _NewGameContext = value;
+                OnPropertyChanged(() => NewGameContext);
+            }
+        }
 
         public GamePhase GamePhase
         {
@@ -43,8 +54,7 @@ namespace Catan.ViewModel
             set
             {
                 _GamePhase = value;
-                switch (value)
-                {
+                switch (value) {
                     case GamePhase.Initialization:
                         ShowMessage("Játékosok sorrendjének megállapítása ...", "Játék kezdete");
                         break;
@@ -81,6 +91,10 @@ namespace Catan.ViewModel
                 throw new ArgumentNullException("service");
             WindowService = service;
             GamePhase = GamePhase.Initialization;
+            NewGameContext = new NewGameContext(new[] { new Player("1. játékos", PlayerColor.Blue),
+														new Player("2. játékos", PlayerColor.Red),
+                                                        new Player("3. játékos", PlayerColor.Orange),
+                                                        new Player("4. játékos", PlayerColor.Red), });
             InitializeGame();
         }
 
@@ -90,8 +104,7 @@ namespace Catan.ViewModel
             List<Player> newPlayers = new List<Player>();
             var random = new Random();
 
-            while (players.Any())
-            {
+            while (players.Any()) {
                 var index = random.Next(0, players.Count);
                 newPlayers.Add(players[index]);
                 players.RemoveAt(index);
@@ -206,8 +219,7 @@ namespace Catan.ViewModel
             get
             {
                 return Lazy.Init(ref _SaveCommand, () => new ActionCommand(
-                    () =>
-                    {
+                    () => {
                         GameController.Instance.Save();
                     }));
             }
@@ -253,9 +265,9 @@ namespace Catan.ViewModel
             {
                 return Lazy.Init(ref _ShowNewGameWindowCommand,
                     () => new ActionCommand(() => {
-                        var newGameControl = new NewGameWindow();
+                        /*var newGameControl = new NewGameWindow();
                         newGameControl.DataContext = new NewGameContext(this, _TableSize, new WPFWindowService(newGameControl));
-                        newGameControl.ShowDialog();
+                        newGameControl.ShowDialog();*/
                     }));
             }
         }

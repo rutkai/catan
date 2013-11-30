@@ -26,8 +26,7 @@ namespace Catan.Model
             doc.AppendChild(tableNode);
             XmlNode hexagonsNode = doc.CreateElement("Hexagons");
             tableNode.AppendChild(hexagonsNode);
-            foreach (var hex in hexagons)
-            {
+            foreach (var hex in hexagons) {
                 XmlNode hexagonNode = doc.CreateElement("Hexagon");
                 XmlAttribute colAttribute = doc.CreateAttribute("col");
                 colAttribute.Value = hex.Id.getCol().ToString();
@@ -46,10 +45,8 @@ namespace Catan.Model
                 XmlNode settlementsNode = doc.CreateElement("Settlements");
                 hexagonNode.AppendChild(settlementsNode);
 
-                for (var i=0; i<hex.Settlements.Length; ++i)
-                {
-                    if (hex.Settlements[i] != null)
-                    {
+                for (var i = 0; i < hex.Settlements.Length; ++i) {
+                    if (hex.Settlements[i] != null) {
                         XmlNode settlementNode = doc.CreateElement("Settlement");
                         XmlAttribute nodeNumberAttribute = doc.CreateAttribute("nodeNumber");
                         nodeNumberAttribute.Value = i.ToString();
@@ -63,14 +60,12 @@ namespace Catan.Model
                         settlementsNode.AppendChild(settlementNode);
                     }
                 }
-                
+
                 XmlNode roadsNode = doc.CreateElement("Roads");
                 hexagonNode.AppendChild(roadsNode);
 
-                for (var i = 0; i < hex.Roads.Length; ++i)
-                {
-                    if (hex.Roads[i] != null)
-                    {
+                for (var i = 0; i < hex.Roads.Length; ++i) {
+                    if (hex.Roads[i] != null) {
                         XmlNode roadNode = doc.CreateElement("Road");
                         XmlAttribute sideAttribute = doc.CreateAttribute("side");
                         sideAttribute.Value = i.ToString();
@@ -85,8 +80,7 @@ namespace Catan.Model
 
             XmlNode playersNode = doc.CreateElement("Players");
             tableNode.AppendChild(playersNode);
-            foreach (var player in players)
-            {
+            foreach (var player in players) {
                 XmlNode playerNode = doc.CreateElement("Player");
                 XmlAttribute colorAttribute = doc.CreateAttribute("color");
                 colorAttribute.Value = player.Color.ToString();
@@ -99,13 +93,12 @@ namespace Catan.Model
                 playerNode.Attributes.Append(goldAttribute);
 
                 XmlNode materialsNode = doc.CreateElement("Materials");
-                foreach (var material in player.Materials)
-                {
+                foreach (var material in player.Materials) {
                     XmlAttribute materialAttribute = doc.CreateAttribute(material.Key.ToString());
                     materialAttribute.Value = material.Value.ToString();
                     materialsNode.Attributes.Append(materialAttribute);
                 }
-                
+
                 playerNode.AppendChild(materialsNode);
                 playersNode.AppendChild(playerNode);
             }

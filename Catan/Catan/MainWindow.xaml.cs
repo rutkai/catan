@@ -62,11 +62,11 @@ namespace Catan
             }
 
             GameController.Instance.SetAllNeighbours();
-            NewGameWindow newGameWindow = new NewGameWindow();
+            /*NewGameWindow newGameWindow = new NewGameWindow();
             var newGameContext = new NewGameContext(context, 7, new WPFWindowService(newGameWindow));
             newGameWindow.DataContext = newGameContext;
 
-            newGameWindow.ShowDialog();
+            newGameWindow.ShowDialog();*/
             DataContext = context;
         }
     }
