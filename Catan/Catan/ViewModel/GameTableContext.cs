@@ -281,7 +281,7 @@ namespace Catan.ViewModel
             {
                 return Lazy.Init(ref _ShowTradeWindowCommand,
                     () => new ActionCommand(() => {
-                        var tradeControl = new TradeControl();
+                        var tradeControl = new TradeView();
                         tradeControl.SetBinding(FrameworkElement.DataContextProperty,
                             new Binding("TradeContext") {
                                 Source = this

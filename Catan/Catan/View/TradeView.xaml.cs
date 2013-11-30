@@ -14,14 +14,14 @@ using System.Windows.Shapes;
 
 namespace Catan.View
 {
-	/// <summary>
-	/// Interaction logic for TradeControl.xaml
-	/// </summary>
-	public partial class TradeControl : Window
-	{
-		public TradeControl()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Interaction logic for TradeView.xaml
+    /// </summary>
+    public partial class TradeView : Window
+    {
+        public TradeView()
+        {
+            InitializeComponent();
+        }
+    }
 }
