@@ -250,9 +250,7 @@ namespace Catan.ViewModel
                             }
                         },
 
-                        index => {
-                            return !string.IsNullOrWhiteSpace(index);
-                        }));
+                        index => !string.IsNullOrWhiteSpace(index)));
             }
         }
 
@@ -302,8 +300,12 @@ namespace Catan.ViewModel
         {
             get
             {
-                return _Hexagon.Roads.Where(road => road != null)
-                                     .Select(road => road.Player).ToArray();
+                return _Hexagon.Roads//.Where(road => road != null)
+                                     .Select(road => {
+                                         if (road != null)
+                                             return road.Player;
+                                         return null;
+                                     }).ToArray();
             }
             protected set
             {

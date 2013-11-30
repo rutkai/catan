@@ -65,6 +65,9 @@ namespace Catan.ViewModel
             TableSize = 7;
             Open();
             Players = new List<ChoosablePlayer>(players.Select(player => new ChoosablePlayer(player)));
+            foreach (var player in Players.Take(2)) {
+                player.IsChoosen = true;
+            }
         }
 
         public void Open()
