@@ -154,7 +154,7 @@ namespace Catan.ViewModel
 
             GameController.Instance.Step();
 
-            GamePhase = GamePhase.Game;
+            GamePhase = GamePhase.FirstPhase;
 
             return this;
         }
