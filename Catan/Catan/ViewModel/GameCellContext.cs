@@ -300,12 +300,11 @@ namespace Catan.ViewModel
         {
             get
             {
-                return _Hexagon.Roads//.Where(road => road != null)
-                                     .Select(road => {
-                                         if (road != null)
-                                             return road.Player;
-                                         return null;
-                                     }).ToArray();
+                return _Hexagon.Roads.Select(road => {
+                    if (road != null)
+                        return road.Player;
+                    return null;
+                }).ToArray();
             }
             protected set
             {
