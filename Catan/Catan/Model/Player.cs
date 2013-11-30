@@ -144,11 +144,13 @@ namespace Catan.Model
         /// Levonja a szükséges nyersanyagokat majd visszatér önmagával. Ha nincs elég
         /// nyersanyag kivételt dob.
         /// </summary>
-        public Player BuildRoad()
+        public Player BuildRoad(bool isFree)
         {
             if (Materials[Material.Wood] > 0 && Materials[Material.Clay] > 0) {
-                Materials[Material.Wood]--;
-                Materials[Material.Clay]--;
+                if (!isFree) {
+                    Materials[Material.Wood]--;
+                    Materials[Material.Clay]--;
+                }
             }
             else {
                 throw new Exception("Nincs elég nyersanyag!");
@@ -160,14 +162,16 @@ namespace Catan.Model
         /// Készít egy új települést. Hozzáadja a listájához, levonja a nyersanyagot, majd
         /// visszatér vele. Ha nincs elég nyersanyag akkor kivételt dob.
         /// </summary>
-        public Settlement BuildSettlement()
+        public Settlement BuildSettlement(bool isFree)
         {
             Settlement set = new Settlement(null, this);
             if (Materials[Material.Wood] > 0 && Materials[Material.Clay] > 0 && Materials[Material.Wheat] > 0 && Materials[Material.Wool] > 0) {
-                Materials[Material.Wood]--;
-                Materials[Material.Clay]--;
-                Materials[Material.Wheat]--;
-                Materials[Material.Wool]--;
+                if (!isFree) {
+                    Materials[Material.Wood]--;
+                    Materials[Material.Clay]--;
+                    Materials[Material.Wheat]--;
+                    Materials[Material.Wool]--;
+                }
                 Settlements.Add(set);
             }
             else {

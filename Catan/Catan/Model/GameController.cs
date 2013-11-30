@@ -104,14 +104,14 @@ namespace Catan.Model
         /// <summary>
         /// Út megépítése
         /// </summary>
-        public void BuildRoad(int position, Hexagon h)
+        public void BuildRoad(int position, Hexagon h, bool isFree)
         {
             var set1 = h.Settlements[position];
             var set2 = h.Settlements[(position + 5) % 6];
             var road1 = h.Roads[(position + 1) % 6];
             var road2 = h.Roads[(position + 5) % 6];
             if ((set1 != null && set1.Owner == CurrentPlayer || set2 != null && set2.Owner == CurrentPlayer) || (road1 != null && road1.Player.Color == CurrentPlayer.Color) || (road2 != null && road2.Player.Color == CurrentPlayer.Color)) {
-                CurrentPlayer.BuildRoad(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                CurrentPlayer.BuildRoad(isFree); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 h.SetRoad(CurrentPlayer, position);
             }
             else {
@@ -122,7 +122,7 @@ namespace Catan.Model
         /// <summary>
         /// Település építése
         /// </summary>
-        public void BuildSettlement(int position, Hexagon h)
+        public void BuildSettlement(int position, Hexagon h, bool isFree)
         {
             Settlement set1 = h.Settlements[(position + 1) % 6];
             Settlement set2 = h.Settlements[(position + 5) % 6];
@@ -135,7 +135,7 @@ namespace Catan.Model
             }
             else {
                 Settlement set = h.GetSettlement(position);
-                set = CurrentPlayer.BuildSettlement(); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                set = CurrentPlayer.BuildSettlement(isFree); //dobhat exceptiont!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 h.SetTown(set, position);
             }
         }

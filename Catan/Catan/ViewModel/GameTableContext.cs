@@ -36,6 +36,7 @@ namespace Catan.ViewModel
         private ActionCommand _ClearMessageCommand;
         private GamePhase _GamePhase;
         private NewGameContext _NewGameContext;
+        private bool _IsTradeEnabled;
 
         public IFace.IWindowService WindowService { get; set; }
 
@@ -58,6 +59,7 @@ namespace Catan.ViewModel
                 switch (value) {
                     case GamePhase.Initialization:
                         ShowMessage("Játékosok sorrendjének megállapítása ... kész.", "Játék kezdete");
+                        IsTradeEnabled = false;
                         break;
                     case GamePhase.FirstPhase:
                         ShowMessage("Első falu és a hozzátartozó út megépítése ...", "Első fázis");
@@ -67,6 +69,7 @@ namespace Catan.ViewModel
                         break;
                     case GamePhase.Game:
                         ShowMessage("Kezdődjön a játék!");
+                        IsTradeEnabled = true;
                         break;
                     case GamePhase.GameOver:
                         break;
@@ -232,7 +235,7 @@ namespace Catan.ViewModel
 
             var roadsCount = player.Roads.Count();
             var settlementsCount = player.Settlements.Where(settlement => settlement != null)
-                                                     .Count(settlement => !(settlement is Town) && settlement.Owner == player);
+                                                     .Count(settlement => settlement.Owner == player);
 
             return roadsCount == 1 && settlementsCount == 1;
         }
@@ -242,10 +245,10 @@ namespace Catan.ViewModel
             if (player == null) throw new ArgumentNullException("player");
 
             var roadsCount = player.Roads.Count();
-            var settlementsCount = GameCells.Sum(cell => player.Settlements.Where(settlement => settlement != null)
-                                                                           .Count(settlement => (settlement is Town) && settlement.Owner == player));
+            var settlementsCount = player.Settlements.Where(settlement => settlement != null)
+                                                     .Count(settlement => settlement.Owner == player);
 
-            return roadsCount == 2 && settlementsCount == 1;
+            return roadsCount == 2 && settlementsCount == 2;
         }
 
         /// <summary>
@@ -267,7 +270,7 @@ namespace Catan.ViewModel
                         if (GamePhase == GamePhase.SecondPhase) {
                             var result = CheckSecondPhase(CurrentPlayer);
                             if (!result)
-                                ShowMessage("Építened kell egy várost és egy falut!", "Információ", MessageType.Warning);
+                                ShowMessage("Építened kell egy falut és egy falut!", "Információ", MessageType.Warning);
                             return result;
                         }
                         return true;
@@ -333,13 +336,22 @@ namespace Catan.ViewModel
             }
         }
 
+        public bool IsTradeEnabled
+        {
+            get { return _IsTradeEnabled; }
+            set
+            {
+                _IsTradeEnabled = value;
+                OnPropertyChanged(() => IsTradeEnabled);
+            }
+        }
+
         public ActionCommand ShowTradeWindowCommand
         {
             get
             {
                 return Lazy.Init(ref _ShowTradeWindowCommand,
                     () => new ActionCommand(
-                        param => GamePhase == GamePhase.Game,
                         () => {
                             var tradeControl = new TradeView();
                             tradeControl.SetBinding(FrameworkElement.DataContextProperty,

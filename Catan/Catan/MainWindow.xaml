@@ -265,6 +265,7 @@
 						<TextBlock Text="{Binding CurrentPlayer.Gold}" />
 					</InlineUIContainer></TextBlock>
         <Button Command="{Binding ShowTradeWindowCommand}"
+                IsEnabled="{Binding IsTradeEnabled}"
                 Content="Kereskedelem" />
         <Button Command="{Binding StepCommand}"
                 Content="Kör vége" />

@@ -164,13 +164,18 @@
 													<SolidColorBrush Color="{Binding Path=Tag.Owner.Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PlayerColorValueConverter}}" />
 												</Ellipse.Fill>
 											</Ellipse>
-											<TextBlock VerticalAlignment="Center"
-																 HorizontalAlignment="Center"
-																 Foreground="White"
-																 FontSize="13"
-																 FontWeight="Bold"
-																 ToolTip="{Binding Path=Tag.Owner.Name, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-																 Text="F" />
+                      <TextBlock VerticalAlignment="Center"
+                                 HorizontalAlignment="Center"
+                                 Foreground="White"
+                                 FontSize="13"
+                                 FontWeight="Bold"
+                                 ToolTip="{Binding Path=Tag.Owner.Name, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                        <TextBlock.Style>
+                          <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="F" />
+                          </Style>
+                        </TextBlock.Style>
+                      </TextBlock>
 										</Grid>
 									</ControlTemplate>
 								</Setter.Value>

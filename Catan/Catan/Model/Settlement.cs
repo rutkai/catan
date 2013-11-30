@@ -9,16 +9,24 @@ namespace Catan.Model
     {
         private Hexagon[] Fields;
 
-	    /// <summary>
-	    /// Tulajdonos
-	    /// </summary>
-	    public Player Owner { get; set; }
-        
-		public Hexagon m_Hexagon;
+        /// <summary>
+        /// Tulajdonos
+        /// </summary>
+        public Player Owner { get; set; }
+
+        public Hexagon m_Hexagon;
 
         public Hexagon[] getFields()
         {
             return Fields;
+        }
+
+        public bool IsTown
+        {
+            get
+            {
+                return this is Town;
+            }
         }
 
         /// <summary>
@@ -32,15 +40,15 @@ namespace Catan.Model
             this.Owner = Owner;
         }
 
-		/// <summary>
-		/// Lásd õs, csak többet termel.
-		/// </summary>
-		/// <param name="Dice"></param>
-		public virtual Dictionary<Material, int> Produce(int Dice)
-		{
+        /// <summary>
+        /// Lásd õs, csak többet termel.
+        /// </summary>
+        /// <param name="Dice"></param>
+        public virtual Dictionary<Material, int> Produce(int Dice)
+        {
 
-			return null;
-		}
+            return null;
+        }
 
     }
 }

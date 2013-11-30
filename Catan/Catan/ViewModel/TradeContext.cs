@@ -99,7 +99,9 @@ namespace Catan.ViewModel
                                 material => {
                                     if (Player != null) {
                                         if (!Player.AddTradeItem(1, 1, (Material)material))
-                                            GameTableContext.WindowService.ShowMessageBox("Nincs ilyen nyersanyagod raktáron!", "Kevés a nyersanyag");
+                                            GameTableContext.ShowMessage("Nincs ilyen nyersanyagod raktáron!",
+                                                "Kevés a nyersanyag", MessageType.Error);
+                                        //GameTableContext.WindowService.ShowMessageBox("Nincs ilyen nyersanyagod raktáron!", "Kevés a nyersanyag");
 
                                         Player.Materials[(Material)material]--;
                                     }

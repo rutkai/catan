@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using Catan.Common;
 using Catan.Model;
@@ -196,15 +197,22 @@ namespace Catan.ViewModel
                 return Lazy.Init(ref _BuildRoadCommand,
                     () => new DelegateCommand<string>(
                         index => {
+                            if ((GameTable.GamePhase == GamePhase.FirstPhase && GameTable.CurrentPlayer.Roads.Count >= 1) ||
+                                (GameTable.GamePhase == GamePhase.SecondPhase && GameTable.CurrentPlayer.Roads.Count >= 2)) {
+                                GameTable.ShowMessage("Nem építhetsz több utat!", "Építési hiba", MessageType.Error);
+                                return;
+                            }
+
                             try {
                                 int result;
                                 if (int.TryParse(index, out result)) {
-                                    GameController.Instance.BuildRoad(result, _Hexagon);
+                                    GameController.Instance.BuildRoad(result, _Hexagon, GameTable.GamePhase == GamePhase.FirstPhase || GameTable.GamePhase == GamePhase.SecondPhase);
                                     GameTable.Refresh();
                                 }
                             }
                             catch (Exception ex) {
-                                GameTable.WindowService.ShowMessageBox(ex.Message, "Catan");
+                                GameTable.ShowMessage(ex.Message, "Catan", MessageType.Warning);
+                                //GameTable.WindowService.ShowMessageBox(ex.Message, "Catan");
                             }
                         },
                         index => !string.IsNullOrWhiteSpace(index)));
@@ -221,18 +229,30 @@ namespace Catan.ViewModel
                 return Lazy.Init(ref _BuildTownCommand,
                     () => new DelegateCommand<string>(
                         index => {
+                            if ((GameTable.GamePhase == GamePhase.FirstPhase && GameTable.CurrentPlayer.Settlements.Count >= 1) ||
+                            (GameTable.GamePhase == GamePhase.SecondPhase && GameTable.CurrentPlayer.Settlements.Count >= 2)) {
+                                GameTable.ShowMessage("Nem építhetsz több falut!", "Építési fázis", MessageType.Error);
+                                return;
+                            }
+
                             try {
                                 int result;
                                 if (int.TryParse(index, out result)) {
-                                    GameController.Instance.BuildSettlement(result, _Hexagon);
+                                    GameController.Instance.BuildSettlement(result, _Hexagon,
+                                                                            GameTable.GamePhase == GamePhase.FirstPhase ||
+                                                                            GameTable.GamePhase == GamePhase.SecondPhase);
                                     GameTable.Refresh();
                                 }
                             }
                             catch (Exception ex) {
-                                GameTable.WindowService.ShowMessageBox(ex.Message, "Catan");
+                                GameTable.ShowMessage(ex.Message, "Catan", MessageType.Warning);
+                                //GameTable.WindowService.ShowMessageBox(ex.Message, "Catan");
                             }
                         },
-                        index => !string.IsNullOrWhiteSpace(index)));
+
+                        index => {
+                            return !string.IsNullOrWhiteSpace(index);
+                        }));
             }
         }
 
