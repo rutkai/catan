@@ -15,6 +15,7 @@ using Catan.Model;
 using Catan.View;
 using Catan.View.Services;
 using Catan.ViewModel.Commons;
+using Microsoft.Win32;
 
 namespace Catan.ViewModel
 {
@@ -320,8 +321,13 @@ namespace Catan.ViewModel
             {
                 return Lazy.Init(ref _SaveCommand, () => new ActionCommand(
                     () => {
-                        GameController.Instance.Save();
-                        ShowMessage("Játék sikeresen mentésre került ...", "Betöltés sikeres");
+                        var saveFileDialog = new SaveFileDialog() {
+                            Filter = "Játék állás (*.xml)|*.xml"
+                        };
+                        if (saveFileDialog.ShowDialog() == true) {
+                            GameController.Instance.Save(saveFileDialog.FileName);
+                            ShowMessage("Játék sikeresen mentésre került ...", "Mentés sikeres");
+                        }
                     }));
             }
         }
