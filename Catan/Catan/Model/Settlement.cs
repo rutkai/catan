@@ -29,6 +29,11 @@ namespace Catan.Model
             }
         }
 
+        public Settlement(Player Owner)
+        {
+            this.Owner = Owner;
+        }
+
         /// <summary>
         /// Konstruktor. Inicializálja az objektumot.
         /// </summary>

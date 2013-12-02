@@ -15,9 +15,9 @@ namespace Catan.Model
         public int Dobas1 { get; set; }
         public int Dobas2 { get; set; }
         public int WinnerScore = 9;
+        public int size = 7;
         private int _CurrentPlayerIndex;
         private Player Winner = null;
-        private int size = 7;
         private int cellNumber = 0;
 
         public List<Hexagon> Hexagons;
