@@ -279,7 +279,7 @@ namespace Catan.Model
                 if (Materials[Material.Iron] >= 3 && Materials[Material.Wheat] >= 2) {
                     Materials[Material.Wheat] -= 3;
                     Materials[Material.Iron] -= 2;
-                    Town town = new Town(settlement.Fields, this);
+                    Town town = new Town(settlement.getFields(), this);
                     Settlements.Remove(settlement);
                     Settlements.Add(town);
                 }
