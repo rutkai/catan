@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
@@ -99,6 +101,7 @@ namespace Catan.ViewModel
                             GameTableContext.ShowMessage("Legalább egy játékost ki kell választani!", "Figyelmeztetés", MessageType.Warning);
                             return;
                         }
+                              IsNewGame = true;
                         Close();
                     }));
             }
@@ -125,12 +128,22 @@ namespace Catan.ViewModel
                         Filter = "Játék fájlok (*.xml)|*.xml"
                     };
                     if (dialog.ShowDialog() == true) {
-                        GameController.Instance.Load(dialog.FileName);
+                        string fileName = dialog.FileName;
+                        GameController.Instance.Load(fileName);
+
+                        GameTableContext.GameCells = new ObservableCollection<GameCellContext>();
+                        foreach (var hexagon in GameController.Instance.Hexagons)
+                            GameTableContext.GameCells.Add(new GameCellContext(GameTableContext, hexagon));
+
+                        IsNewGame = false;
                         GameTableContext.ShowMessage("Játék sikeresen betöltődött ...", "Betöltés sikeres");
+                        //GameTableContext.LoadGame(dialog.FileName);
                         Close();
                     }
                 }));
             }
         }
+
+        public bool IsNewGame { get; protected set; }
     }
 }

@@ -105,9 +105,15 @@ namespace Catan.ViewModel
             NewGameContext = new NewGameContext(this, new[] { new Player("1. játékos", PlayerColor.Blue),
 														      new Player("2. játékos", PlayerColor.Red),
                                                               new Player("3. játékos", PlayerColor.Orange),
-                                                              new Player("4. játékos", PlayerColor.Red), });
+                                                              new Player("4. játékos", PlayerColor.Green), });
 
-            NewGameContext.Closed += (sender, args) => InitializeGame(sender as NewGameContext);
+            NewGameContext.Closed += (sender, args) => {
+                var context = sender as NewGameContext;
+                if (context != null) {
+                    if (context.IsNewGame)
+                        InitializeGame(context);
+                }
+            };
         }
 
         private GameTableContext InitializeGame(NewGameContext newGameContext)
@@ -145,8 +151,9 @@ namespace Catan.ViewModel
 
             for (var j = 0; j < TableSize; ++j) {
                 for (var i = 0; i < TableSize - Math.Abs(Math.Floor(TableSize / 2.0) - j); ++i) {
-                    var h = new Hexagon(10, materials[random.Next(0, materials.Length)], new Hexid(j, i));
-                    GameCells.Add(new GameCellContext(this, h) { Value = random.Next(2, 13) });
+                    int value = random.Next(2, 13);
+                    var h = new Hexagon(value, materials[random.Next(0, materials.Length)], new Hexid(j, i));
+                    GameCells.Add(new GameCellContext(this, h) { Value = value });
                     GameController.Instance.Hexagons.Add(h);
                 }
             }
@@ -158,6 +165,75 @@ namespace Catan.ViewModel
             GamePhase = GamePhase.FirstPhase;
 
             return this;
+        }
+
+        public void LoadGame(string fileName)
+        {
+            var players = new Player[2]
+            {
+                new Player("Gipsz Jakab", PlayerColor.Blue)
+                {
+                    Gold = 1874,
+                },
+                new Player("Mekk Elek", PlayerColor.Orange)
+            };
+
+            var random = new Random();
+
+            players[0].Materials[Material.Clay] = 17;
+            players[0].Materials[Material.Wheat] = 7;
+            players[0].Materials[Material.Wool] = 37;
+
+            players[1].Materials[Material.Clay] = random.Next(14, 32);
+            players[1].Materials[Material.Iron] = random.Next(4, 9);
+            players[1].Materials[Material.Wood] = random.Next(9, 54);
+
+            TableSize = 7;
+            GameCells = new ObservableCollection<GameCellContext>();
+            GameController.Instance.Init((uint)TableSize, 1, players);
+
+
+            var materials = new[]
+            {
+                Material.Wood,
+                Material.Wool,
+                Material.Clay,
+                Material.Wheat,
+                Material.Iron
+            };
+
+            for (var j = 0; j < TableSize; ++j) {
+                for (var i = 0; i < TableSize - Math.Abs(Math.Floor(TableSize / 2.0) - j); ++i) {
+                    int value = (i + j) + 1;
+                    var h = new Hexagon(value, materials[random.Next(0, materials.Length)], new Hexid(j, i));
+                    GameCells.Add(new GameCellContext(this, h) { Value = value });
+                    GameController.Instance.Hexagons.Add(h);
+                }
+            }
+
+            GameController.Instance.SetAllNeighbours();
+
+            for (int i = 0; i < players.Count(); i++)
+            {
+                GameController.Instance._CurrentPlayerIndex = i;
+                foreach (var hexagon in GameController.Instance.Hexagons)
+                {
+                    if (random.NextDouble() < 0.3) {
+                        int position = random.Next(0, 5);
+                        try
+                        {
+                            GameController.Instance.BuildSettlement(position, hexagon, true);
+                            GameController.Instance.BuildRoad(position, hexagon, true);
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine(exception);
+                        }
+                    }
+                }
+            }
+
+            GamePhase = GamePhase.Game;
         }
 
         /// <summary>
@@ -304,8 +380,8 @@ namespace Catan.ViewModel
                             ShowMessage(string.Format("Következő játékos: {0}", CurrentPlayer.Name), "Játék állása", MessageType.Information);
                         }
                         catch (Exception e) {
-                            MessageBox.Show(e.Message);
-                            WindowService.Close();
+                            //MessageBox.Show(e.Message);
+                            //WindowService.Close();
                         }
                         OnPropertyChanged(() => CurrentPlayer,
                                           () => TradeContext,
@@ -486,7 +562,7 @@ namespace Catan.ViewModel
                     _ClearMessageCommand = new ActionCommand(() => {
                         if (Messages.Any())
                             RuntimeMessage = Messages.Dequeue();
-                        else
+                        else if (GamePhase != GamePhase.GameOver)
                             RuntimeMessage = null;
                     });
 

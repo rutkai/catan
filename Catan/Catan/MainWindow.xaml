@@ -24,7 +24,7 @@
             BorderThickness="2"
             Background="LightBlue"
             Visibility="Visible">
-      <ItemsControl ItemsSource="{Binding GameCells}" >
+      <ItemsControl ItemsSource="{Binding GameCells}" ClipToBounds="True">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
             <View:GameCanvas Rows="{Binding TableSize}"

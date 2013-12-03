@@ -16,7 +16,7 @@ namespace Catan.Model
         public int Dobas2 { get; set; }
         public int WinnerScore = 9;
         public int size = 7;
-        private int _CurrentPlayerIndex;
+        public int _CurrentPlayerIndex;
         private Player Winner = null;
         private int cellNumber = 0;
 
